@@ -1,0 +1,2301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OctoMinds Owner Demo | Multi-Centre Preschool ERP by SrS Logics</title>
+  <meta name="description" content="A live preschool ERP demo for OctoMinds showing owner dashboard, admissions, branch operations, parent app, fee collections, child progress tracking, and installable PWA apps across 7 centres.">
+  <meta name="theme-color" content="#fff5ea">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="OctoMinds ERP">
+  <link rel="icon" type="image/png" sizes="192x192" href="../assets/images/favicon-192.png">
+  <link rel="apple-touch-icon" href="./icon-192.svg">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <style>
+    html {
+      background: #fff7ef;
+      color-scheme: light;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 14% 12%, rgba(255, 154, 180, 0.28), transparent 22%),
+        radial-gradient(circle at 86% 18%, rgba(255, 203, 132, 0.34), transparent 20%),
+        radial-gradient(circle at 62% 80%, rgba(255, 171, 115, 0.2), transparent 24%),
+        linear-gradient(180deg, #fffaf4 0%, #fff5ea 42%, #fffdf8 100%);
+      color: #2f2340;
+    }
+
+    body::before {
+      background-image:
+        linear-gradient(rgba(255, 145, 170, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 199, 112, 0.08) 1px, transparent 1px);
+      opacity: 0.22;
+      mask-image: radial-gradient(circle at center, black 32%, transparent 88%);
+    }
+
+    body::after {
+      background:
+        linear-gradient(
+          180deg,
+          transparent 0%,
+          rgba(255, 198, 140, 0.16) 38%,
+          rgba(255, 138, 168, 0.18) 72%,
+          rgba(255, 220, 173, 0.18) 100%
+        );
+      opacity: 0.35;
+      mask-image:
+        repeating-linear-gradient(
+          90deg,
+          transparent 0 20px,
+          rgba(0, 0, 0, 0.72) 20px 21px,
+          transparent 21px 34px
+        ),
+        linear-gradient(180deg, transparent 0%, black 30%, black 100%);
+    }
+
+    .demo-shell {
+      position: relative;
+    }
+
+    .demo-shell::before {
+      background: rgba(255, 164, 192, 0.28);
+      opacity: 0.3;
+    }
+
+    .demo-shell::after {
+      background: rgba(255, 199, 112, 0.24);
+      opacity: 0.28;
+    }
+
+    .site-header {
+      background:
+        linear-gradient(180deg, rgba(255, 251, 246, 0.92), rgba(255, 245, 233, 0.88));
+      border-bottom: 1px solid rgba(214, 131, 115, 0.14);
+      box-shadow: 0 12px 30px rgba(196, 149, 117, 0.12);
+      backdrop-filter: blur(18px);
+    }
+
+    .site-header::after {
+      background: linear-gradient(90deg, transparent, rgba(255, 151, 179, 0.4), rgba(255, 191, 116, 0.4), transparent);
+    }
+
+    .brand {
+      gap: 0.7rem;
+    }
+
+    .brand-badge {
+      width: 2.7rem;
+      height: 2.7rem;
+      border-radius: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ff9eb5, #ffc57f);
+      color: white;
+      font-size: 1.25rem;
+      box-shadow: 0 10px 24px rgba(243, 172, 129, 0.28);
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      color: #51304d;
+      text-shadow: none;
+    }
+
+    .brand-tag,
+    .site-nav a {
+      color: #8d6c73;
+    }
+
+    .site-nav a:hover,
+    .site-nav a:focus-visible {
+      color: #51304d;
+      text-shadow: none;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.78rem 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 154, 181, 0.28);
+      background: linear-gradient(135deg, rgba(255, 219, 229, 0.95), rgba(255, 241, 212, 0.98));
+      color: #74465e;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .nav-cta:hover,
+    .nav-cta:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 24px rgba(240, 184, 150, 0.2);
+    }
+
+    .app-workspace {
+      width: min(calc(100% - 2rem), 1360px);
+      margin: 1.2rem auto 2rem;
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .workspace-sidebar,
+    .workspace-main {
+      background: linear-gradient(180deg, rgba(255, 251, 245, 0.94), rgba(255, 243, 231, 0.92));
+      border: 1px solid rgba(221, 178, 160, 0.32);
+      box-shadow: 0 24px 50px rgba(210, 174, 145, 0.16);
+      border-radius: 28px;
+    }
+
+    .workspace-sidebar {
+      position: sticky;
+      top: 6.5rem;
+      padding: 1.1rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .workspace-main {
+      min-height: 76vh;
+      overflow: hidden;
+    }
+
+    .workspace-brand {
+      padding: 0.95rem 1rem;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(255, 220, 228, 0.95), rgba(255, 241, 210, 0.96));
+      border: 1px solid rgba(233, 184, 171, 0.44);
+    }
+
+    .workspace-brand strong {
+      display: block;
+      color: #4f304d;
+      font-size: 1rem;
+      margin-bottom: 0.28rem;
+    }
+
+    .workspace-brand span {
+      color: #745f68;
+      font-size: 0.88rem;
+    }
+
+    .workspace-nav {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .workspace-link {
+      width: 100%;
+      text-align: left;
+      padding: 0.9rem 1rem;
+      border-radius: 20px;
+      border: 1px solid rgba(228, 189, 172, 0.42);
+      background: rgba(255, 255, 255, 0.6);
+      color: #735d68;
+      cursor: pointer;
+      font: inherit;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+
+    .workspace-link strong {
+      display: block;
+      color: #4f304d;
+      font-size: 0.95rem;
+      margin-bottom: 0.18rem;
+    }
+
+    .workspace-link span {
+      display: block;
+      font-size: 0.82rem;
+      color: #907b84;
+    }
+
+    .workspace-link:hover,
+    .workspace-link:focus-visible,
+    .workspace-link.is-active {
+      background: linear-gradient(135deg, rgba(255, 214, 223, 0.92), rgba(255, 239, 207, 0.94));
+      border-color: rgba(255, 150, 177, 0.42);
+      color: #51304d;
+      transform: translateY(-1px);
+    }
+
+    .workspace-meta {
+      padding: 0.95rem 1rem;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(228, 189, 172, 0.4);
+    }
+
+    .workspace-meta strong {
+      display: block;
+      color: #4f304d;
+      margin-bottom: 0.3rem;
+      font-size: 0.92rem;
+    }
+
+    .workspace-meta p {
+      margin: 0;
+      color: #755f69;
+      font-size: 0.84rem;
+    }
+
+    .workspace-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      background: rgba(255, 248, 240, 0.92);
+      border-bottom: 1px solid rgba(226, 187, 170, 0.35);
+    }
+
+    .workspace-topbar strong {
+      display: block;
+      color: #4e314b;
+      font-size: 1rem;
+    }
+
+    .workspace-topbar span,
+    .workspace-topbar p {
+      margin: 0;
+      color: #81676f;
+      font-size: 0.86rem;
+    }
+
+    .workspace-topbar p {
+      max-width: 38rem;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pwa-pill,
+    .install-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .pwa-pill {
+      padding: 0.55rem 0.85rem;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(228, 189, 172, 0.42);
+      color: #7c5d63;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .install-button {
+      padding: 0.72rem 1rem;
+      border: 1px solid rgba(255, 154, 181, 0.28);
+      background: linear-gradient(135deg, rgba(255, 219, 229, 0.95), rgba(255, 241, 212, 0.98));
+      color: #74465e;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+    }
+
+    .install-button:hover,
+    .install-button:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 24px rgba(240, 184, 150, 0.2);
+    }
+
+    .install-button[hidden] {
+      display: none;
+    }
+
+    .workspace-stage {
+      padding: 1rem;
+    }
+
+    .workspace-view {
+      display: none;
+      animation: fadeSlide 220ms ease;
+    }
+
+    .workspace-view.is-active {
+      display: block;
+    }
+
+    .workspace-view.hero,
+    .workspace-view.section-frame {
+      padding: 0;
+    }
+
+    .workspace-view .container {
+      width: 100%;
+    }
+
+    .demo-hero {
+      padding: 0;
+    }
+
+    .demo-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.48rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(255, 146, 173, 0.12);
+      border: 1px solid rgba(255, 146, 173, 0.2);
+      color: #aa486d;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .demo-hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 1.75rem;
+      align-items: stretch;
+    }
+
+    .demo-hero-copy,
+    .demo-hero-panel,
+    .demo-panel,
+    .demo-card,
+    .demo-section-card {
+      background: linear-gradient(180deg, rgba(255, 251, 245, 0.96), rgba(255, 243, 231, 0.94));
+      border: 1px solid rgba(221, 178, 160, 0.32);
+      box-shadow: 0 24px 50px rgba(210, 174, 145, 0.16);
+      border-radius: 28px;
+    }
+
+    .demo-hero-copy {
+      padding: 2rem;
+    }
+
+    .demo-hero-copy h1 {
+      margin-bottom: 1rem;
+      font-size: clamp(2.4rem, 4vw, 4.55rem);
+      line-height: 0.98;
+    }
+
+    .demo-hero-copy p {
+      color: #725d67;
+      max-width: 62ch;
+    }
+
+    .demo-hero-panel {
+      padding: 1.4rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .persona-switcher {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 1.6rem 0 1rem;
+    }
+
+    .persona-button,
+    .mini-tab,
+    .screen-nav a,
+    .insight-chip {
+      border-radius: 999px;
+      border: 1px solid rgba(225, 182, 163, 0.45);
+      background: rgba(255, 255, 255, 0.56);
+      color: #7c6770;
+      text-decoration: none;
+      transition: transform 160ms ease, border-color 160ms ease, color 160ms ease, background 160ms ease;
+    }
+
+    .persona-button {
+      padding: 0.8rem 1rem;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .persona-button strong,
+    .mini-tab strong {
+      display: block;
+      color: #51304d;
+      font-size: 0.92rem;
+      margin-bottom: 0.18rem;
+    }
+
+    .persona-button span,
+    .mini-tab span {
+      font-size: 0.83rem;
+      color: #8f7984;
+    }
+
+    .persona-button.is-active,
+    .mini-tab.is-active,
+    .screen-nav a:hover,
+    .screen-nav a:focus-visible,
+    .insight-chip:hover,
+    .insight-chip:focus-visible {
+      color: #51304d;
+      border-color: rgba(255, 150, 177, 0.42);
+      background: linear-gradient(135deg, rgba(255, 214, 223, 0.92), rgba(255, 239, 207, 0.94));
+      transform: translateY(-1px);
+    }
+
+    .demo-callouts {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .demo-callout {
+      padding: 1rem 1.1rem;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(228, 189, 172, 0.4);
+    }
+
+    .demo-callout strong {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-size: 0.96rem;
+      color: #553553;
+    }
+
+    .demo-callout p {
+      color: #745f68;
+    }
+
+    .quick-grid,
+    .mini-stats {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .quick-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .quick-card {
+      padding: 1rem;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(228, 189, 172, 0.4);
+    }
+
+    .quick-card strong {
+      display: block;
+      color: #4f304d;
+      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
+    }
+
+    .quick-card span {
+      color: #745f68;
+      font-size: 0.84rem;
+    }
+
+    .mini-stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .mini-stat {
+      padding: 0.9rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(228, 189, 172, 0.4);
+    }
+
+    .mini-stat span {
+      display: block;
+      color: #9a7b74;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .mini-stat strong {
+      display: block;
+      margin-top: 0.35rem;
+      color: #4f304d;
+      font-size: 1.2rem;
+    }
+
+    .feed-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .feed-item {
+      padding: 0.9rem 1rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(228, 189, 172, 0.38);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .feed-item strong {
+      display: block;
+      color: #533451;
+      font-size: 0.92rem;
+      margin-bottom: 0.18rem;
+    }
+
+    .feed-item span {
+      color: #775f67;
+      font-size: 0.82rem;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(320px, 0.95fr);
+      gap: 1.5rem;
+    }
+
+    .screen-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1.3rem;
+    }
+
+    .screen-nav a {
+      padding: 0.7rem 0.95rem;
+      font-size: 0.88rem;
+    }
+
+    .demo-panel,
+    .demo-section-card,
+    .demo-card {
+      padding: 1.4rem;
+    }
+
+    .demo-panel h2,
+    .demo-section-card h2 {
+      margin-top: 0.2rem;
+      margin-bottom: 0.6rem;
+      font-size: clamp(1.55rem, 2vw, 2.2rem);
+      line-height: 1.04;
+      color: #4c314d;
+    }
+
+    .section-intro {
+      color: #735f67;
+      max-width: 68ch;
+      margin-bottom: 1rem;
+    }
+
+    .module-grid,
+    .metric-grid,
+    .centres-grid,
+    .journey-grid,
+    .role-grid,
+    .flow-grid,
+    .report-grid,
+    .rollout-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .module-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .metric-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 1rem;
+    }
+
+    .metric {
+      padding: 1rem;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(230, 193, 175, 0.48);
+    }
+
+    .metric span {
+      display: block;
+      color: #9b7b73;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 0.55rem;
+      font-size: 1.7rem;
+      color: #4b2b47;
+      line-height: 1;
+    }
+
+    .metric small {
+      display: block;
+      margin-top: 0.5rem;
+      color: #7b666e;
+      font-size: 0.85rem;
+    }
+
+    .module-card,
+    .centre-card,
+    .journey-step,
+    .role-card,
+    .report-card,
+    .flow-card,
+    .timeline-card {
+      padding: 1.05rem 1.1rem;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(228, 189, 172, 0.42);
+    }
+
+    .module-card h3,
+    .centre-card h3,
+    .report-card h3,
+    .flow-card h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1.02rem;
+      color: #4f304d;
+    }
+
+    .module-card p,
+    .centre-card p,
+    .report-card p,
+    .journey-step p,
+    .role-card p,
+    .flow-card p,
+    .timeline-card p {
+      margin: 0;
+      color: #735e67;
+      font-size: 0.92rem;
+    }
+
+    .module-list,
+    .mini-list {
+      list-style: none;
+      margin: 0.9rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .module-list li,
+    .mini-list li {
+      color: #725d66;
+      font-size: 0.9rem;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .module-list li::before,
+    .mini-list li::before {
+      content: "";
+      width: 0.42rem;
+      height: 0.42rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff8fb0, #ffbf73);
+      position: absolute;
+      left: 0;
+      top: 0.56rem;
+    }
+
+    .owner-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.95fr);
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .owner-board,
+    .owner-sidebar,
+    .app-shell,
+    .mobile-shell {
+      border-radius: 26px;
+      border: 1px solid rgba(226, 187, 170, 0.45);
+      background: rgba(255, 255, 255, 0.5);
+      overflow: hidden;
+    }
+
+    .owner-board-header,
+    .owner-sidebar-header,
+    .app-shell-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.1rem;
+      border-bottom: 1px solid rgba(226, 187, 170, 0.35);
+      background: rgba(255, 246, 239, 0.88);
+    }
+
+    .owner-board-header strong,
+    .owner-sidebar-header strong,
+    .app-shell-header strong {
+      font-size: 0.96rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5a3954;
+    }
+
+    .board-body,
+    .sidebar-body,
+    .app-shell-body {
+      padding: 1rem;
+    }
+
+    .centres-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .centre-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .status-pill,
+    .score-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.72);
+      color: #895f68;
+      border: 1px solid rgba(225, 188, 171, 0.45);
+      white-space: nowrap;
+    }
+
+    .status-pill.good {
+      background: rgba(176, 233, 201, 0.62);
+      color: #356b53;
+      border-color: rgba(106, 178, 138, 0.34);
+    }
+
+    .status-pill.warn {
+      background: rgba(255, 234, 187, 0.72);
+      color: #8a6940;
+      border-color: rgba(226, 181, 95, 0.34);
+    }
+
+    .status-pill.alert {
+      background: rgba(255, 214, 219, 0.82);
+      color: #924a66;
+      border-color: rgba(230, 132, 162, 0.36);
+    }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.7rem;
+      margin-top: 0.8rem;
+    }
+
+    .kpi {
+      padding: 0.78rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(229, 192, 176, 0.38);
+    }
+
+    .kpi span {
+      display: block;
+      color: #a17b77;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .kpi strong {
+      display: block;
+      margin-top: 0.35rem;
+      font-size: 1.15rem;
+      color: #4e2f4c;
+    }
+
+    .priority-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .priority-list li {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.85rem;
+      padding: 0.95rem 1rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(228, 191, 174, 0.38);
+    }
+
+    .priority-list strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
+      color: #533451;
+    }
+
+    .priority-list span {
+      color: #775f67;
+      font-size: 0.86rem;
+    }
+
+    .journey-grid {
+      margin-top: 1rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .journey-step {
+      position: relative;
+      min-height: 100%;
+    }
+
+    .journey-step .step-number,
+    .flow-card .step-number {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+      color: #5f3454;
+      background: linear-gradient(135deg, #ffd3df, #ffe4b3);
+      font-weight: 700;
+    }
+
+    .mini-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .mini-tab {
+      padding: 0.8rem 0.95rem;
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
+    }
+
+    .demo-screen {
+      display: none;
+    }
+
+    .demo-screen.is-active {
+      display: block;
+      animation: fadeSlide 240ms ease;
+    }
+
+    @keyframes fadeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .app-layout {
+      display: grid;
+      grid-template-columns: minmax(240px, 0.85fr) minmax(0, 1.15fr);
+      gap: 1rem;
+    }
+
+    .role-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mobile-stack {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .mobile-shell {
+      padding: 0.65rem;
+      background: linear-gradient(180deg, rgba(255, 190, 203, 0.9), rgba(255, 213, 166, 0.88));
+    }
+
+    .mobile-shell-inner {
+      border-radius: 24px;
+      background: linear-gradient(180deg, #fffdf5, #f7f2e7);
+      padding: 0.9rem;
+      min-height: 21rem;
+      color: #1d2430;
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .mobile-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      color: #5a6170;
+    }
+
+    .mobile-highlight {
+      padding: 0.85rem;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #ff8fab, #ffb974);
+      color: #fffdf5;
+    }
+
+    .mobile-highlight strong {
+      display: block;
+      font-size: 0.92rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .mobile-list {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .mobile-item {
+      padding: 0.72rem 0.8rem;
+      border-radius: 16px;
+      background: rgba(255, 156, 178, 0.08);
+      border: 1px solid rgba(255, 156, 178, 0.1);
+      font-size: 0.82rem;
+    }
+
+    .fee-layout,
+    .progress-layout,
+    .report-grid,
+    .rollout-grid {
+      margin-top: 1rem;
+    }
+
+    .fee-layout,
+    .progress-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 1rem;
+    }
+
+    .collection-table {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .collection-row {
+      display: grid;
+      grid-template-columns: 1.15fr repeat(4, minmax(0, 0.7fr));
+      gap: 0.6rem;
+      padding: 0.88rem 0.9rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(229, 191, 174, 0.34);
+      align-items: center;
+      font-size: 0.88rem;
+      color: #654e58;
+    }
+
+    .collection-row.is-head {
+      background: rgba(255, 236, 224, 0.9);
+      color: #7b5454;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .progress-cards {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .child-card {
+      padding: 1rem;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(228, 189, 172, 0.4);
+    }
+
+    .child-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .child-head strong {
+      display: block;
+      font-size: 1rem;
+      color: #52324f;
+    }
+
+    .child-head span {
+      color: #755e67;
+      font-size: 0.85rem;
+    }
+
+    .bar-group {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr) 42px;
+      gap: 0.75rem;
+      align-items: center;
+      font-size: 0.84rem;
+      color: #6f5962;
+    }
+
+    .bar-track {
+      height: 0.55rem;
+      border-radius: 999px;
+      background: rgba(241, 197, 179, 0.58);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ff92ad, #ffb971);
+    }
+
+    .report-grid,
+    .rollout-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .insight-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+
+    .insight-chip {
+      padding: 0.72rem 0.9rem;
+      font-size: 0.86rem;
+    }
+
+    .cta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .cta-bar p {
+      margin: 0;
+      color: #735e67;
+      max-width: 48rem;
+    }
+
+    .footer-note {
+      margin-top: 1.25rem;
+      color: #8c7178;
+      font-size: 0.84rem;
+    }
+
+    @media (max-width: 1080px) {
+      .app-workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .workspace-sidebar {
+        position: static;
+      }
+
+      .demo-hero-grid,
+      .demo-grid,
+      .owner-layout,
+      .app-layout,
+      .fee-layout,
+      .progress-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-grid,
+      .journey-grid,
+      .report-grid,
+      .rollout-grid,
+      .mobile-stack {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .centres-grid,
+      .module-grid,
+      .role-grid,
+      .quick-grid,
+      .mini-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .workspace-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .topbar-actions {
+        justify-content: flex-start;
+      }
+
+      .workspace-stage {
+        padding: 0.75rem;
+      }
+
+      .demo-hero-copy,
+      .demo-hero-panel,
+      .demo-panel,
+      .demo-card,
+      .demo-section-card {
+        padding: 1.15rem;
+        border-radius: 22px;
+      }
+
+      .metric-grid,
+      .journey-grid,
+      .report-grid,
+      .rollout-grid,
+      .mobile-stack {
+        grid-template-columns: 1fr;
+      }
+
+      .collection-row {
+        grid-template-columns: 1fr;
+      }
+
+      .kpi-row {
+        grid-template-columns: 1fr;
+      }
+
+      .bar-row {
+        grid-template-columns: 92px minmax(0, 1fr) 38px;
+      }
+
+      .nav-cta {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell demo-shell">
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="#overview" aria-label="OctoMinds ERP demo home" data-view-link="overview">
+          <span class="brand-badge" aria-hidden="true">O</span>
+          <span class="brand-mark">
+            <span class="brand-name">OctoMinds ERP</span>
+            <span class="brand-tag">Founder demo environment</span>
+          </span>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="site-nav" id="primary-nav" aria-label="Primary">
+          <a href="#owner-control-room" data-view-link="owner-control-room">Control Room</a>
+          <a href="#branch-operations" data-view-link="branch-operations">Centres</a>
+          <a href="#admissions-engine" data-view-link="admissions-engine">Admissions</a>
+          <a href="#parent-app" data-view-link="parent-app">Parent App</a>
+          <a href="#fees-control" data-view-link="fees-control">Fees</a>
+          <a href="#child-progress" data-view-link="child-progress">Progress</a>
+          <a class="nav-cta" href="#module-map" data-view-link="module-map">View ERP Scope</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="app-workspace">
+      <aside class="workspace-sidebar">
+        <div class="workspace-brand">
+          <strong>OctoMinds Founder Console</strong>
+          <span>One live environment for all 7 centres, with every role delivered as an installable PWA app.</span>
+        </div>
+
+        <div class="workspace-nav" aria-label="ERP modules">
+          <button class="workspace-link is-active" type="button" data-view-target="overview">
+            <strong>Overview</strong>
+            <span>Product vision and why this feels like one software.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="owner-control-room">
+            <strong>Control Room</strong>
+            <span>Founder snapshot across all 7 centres.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="admissions-engine">
+            <strong>Admissions</strong>
+            <span>Lead to child-master conversion engine.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="branch-operations">
+            <strong>Centres</strong>
+            <span>Daily branch execution and class operations.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="parent-app">
+            <strong>Parent App</strong>
+            <span>Premium family-facing touchpoints.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="fees-control">
+            <strong>Fees</strong>
+            <span>Collections, dues, and branch-wise recovery.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="child-progress">
+            <strong>Progress</strong>
+            <span>Milestones instead of exam-heavy records.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="module-map">
+            <strong>ERP Scope</strong>
+            <span>Full 7-module rollout structure.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="rollout-plan">
+            <strong>Rollout Plan</strong>
+            <span>From prototype to MVP launch.</span>
+          </button>
+        </div>
+
+        <div class="workspace-meta">
+          <strong>Suggested flow</strong>
+          <p>Control Room → Admissions → Centres → Parent App → Fees → Progress.</p>
+        </div>
+      </aside>
+
+      <section class="workspace-main">
+        <div class="workspace-topbar">
+          <div>
+            <strong id="workspace-title">Overview</strong>
+            <span id="workspace-subtitle">Founder demo environment · single-app walkthrough</span>
+          </div>
+          <div class="topbar-actions">
+            <span class="pwa-pill">PWA Ready</span>
+            <button class="install-button" id="install-app" type="button" hidden>Install App</button>
+          </div>
+          <p id="workspace-caption">Move across modules from the left sidebar to simulate how the founder would actually use the software day to day.</p>
+        </div>
+
+        <div class="workspace-stage">
+      <section class="hero demo-hero workspace-view is-active" id="overview" data-view-title="Overview" data-view-subtitle="Founder demo environment · single-app walkthrough" data-view-caption="Move across modules from the left sidebar to simulate how the founder would actually use the software day to day.">
+        <div class="container demo-hero-grid">
+          <div class="demo-hero-copy">
+            <span class="demo-label">Live Concept Demo · 7-centre preschool chain</span>
+            <h1>OctoMinds can run on one <span class="accent-text">multi-centre preschool control system</span>, not scattered tools.</h1>
+            <p class="lead">
+              This live demo converts the college-style institutional proposal into a preschool-specific operating system for admissions, parent communication, branch operations, child development tracking, collections, compliance, and owner visibility across all 7 centres.
+            </p>
+
+            <div class="persona-switcher" role="tablist" aria-label="Demo perspectives">
+              <button class="persona-button is-active" type="button" data-persona="owner" role="tab" aria-selected="true">
+                <strong>Owner View</strong>
+                <span>See all 7 centres, fees, conversions, and exceptions.</span>
+              </button>
+              <button class="persona-button" type="button" data-persona="manager" role="tab" aria-selected="false">
+                <strong>Centre Manager</strong>
+                <span>Run one branch with attendance, staff, and follow-ups.</span>
+              </button>
+              <button class="persona-button" type="button" data-persona="parent" role="tab" aria-selected="false">
+                <strong>Parent Experience</strong>
+                <span>Daily updates, receipts, notices, and child progress.</span>
+              </button>
+            </div>
+
+            <p id="persona-copy" class="section-intro">
+              One login, all 7 centres, no spreadsheet chasing.
+            </p>
+
+            <div class="screen-nav" aria-label="Demo sections">
+              <a href="#module-map" data-view-link="module-map">Module map</a>
+              <a href="#owner-control-room" data-view-link="owner-control-room">Owner control room</a>
+              <a href="#admissions-engine" data-view-link="admissions-engine">Admissions engine</a>
+              <a href="#branch-operations" data-view-link="branch-operations">Branch operations</a>
+              <a href="#parent-app" data-view-link="parent-app">Parent app</a>
+              <a href="#fees-control" data-view-link="fees-control">Fees and collections</a>
+              <a href="#child-progress" data-view-link="child-progress">Child progress</a>
+            </div>
+          </div>
+
+          <aside class="demo-hero-panel">
+            <div class="mini-stats">
+              <div class="mini-stat">
+                <span>Centres Live</span>
+                <strong>7</strong>
+              </div>
+              <div class="mini-stat">
+                <span>Users</span>
+                <strong>Owner + 42 Staff</strong>
+              </div>
+              <div class="mini-stat">
+                <span>Today</span>
+                <strong>164 Leads</strong>
+              </div>
+            </div>
+            <div class="quick-grid">
+              <div class="quick-card">
+                <strong>Open Admissions</strong>
+                <span>See branch-wise lead movement and follow-ups.</span>
+              </div>
+              <div class="quick-card">
+                <strong>Review Fees</strong>
+                <span>Check centres with slow collection recovery.</span>
+              </div>
+              <div class="quick-card">
+                <strong>Open Parent App</strong>
+                <span>Experience the installable parent PWA the way families will use it.</span>
+              </div>
+              <div class="quick-card">
+                <strong>Check Progress</strong>
+                <span>View milestones instead of exam-heavy records.</span>
+              </div>
+            </div>
+            <ul class="feed-list">
+              <li class="feed-item">
+                <div>
+                  <strong>Fee alert · Trimurti Nagar</strong>
+                  <span>18 families overdue beyond 12 days.</span>
+                </div>
+                <span class="status-pill alert">Now</span>
+              </li>
+              <li class="feed-item">
+                <div>
+                  <strong>Admissions spike · Manish Nagar</strong>
+                  <span>8 new walk-ins logged since 10:00 AM.</span>
+                </div>
+                <span class="status-pill good">Live</span>
+              </li>
+              <li class="feed-item">
+                <div>
+                  <strong>PWA ready for all roles</strong>
+                  <span>Owner, centre head, counsellor, teacher, finance, and parent apps install from browser to home screen.</span>
+                </div>
+                <span class="status-pill good">Apps</span>
+              </li>
+              <li class="feed-item">
+                <div>
+                  <strong>Pickup note updated</strong>
+                  <span>6 alternate guardian requests pending front-desk review.</span>
+                </div>
+                <span class="status-pill warn">Queue</span>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section-frame workspace-view" id="module-map" data-view-title="ERP Scope" data-view-subtitle="7-module preschool operating system" data-view-caption="This is the full rollout structure behind the live screens. The founder can use the product module by module without losing the bigger operating picture.">
+        <div class="container demo-section-card">
+          <span class="eyebrow">Preschool ERP module map</span>
+          <h2>The 7-module preschool version of the institutional system.</h2>
+          <p class="section-intro">This is the scope behind the screens the owner is clicking through.</p>
+
+          <div class="module-grid">
+            <article class="module-card">
+              <h3>1. Admissions and Enquiry Engine</h3>
+              <p>Turn leads, campus visits, follow-ups, document collection, and enrolment into one visible conversion flow.</p>
+              <ul class="module-list">
+                <li>Lead capture by source and branch</li>
+                <li>Follow-up queue for counsellors</li>
+                <li>Campus visit scheduling</li>
+                <li>Admission confirmation and document status</li>
+              </ul>
+            </article>
+
+            <article class="module-card">
+              <h3>2. Child, Parent and Classroom System</h3>
+              <p>Create one child record that connects parents, class, centre, pickup permissions, medical notes, and classroom visibility.</p>
+              <ul class="module-list">
+                <li>Child and parent master records</li>
+                <li>Emergency contact and allergy flags</li>
+                <li>Program, class, and teacher mapping</li>
+                <li>Pickup authorization and sibling links</li>
+              </ul>
+            </article>
+
+            <article class="module-card">
+              <h3>3. Progress and Development Tracking</h3>
+              <p>Replace exam logic with developmental milestones, teacher notes, settling observations, and school readiness indicators.</p>
+              <ul class="module-list">
+                <li>Motor, language, and social-emotional progress</li>
+                <li>Monthly observations and readiness summaries</li>
+                <li>Parent-facing progress snapshots</li>
+                <li>Teacher-led milestone updates</li>
+              </ul>
+            </article>
+
+            <article class="module-card">
+              <h3>4. Fees and Collection Control</h3>
+              <p>Connect fee plans, due dates, receipts, concessions, branch-wise collections, and follow-ups to a single finance layer.</p>
+              <ul class="module-list">
+                <li>Program-wise fee plans and daycare add-ons</li>
+                <li>Pending dues and reminder automation</li>
+                <li>Receipts and payment method tracking</li>
+                <li>Owner-level collection visibility by centre</li>
+              </ul>
+            </article>
+
+            <article class="module-card">
+              <h3>5. Parent Communication App</h3>
+              <p>Give parents one calm, trust-building app for updates, notices, events, receipts, leave, and child progress.</p>
+              <ul class="module-list">
+                <li>Daily updates and classroom highlights</li>
+                <li>Fee receipts and due alerts</li>
+                <li>Leave request and acknowledgement</li>
+                <li>Notice board and event reminders</li>
+                <li>Installable PWA on Android, iPhone, desktop, and tablet</li>
+              </ul>
+            </article>
+
+            <article class="module-card">
+              <h3>6. Multi-Centre Admin and Compliance</h3>
+              <p>Run branch checklists, staff records, visitor logs, incidents, pickup control, and SOP visibility from one back-office layer.</p>
+              <ul class="module-list">
+                <li>Branch audit and hygiene checklist</li>
+                <li>Staff attendance and leave records</li>
+                <li>Incident and safety logging</li>
+                <li>Admin escalations and branch support tasks</li>
+              </ul>
+            </article>
+
+            <article class="module-card">
+              <h3>7. Owner Control Dashboard</h3>
+              <p>Show the founder exactly what matters daily across all 7 centres without opening separate reports.</p>
+              <ul class="module-list">
+                <li>Admissions velocity and occupancy</li>
+                <li>Collections, defaulters, and fee health</li>
+                <li>Centre-wise staffing and attention areas</li>
+                <li>Live issue tracking and branch comparison</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="insight-strip">
+            <button class="insight-chip" type="button">Removed: Placement system</button>
+            <button class="insight-chip" type="button">Reworked: Examination system into progress tracking</button>
+            <button class="insight-chip" type="button">Added: Parent app and pickup trust layer</button>
+            <button class="insight-chip" type="button">Added: Multi-centre founder control room</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-frame workspace-view" id="owner-control-room" data-view-title="Control Room" data-view-subtitle="Founder visibility across all 7 centres" data-view-caption="This is the daily owner screen: occupancy, fee health, admissions momentum, branch performance, and escalations in one place.">
+        <div class="container demo-panel">
+          <span class="eyebrow">Screen 1</span>
+          <h2>Owner control room for all 7 centres.</h2>
+          <p class="section-intro">What the founder should see first every morning.</p>
+
+          <div class="metric-grid">
+            <div class="metric">
+              <span>Total active children</span>
+              <strong>842</strong>
+              <small>Across Playgroup, Nursery, Jr KG, Sr KG, and daycare.</small>
+            </div>
+            <div class="metric">
+              <span>New enquiries this week</span>
+              <strong>164</strong>
+              <small>Website, walk-in, WhatsApp, and referrals combined.</small>
+            </div>
+            <div class="metric">
+              <span>Fee collection this month</span>
+              <strong>₹84.6L</strong>
+              <small>94% of month target already collected.</small>
+            </div>
+            <div class="metric">
+              <span>Open action alerts</span>
+              <strong>19</strong>
+              <small>Pending follow-up, dues, staffing gaps, and parent issues.</small>
+            </div>
+          </div>
+
+          <div class="owner-layout">
+            <div class="owner-board">
+              <div class="owner-board-header">
+                <strong>OctoMinds Executive Control Room</strong>
+                <span class="score-pill">Snapshot · Today 8:30 AM</span>
+              </div>
+              <div class="board-body">
+                <div class="centres-grid">
+                  <article class="centre-card">
+                    <div class="centre-head">
+                      <div>
+                        <h3>Manish Nagar</h3>
+                        <p>Highest occupancy · strongest fee discipline</p>
+                      </div>
+                      <span class="status-pill good">Stable</span>
+                    </div>
+                    <div class="kpi-row">
+                      <div class="kpi"><span>Occupancy</span><strong>96%</strong></div>
+                      <div class="kpi"><span>Enquiries</span><strong>31</strong></div>
+                      <div class="kpi"><span>Dues</span><strong>₹1.8L</strong></div>
+                    </div>
+                  </article>
+
+                  <article class="centre-card">
+                    <div class="centre-head">
+                      <div>
+                        <h3>Khapri (MIHAN)</h3>
+                        <p>Admissions strong · follow-ups healthy</p>
+                      </div>
+                      <span class="status-pill good">Growing</span>
+                    </div>
+                    <div class="kpi-row">
+                      <div class="kpi"><span>Occupancy</span><strong>92%</strong></div>
+                      <div class="kpi"><span>Enquiries</span><strong>27</strong></div>
+                      <div class="kpi"><span>Dues</span><strong>₹2.2L</strong></div>
+                    </div>
+                  </article>
+
+                  <article class="centre-card">
+                    <div class="centre-head">
+                      <div>
+                        <h3>Friends Colony</h3>
+                        <p>Strong reputation · moderate conversion lag</p>
+                      </div>
+                      <span class="status-pill warn">Watch</span>
+                    </div>
+                    <div class="kpi-row">
+                      <div class="kpi"><span>Occupancy</span><strong>88%</strong></div>
+                      <div class="kpi"><span>Enquiries</span><strong>22</strong></div>
+                      <div class="kpi"><span>Dues</span><strong>₹3.1L</strong></div>
+                    </div>
+                  </article>
+
+                  <article class="centre-card">
+                    <div class="centre-head">
+                      <div>
+                        <h3>Ambazari</h3>
+                        <p>Good conversion · two parent escalations open</p>
+                      </div>
+                      <span class="status-pill warn">Attention</span>
+                    </div>
+                    <div class="kpi-row">
+                      <div class="kpi"><span>Occupancy</span><strong>85%</strong></div>
+                      <div class="kpi"><span>Enquiries</span><strong>18</strong></div>
+                      <div class="kpi"><span>Dues</span><strong>₹2.7L</strong></div>
+                    </div>
+                  </article>
+
+                  <article class="centre-card">
+                    <div class="centre-head">
+                      <div>
+                        <h3>Jaripatka</h3>
+                        <p>Healthy attendance · weaker lead intake</p>
+                      </div>
+                      <span class="status-pill warn">Needs demand</span>
+                    </div>
+                    <div class="kpi-row">
+                      <div class="kpi"><span>Occupancy</span><strong>79%</strong></div>
+                      <div class="kpi"><span>Enquiries</span><strong>11</strong></div>
+                      <div class="kpi"><span>Dues</span><strong>₹1.1L</strong></div>
+                    </div>
+                  </article>
+
+                  <article class="centre-card">
+                    <div class="centre-head">
+                      <div>
+                        <h3>Indraprasth</h3>
+                        <p>Strong walk-ins · one staffing gap open</p>
+                      </div>
+                      <span class="status-pill alert">Escalation</span>
+                    </div>
+                    <div class="kpi-row">
+                      <div class="kpi"><span>Occupancy</span><strong>73%</strong></div>
+                      <div class="kpi"><span>Enquiries</span><strong>24</strong></div>
+                      <div class="kpi"><span>Dues</span><strong>₹3.4L</strong></div>
+                    </div>
+                  </article>
+
+                  <article class="centre-card">
+                    <div class="centre-head">
+                      <div>
+                        <h3>Trimurti Nagar</h3>
+                        <p>Recovering branch · fees and admissions both need push</p>
+                      </div>
+                      <span class="status-pill alert">Priority</span>
+                    </div>
+                    <div class="kpi-row">
+                      <div class="kpi"><span>Occupancy</span><strong>68%</strong></div>
+                      <div class="kpi"><span>Enquiries</span><strong>9</strong></div>
+                      <div class="kpi"><span>Dues</span><strong>₹4.6L</strong></div>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <aside class="owner-sidebar">
+              <div class="owner-sidebar-header">
+                <strong>Priority queue</strong>
+                <span class="score-pill">Owner actions</span>
+              </div>
+              <div class="sidebar-body">
+                <ul class="priority-list">
+                  <li>
+                    <div>
+                      <strong>Trimurti Nagar fee recovery</strong>
+                      <span>18 families cross 12-day delay. Escalation suggested for centre head.</span>
+                    </div>
+                    <span class="status-pill alert">High</span>
+                  </li>
+                  <li>
+                    <div>
+                      <strong>Indraprasth staffing gap</strong>
+                      <span>One teacher vacancy affecting nursery ratio. Interview pipeline can be tracked from HR sublayer later.</span>
+                    </div>
+                    <span class="status-pill warn">Open</span>
+                  </li>
+                  <li>
+                    <div>
+                      <strong>Ambazari parent issue</strong>
+                      <span>Two unresolved concerns around pickup communication and daycare handover timing.</span>
+                    </div>
+                    <span class="status-pill warn">Review</span>
+                  </li>
+                  <li>
+                    <div>
+                      <strong>Friends Colony conversion gap</strong>
+                      <span>Walk-ins are healthy but visit-to-admission conversion dropped 9% week on week.</span>
+                    </div>
+                    <span class="status-pill good">Coach</span>
+                  </li>
+                </ul>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-frame workspace-view" id="admissions-engine" data-view-title="Admissions" data-view-subtitle="Lead to enrolment conversion flow" data-view-caption="A preschool chain should not manage admissions from spreadsheets and WhatsApp alone. This screen makes demand, follow-up, and conversion visible.">
+        <div class="container demo-panel">
+          <span class="eyebrow">Screen 2</span>
+          <h2>Admissions should behave like a conversion engine, not a loose enquiry register.</h2>
+          <p class="section-intro">Every admission should move through one clean, visible funnel.</p>
+
+          <div class="journey-grid">
+            <article class="journey-step">
+              <span class="step-number">1</span>
+              <h3>Lead capture and branch assignment</h3>
+              <p>Website form, walk-in, WhatsApp, Instagram, and referral leads enter one queue with preferred centre and child age.</p>
+            </article>
+            <article class="journey-step">
+              <span class="step-number">2</span>
+              <h3>Counselling, visit, and fit check</h3>
+              <p>Parents are guided to the right program, visit time, and settling expectations before paperwork starts.</p>
+            </article>
+            <article class="journey-step">
+              <span class="step-number">3</span>
+              <h3>Documents, payment, and child creation</h3>
+              <p>Once admitted, the child record, parent login, fee plan, and class mapping are created in one clean sequence.</p>
+            </article>
+          </div>
+
+          <div class="app-layout" style="margin-top: 1.2rem;">
+            <div class="app-shell">
+              <div class="app-shell-header">
+                <strong>Admissions pipeline</strong>
+                <span class="score-pill">This week</span>
+              </div>
+              <div class="app-shell-body">
+                <div class="collection-table">
+                  <div class="collection-row is-head">
+                    <div>Stage</div>
+                    <div>Total</div>
+                    <div>Manish</div>
+                    <div>Khapri</div>
+                    <div>Trimurti</div>
+                  </div>
+                  <div class="collection-row">
+                    <div>Fresh enquiries</div>
+                    <div>164</div>
+                    <div>31</div>
+                    <div>27</div>
+                    <div>9</div>
+                  </div>
+                  <div class="collection-row">
+                    <div>Campus visits booked</div>
+                    <div>118</div>
+                    <div>21</div>
+                    <div>18</div>
+                    <div>7</div>
+                  </div>
+                  <div class="collection-row">
+                    <div>Documents pending</div>
+                    <div>43</div>
+                    <div>7</div>
+                    <div>5</div>
+                    <div>8</div>
+                  </div>
+                  <div class="collection-row">
+                    <div>Fees paid, seat blocked</div>
+                    <div>67</div>
+                    <div>14</div>
+                    <div>11</div>
+                    <div>4</div>
+                  </div>
+                  <div class="collection-row">
+                    <div>Child master created</div>
+                    <div>59</div>
+                    <div>13</div>
+                    <div>10</div>
+                    <div>4</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-card">
+              <h3>Action queue</h3>
+              <ul class="feed-list">
+                <li class="feed-item">
+                  <div>
+                    <strong>21 campus visits today</strong>
+                    <span>Most coming from Manish Nagar and Khapri.</span>
+                  </div>
+                  <span class="status-pill good">Booked</span>
+                </li>
+                <li class="feed-item">
+                  <div>
+                    <strong>43 documents pending</strong>
+                    <span>Highest pending pile currently in Trimurti Nagar.</span>
+                  </div>
+                  <span class="status-pill warn">Review</span>
+                </li>
+                <li class="feed-item">
+                  <div>
+                    <strong>8 payment confirmations waiting</strong>
+                    <span>Child profile should unlock only after this step.</span>
+                  </div>
+                  <span class="status-pill alert">Hold</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-frame workspace-view" id="branch-operations" data-view-title="Centres" data-view-subtitle="Branch operations and classroom execution" data-view-caption="Each centre should feel like one organized operating unit with its own attendance, staffing, parent issues, and child records.">
+        <div class="container demo-panel">
+          <span class="eyebrow">Screen 3</span>
+          <h2>Each branch should run through one centre operations layer.</h2>
+          <p class="section-intro">One branch, one dashboard, no confusion.</p>
+
+          <div class="mini-tabs" role="tablist" aria-label="Branch demo screens">
+            <button class="mini-tab is-active" type="button" data-screen="manager-overview">
+              <strong>Centre overview</strong>
+              <span>Daily branch health, attendance, staff, and alerts.</span>
+            </button>
+            <button class="mini-tab" type="button" data-screen="manager-child">
+              <strong>Child record</strong>
+              <span>Parent, pickup, class, medical, and settling profile.</span>
+            </button>
+            <button class="mini-tab" type="button" data-screen="manager-teacher">
+              <strong>Teacher workflow</strong>
+              <span>Attendance, notes, milestones, and daily update flow.</span>
+            </button>
+          </div>
+
+          <div class="demo-screen is-active" id="manager-overview">
+            <div class="owner-layout">
+              <div class="owner-board">
+                <div class="owner-board-header">
+                  <strong>Centre manager dashboard · Manish Nagar</strong>
+                  <span class="score-pill">Monday 9:15 AM</span>
+                </div>
+                <div class="board-body">
+                  <div class="metric-grid" style="grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 0;">
+                    <div class="metric">
+                      <span>Children present</span>
+                      <strong>122</strong>
+                      <small>95% live attendance posted.</small>
+                    </div>
+                    <div class="metric">
+                      <span>Teachers present</span>
+                      <strong>14/15</strong>
+                      <small>One floater covering nursery slot.</small>
+                    </div>
+                    <div class="metric">
+                      <span>Pickup changes</span>
+                      <strong>6</strong>
+                      <small>Need handover confirmation later today.</small>
+                    </div>
+                    <div class="metric">
+                      <span>Open parent issues</span>
+                      <strong>2</strong>
+                      <small>Both still within same-day response target.</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <aside class="owner-sidebar">
+                <div class="owner-sidebar-header">
+                  <strong>Manager actions</strong>
+                  <span class="score-pill">Today</span>
+                </div>
+                <div class="sidebar-body">
+                  <ul class="priority-list">
+                    <li>
+                      <div>
+                        <strong>Nursery helper absent</strong>
+                        <span>Assign floater and confirm class ratio remains compliant.</span>
+                      </div>
+                      <span class="status-pill warn">Open</span>
+                    </li>
+                    <li>
+                      <div>
+                        <strong>Pickup authorization updated</strong>
+                        <span>Two children have alternate guardians today. Front desk must verify.</span>
+                      </div>
+                      <span class="status-pill good">Track</span>
+                    </li>
+                    <li>
+                      <div>
+                        <strong>One fee reminder for daycare child</strong>
+                        <span>Parent to be informed before evening handover.</span>
+                      </div>
+                      <span class="status-pill warn">Follow-up</span>
+                    </li>
+                  </ul>
+                </div>
+              </aside>
+            </div>
+          </div>
+
+          <div class="demo-screen" id="manager-child">
+            <div class="role-grid">
+              <article class="role-card">
+                <h3>Child profile: Aarav Mehta</h3>
+                <p>Nursery · Manish Nagar · Section Tulip · Joined April 2026.</p>
+                <ul class="mini-list">
+                  <li>Parents: Riya and Kunal Mehta</li>
+                  <li>Emergency contact: grandmother added</li>
+                  <li>Pickup access: father, mother, grandmother only</li>
+                  <li>Allergy flag: peanuts</li>
+                  <li>Settling stage: stable after week 2</li>
+                </ul>
+              </article>
+              <article class="role-card">
+                <h3>What the system connects</h3>
+                <p>This child record links the class teacher, parent app, attendance, fee plan, pickup notes, and progress updates without duplicate entry.</p>
+                <ul class="mini-list">
+                  <li>One source of truth for the child</li>
+                  <li>No separate fee register and parent list mismatch</li>
+                  <li>Critical safety information always visible</li>
+                  <li>Ready for parent report and class handover workflows</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+
+          <div class="demo-screen" id="manager-teacher">
+            <div class="role-grid">
+              <article class="role-card">
+                <h3>Teacher daily workflow</h3>
+                <ul class="mini-list">
+                  <li>Mark attendance by class</li>
+                  <li>Post classroom highlights and child notes</li>
+                  <li>Update milestone observations weekly</li>
+                  <li>Raise incident or health notes if needed</li>
+                </ul>
+              </article>
+              <article class="role-card">
+                <h3>Why this matters operationally</h3>
+                <ul class="mini-list">
+                  <li>Parent communication becomes structured, not ad hoc.</li>
+                  <li>Teachers spend less time repeating the same updates across WhatsApp and registers.</li>
+                  <li>Centre heads can review whether updates are actually going out on time.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-frame workspace-view" id="parent-app" data-view-title="Parent App" data-view-subtitle="Premium family-facing experience" data-view-caption="The parent app is a brand layer as much as an operational layer. It should quietly reinforce trust, consistency, and visibility.">
+        <div class="container demo-panel">
+          <span class="eyebrow">Screen 4</span>
+          <h2>The parent app should feel calm, premium, and trust-building.</h2>
+          <p class="section-intro">This is what parents will feel, not just what the school will manage. It will be delivered as an installable PWA.</p>
+
+          <div class="mobile-stack">
+            <div class="mobile-shell">
+              <div class="mobile-shell-inner">
+                <div class="mobile-top">
+                  <span>9:41</span>
+                  <strong>OctoMinds Parent</strong>
+                  <span>4G</span>
+                </div>
+                <div class="mobile-highlight">
+                  <strong>Aarav checked in at 8:37 AM</strong>
+                  <span>Nursery · Tulip room · Teacher Ananya</span>
+                </div>
+                <div class="mobile-list">
+                  <div class="mobile-item">Today's update: water play, story circle, fine-motor tray.</div>
+                  <div class="mobile-item">Pickup note: grandmother authorized for today.</div>
+                  <div class="mobile-item">Fee reminder: June daycare add-on due in 3 days.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mobile-shell">
+              <div class="mobile-shell-inner">
+                <div class="mobile-top">
+                  <span>9:41</span>
+                  <strong>Progress</strong>
+                  <span>Week 10</span>
+                </div>
+                <div class="mobile-highlight">
+                  <strong>School readiness snapshot</strong>
+                  <span>Language 82% · Social 88% · Motor 79%</span>
+                </div>
+                <div class="mobile-list">
+                  <div class="mobile-item">Teacher note: participates confidently in circle time.</div>
+                  <div class="mobile-item">Focus area: pencil grip strength and cutting control.</div>
+                  <div class="mobile-item">Next parent touchpoint: milestone review on Saturday.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mobile-shell">
+              <div class="mobile-shell-inner">
+                <div class="mobile-top">
+                  <span>9:41</span>
+                  <strong>Fees and notices</strong>
+                  <span>Inbox</span>
+                </div>
+                <div class="mobile-highlight">
+                  <strong>Receipt available</strong>
+                  <span>June tuition payment posted successfully.</span>
+                </div>
+                <div class="mobile-list">
+                  <div class="mobile-item">Annual day costume notice and timeline.</div>
+                  <div class="mobile-item">Download receipt PDF and payment summary.</div>
+                  <div class="mobile-item">Apply leave for tomorrow with one tap.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cta-bar">
+            <p>Every role can get its own installable PWA experience: founder console, centre manager app, admissions app, teacher app, finance app, and parent app.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-frame workspace-view" id="fees-control" data-view-title="Fees" data-view-subtitle="Collections, dues, and finance control" data-view-caption="This screen translates the institutional finance logic into a preschool-friendly view with centre-wise targets, dues, and follow-up priorities.">
+        <div class="container demo-panel">
+          <span class="eyebrow">Screen 5</span>
+          <h2>Fees and collections should stay visible by centre, program, and parent status.</h2>
+          <p class="section-intro">Simple branch-wise collection visibility with fast recovery action.</p>
+
+          <div class="fee-layout">
+            <div class="app-shell">
+              <div class="app-shell-header">
+                <strong>Collection board</strong>
+                <span class="score-pill">Current month</span>
+              </div>
+              <div class="app-shell-body">
+                <div class="collection-table">
+                  <div class="collection-row is-head">
+                    <div>Centre</div>
+                    <div>Target</div>
+                    <div>Collected</div>
+                    <div>Pending</div>
+                    <div>Status</div>
+                  </div>
+                  <div class="collection-row">
+                    <div>Manish Nagar</div>
+                    <div>₹14.2L</div>
+                    <div>₹13.6L</div>
+                    <div>₹0.6L</div>
+                    <div><span class="status-pill good">95.8%</span></div>
+                  </div>
+                  <div class="collection-row">
+                    <div>Khapri (MIHAN)</div>
+                    <div>₹12.6L</div>
+                    <div>₹11.8L</div>
+                    <div>₹0.8L</div>
+                    <div><span class="status-pill good">93.7%</span></div>
+                  </div>
+                  <div class="collection-row">
+                    <div>Friends Colony</div>
+                    <div>₹13.4L</div>
+                    <div>₹11.9L</div>
+                    <div>₹1.5L</div>
+                    <div><span class="status-pill warn">88.8%</span></div>
+                  </div>
+                  <div class="collection-row">
+                    <div>Trimurti Nagar</div>
+                    <div>₹9.8L</div>
+                    <div>₹6.1L</div>
+                    <div>₹3.7L</div>
+                    <div><span class="status-pill alert">62.2%</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-card">
+              <h3>Preschool-specific fee logic to include</h3>
+              <ul class="mini-list">
+                <li>Program-wise fee plans: Playgroup, Nursery, Jr KG, Sr KG</li>
+                <li>Daycare add-on charges and timing slabs</li>
+                <li>Sibling discounts or special concessions</li>
+                <li>Receipt sharing directly into parent app</li>
+                <li>Branch-wise defaulter visibility for centre heads and owner</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-frame workspace-view" id="child-progress" data-view-title="Progress" data-view-subtitle="Child development and readiness tracking" data-view-caption="Instead of exams and mark sheets, preschool operations need milestone visibility, class readiness, and teacher-to-parent continuity.">
+        <div class="container demo-panel">
+          <span class="eyebrow">Screen 6</span>
+          <h2>Progress tracking replaces examination logic for preschool.</h2>
+          <p class="section-intro">Progress for preschool should feel visual, human, and parent-ready.</p>
+
+          <div class="progress-layout">
+            <div class="progress-cards">
+              <article class="child-card">
+                <div class="child-head">
+                  <div>
+                    <strong>Aarav Mehta</strong>
+                    <span>Nursery · Manish Nagar · Monthly progress snapshot</span>
+                  </div>
+                  <span class="status-pill good">On track</span>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-row">
+                    <span>Language</span>
+                    <div class="bar-track"><div class="bar-fill" style="width:82%"></div></div>
+                    <strong>82</strong>
+                  </div>
+                  <div class="bar-row">
+                    <span>Motor</span>
+                    <div class="bar-track"><div class="bar-fill" style="width:79%"></div></div>
+                    <strong>79</strong>
+                  </div>
+                  <div class="bar-row">
+                    <span>Social</span>
+                    <div class="bar-track"><div class="bar-fill" style="width:88%"></div></div>
+                    <strong>88</strong>
+                  </div>
+                  <div class="bar-row">
+                    <span>Routine</span>
+                    <div class="bar-track"><div class="bar-fill" style="width:91%"></div></div>
+                    <strong>91</strong>
+                  </div>
+                </div>
+              </article>
+
+              <article class="child-card">
+                <div class="child-head">
+                  <div>
+                    <strong>Class readiness snapshot</strong>
+                    <span>Tulip room · 23 children · teacher review</span>
+                  </div>
+                  <span class="status-pill warn">3 focus cases</span>
+                </div>
+                <ul class="mini-list">
+                  <li>3 children need extra settling support after holiday break</li>
+                  <li>5 children need stronger hand control before next writing tray level</li>
+                  <li>Parent meeting suggested for 2 children with pickup-time anxiety</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="demo-card">
+              <h3>What to show in the demo</h3>
+              <ul class="mini-list">
+                <li>One child profile with visual milestone bars</li>
+                <li>Teacher note and parent-facing summary</li>
+                <li>Class-level readiness heatmap later in phase 2</li>
+                <li>Term report export as branded parent summary PDF</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-frame workspace-view" id="rollout-plan" data-view-title="Rollout Plan" data-view-subtitle="From prototype to MVP launch" data-view-caption="This screen keeps the implementation grounded. The founder should leave the meeting seeing both the product and the path to rollout.">
+        <div class="container demo-panel">
+          <span class="eyebrow">What we should build first</span>
+          <h2>Recommended live demo scope for the owner meeting.</h2>
+          <p class="section-intro">Launch the high-impact screens first, then expand.</p>
+
+          <div class="report-grid">
+            <article class="report-card">
+              <h3>Phase 1 demo screens</h3>
+              <p>Owner dashboard, branch dashboard, admissions pipeline, child profile, fee board, parent PWA.</p>
+            </article>
+            <article class="report-card">
+              <h3>Phase 2 expansion</h3>
+              <p>Progress tracking detail, compliance and incident logs, teacher workflows, branch audit checklists.</p>
+            </article>
+            <article class="report-card">
+              <h3>Phase 3 polish</h3>
+              <p>Role permissions, reports export, notifications layer, PWA install prompts, offline basics, and rollout readiness.</p>
+            </article>
+          </div>
+
+          <div class="rollout-grid">
+            <article class="timeline-card">
+              <h3>Step 1 · Discovery</h3>
+              <p>Map actual roles: founder, centre head, counsellor, front desk, teacher, finance, and parent.</p>
+            </article>
+            <article class="timeline-card">
+              <h3>Step 2 · Clickable prototype</h3>
+              <p>Build the live preview with centre-wise data and realistic branch names so the owner can react to something tangible.</p>
+            </article>
+            <article class="timeline-card">
+              <h3>Step 3 · MVP build</h3>
+              <p>Launch admissions, child master, parent app basics, fees, owner dashboard, and installable PWAs first, then expand.</p>
+            </article>
+          </div>
+
+          <div class="cta-bar">
+            <p><strong>Use this page in the meeting like a live storyboard:</strong> start at the owner control room, go into one branch, open one admissions funnel, show one child record, then end on parent app and fee visibility. That sequence makes the product feel operational, not theoretical.</p>
+            <a class="button" href="#owner-control-room" data-view-link="owner-control-room">Return to control room</a>
+          </div>
+
+          <p class="footer-note">
+            This page is a concept prototype tailored from the WCEM institutional proposal into a preschool-specific multi-centre ERP demo for OctoMinds.
+          </p>
+        </div>
+      </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../assets/js/site-nav.js"></script>
+  <script>
+    (() => {
+      const personaButtons = document.querySelectorAll(".persona-button");
+      const personaCopy = document.getElementById("persona-copy");
+      const personaText = {
+        owner: "The owner dashboard should feel like a command centre: centre-wise occupancy, admissions funnel movement, pending collections, open parent issues, and branch performance in one place.",
+        manager: "The centre manager view should help one branch run smoothly each day with attendance, staff coverage, pickups, parent follow-ups, and zero confusion about what needs attention next.",
+        parent: "The parent experience should feel premium and calm: attendance, updates, receipts, notices, pickup confidence, and progress visibility without overwhelming families."
+      };
+
+      personaButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          personaButtons.forEach((item) => {
+            item.classList.remove("is-active");
+            item.setAttribute("aria-selected", "false");
+          });
+          button.classList.add("is-active");
+          button.setAttribute("aria-selected", "true");
+          personaCopy.textContent = personaText[button.dataset.persona] || "";
+        });
+      });
+
+      const tabs = document.querySelectorAll(".mini-tab");
+      const screens = document.querySelectorAll(".demo-screen");
+      const workspaceLinks = document.querySelectorAll("[data-view-target]");
+      const topNavLinks = document.querySelectorAll("[data-view-link]");
+      const workspaceViews = document.querySelectorAll(".workspace-view");
+      const workspaceTitle = document.getElementById("workspace-title");
+      const workspaceSubtitle = document.getElementById("workspace-subtitle");
+      const workspaceCaption = document.getElementById("workspace-caption");
+      const installButton = document.getElementById("install-app");
+      let deferredInstallPrompt = null;
+
+      const activateView = (targetId) => {
+        const view = document.getElementById(targetId);
+        if (!view) return;
+
+        workspaceViews.forEach((item) => item.classList.toggle("is-active", item.id === targetId));
+        workspaceLinks.forEach((item) => item.classList.toggle("is-active", item.dataset.viewTarget === targetId));
+        if (workspaceTitle) workspaceTitle.textContent = view.dataset.viewTitle || "Overview";
+        if (workspaceSubtitle) workspaceSubtitle.textContent = view.dataset.viewSubtitle || "";
+        if (workspaceCaption) workspaceCaption.textContent = view.dataset.viewCaption || "";
+        if (window.location.hash !== `#${targetId}`) {
+          window.history.replaceState(null, "", `#${targetId}`);
+        }
+      };
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const target = tab.dataset.screen;
+          tabs.forEach((item) => item.classList.remove("is-active"));
+          screens.forEach((screen) => screen.classList.remove("is-active"));
+
+          tab.classList.add("is-active");
+          const activeScreen = document.getElementById(target);
+          if (activeScreen) activeScreen.classList.add("is-active");
+        });
+      });
+
+      workspaceLinks.forEach((link) => {
+        link.addEventListener("click", () => activateView(link.dataset.viewTarget));
+      });
+
+      topNavLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          activateView(link.dataset.viewLink);
+        });
+      });
+
+      const initialView = window.location.hash ? window.location.hash.slice(1) : "overview";
+      activateView(document.getElementById(initialView) ? initialView : "overview");
+
+      window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        deferredInstallPrompt = event;
+        if (installButton) installButton.hidden = false;
+      });
+
+      if (installButton) {
+        installButton.addEventListener("click", async () => {
+          if (!deferredInstallPrompt) return;
+          deferredInstallPrompt.prompt();
+          await deferredInstallPrompt.userChoice;
+          deferredInstallPrompt = null;
+          installButton.hidden = true;
+        });
+      }
+
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./sw.js").catch(() => {});
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

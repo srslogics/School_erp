@@ -1,0 +1,1742 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WCEM ERP Presentation Screens</title>
+    <style>
+      :root {
+        --bg: #07182d;
+        --bg-soft: #eef4fb;
+        --surface: rgba(255, 255, 255, 0.92);
+        --surface-strong: #ffffff;
+        --ink: #11253f;
+        --muted: #5d7088;
+        --line: #d8e3ef;
+        --primary: #0d6fcb;
+        --primary-dark: #0b3a6d;
+        --accent: #ffb02e;
+        --success: #1f9d6a;
+        --danger: #d9534f;
+        --shadow: 0 30px 80px rgba(6, 22, 44, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(13, 111, 203, 0.2), transparent 32%),
+          linear-gradient(180deg, #f4f8fc 0%, #e9f0f8 100%);
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 28px;
+        background: rgba(7, 24, 45, 0.94);
+        color: #fff;
+        backdrop-filter: blur(14px);
+      }
+
+      .topbar-title {
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .topbar-nav {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .topbar-nav a {
+        color: #dce9f8;
+        text-decoration: none;
+        font-size: 13px;
+        padding: 8px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 999px;
+      }
+
+      .page {
+        padding: 32px 24px 60px;
+      }
+
+      .slide {
+        width: 1440px;
+        min-height: 860px;
+        margin: 0 auto 40px;
+        padding: 28px;
+        border-radius: 30px;
+        box-shadow: var(--shadow);
+        background:
+          radial-gradient(circle at top right, rgba(13, 111, 203, 0.12), transparent 25%),
+          linear-gradient(180deg, #f9fbfe 0%, #edf3fa 100%);
+        overflow: hidden;
+      }
+
+      .slide.cover {
+        background:
+          radial-gradient(circle at top left, rgba(36, 131, 225, 0.28), transparent 28%),
+          radial-gradient(circle at bottom right, rgba(255, 176, 46, 0.18), transparent 24%),
+          linear-gradient(135deg, #07182d 0%, #0c2746 55%, #123a67 100%);
+        color: #fff;
+      }
+
+      .slide-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 22px;
+      }
+
+      .eyebrow {
+        color: var(--primary);
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 10px;
+      }
+
+      .slide-title {
+        font-size: 44px;
+        line-height: 1.05;
+        margin: 0;
+        max-width: 780px;
+      }
+
+      .slide-subtitle {
+        margin-top: 10px;
+        max-width: 760px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.5;
+      }
+
+      .brand {
+        padding: 12px 16px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid var(--line);
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--primary-dark);
+      }
+
+      .cover-grid {
+        display: grid;
+        grid-template-columns: 1.25fr 0.75fr;
+        gap: 24px;
+        align-items: stretch;
+        margin-top: 22px;
+      }
+
+      .cover-panel {
+        border-radius: 30px;
+        padding: 38px;
+        min-height: 640px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .cover-eyebrow {
+        color: #9bccff;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .cover-title {
+        margin: 22px 0 20px;
+        font-size: 78px;
+        line-height: 0.98;
+        letter-spacing: -0.04em;
+      }
+
+      .cover-subtitle {
+        max-width: 760px;
+        font-size: 26px;
+        line-height: 1.4;
+        color: rgba(238, 245, 252, 0.88);
+      }
+
+      .cover-meta {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 34px;
+      }
+
+      .cover-chip {
+        padding: 10px 16px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        color: #eef5fc;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .cover-note {
+        margin-top: 38px;
+        padding: 18px 20px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #eef5fc;
+        font-size: 18px;
+        line-height: 1.5;
+      }
+
+      .cover-side-title {
+        margin: 0 0 18px;
+        font-size: 34px;
+        line-height: 1.1;
+      }
+
+      .cover-list {
+        margin: 0;
+        padding-left: 22px;
+        color: #eef5fc;
+        font-size: 19px;
+        line-height: 1.7;
+      }
+
+      .cover-stack {
+        display: grid;
+        gap: 18px;
+        margin-top: 24px;
+      }
+
+      .cover-stat {
+        padding: 18px 20px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--ink);
+      }
+
+      .cover-stat-label {
+        color: var(--primary);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+      }
+
+      .cover-stat-value {
+        margin-top: 8px;
+        font-size: 26px;
+        font-weight: 800;
+        line-height: 1.15;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 320px 1fr 250px;
+        gap: 20px;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(14, 36, 65, 0.06);
+      }
+
+      .card.dark {
+        background: linear-gradient(180deg, #102948 0%, #0a1e36 100%);
+        color: #fff;
+        border: 0;
+      }
+
+      .card.blue {
+        background: linear-gradient(180deg, #1578d1 0%, #0e5ead 100%);
+        color: #fff;
+        border: 0;
+      }
+
+      .card h3,
+      .card h4 {
+        margin: 0 0 12px;
+      }
+
+      .label {
+        color: #8cbef2;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 10px;
+      }
+
+      .purpose {
+        font-size: 18px;
+        line-height: 1.45;
+        font-weight: 600;
+      }
+
+      .list {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--ink);
+        line-height: 1.55;
+      }
+
+      .dark .list,
+      .blue .list {
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .stack {
+        display: grid;
+        gap: 18px;
+      }
+
+      .mockup {
+        background: var(--surface-strong);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        overflow: hidden;
+        min-height: 620px;
+      }
+
+      .mockup-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 24px;
+        color: #fff;
+        background: linear-gradient(90deg, #0e2647, #153b68);
+      }
+
+      .mockup-top h3 {
+        margin: 0;
+        font-size: 30px;
+      }
+
+      .mockup-top span {
+        font-size: 14px;
+        color: #c8def5;
+      }
+
+      .mockup-body {
+        display: grid;
+        grid-template-columns: 170px 1fr;
+        min-height: 560px;
+      }
+
+      .sidebar {
+        background: linear-gradient(180deg, #f0f5fb 0%, #e4edf8 100%);
+        border-right: 1px solid var(--line);
+        padding: 18px;
+      }
+
+      .sidebar h4 {
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--primary);
+        margin-bottom: 16px;
+      }
+
+      .navitem {
+        display: block;
+        padding: 12px 14px;
+        margin-bottom: 8px;
+        border-radius: 14px;
+        font-size: 14px;
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.65);
+      }
+
+      .navitem.active {
+        background: linear-gradient(90deg, #dbeafe, #eef6ff);
+        color: var(--primary-dark);
+        font-weight: 700;
+      }
+
+      .screen {
+        padding: 20px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+
+      .stat {
+        background: linear-gradient(180deg, #fbfdff 0%, #f1f6fb 100%);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 16px;
+      }
+
+      .stat.primary {
+        background: linear-gradient(180deg, #e7f1fd 0%, #d8eafc 100%);
+      }
+
+      .stat-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      .stat-value {
+        margin-top: 8px;
+        font-size: 28px;
+        font-weight: 800;
+      }
+
+      .panel-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.9fr;
+        gap: 18px;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: #fff;
+        padding: 18px;
+      }
+
+      .panel h4 {
+        margin: 0 0 14px;
+        font-size: 18px;
+      }
+
+      .table {
+        display: grid;
+        gap: 10px;
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 0.8fr;
+        gap: 12px;
+        align-items: center;
+        padding: 12px 14px;
+        border-radius: 16px;
+        background: #f7fafe;
+        border: 1px solid #e3ebf5;
+        font-size: 14px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 90px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .ok {
+        color: #116845;
+        background: #dff5ea;
+      }
+
+      .warn {
+        color: #8d5f00;
+        background: #fff1cc;
+      }
+
+      .risk {
+        color: #8a1c1c;
+        background: #fde3e3;
+      }
+
+      .mini-chart {
+        height: 180px;
+        display: flex;
+        align-items: end;
+        gap: 14px;
+        padding: 12px 8px 0;
+      }
+
+      .bar-wrap {
+        flex: 1;
+        text-align: center;
+      }
+
+      .bar {
+        width: 100%;
+        border-radius: 16px 16px 6px 6px;
+        background: linear-gradient(180deg, #4fa7f4 0%, #0d6fcb 100%);
+        box-shadow: inset 0 -10px 20px rgba(4, 35, 68, 0.14);
+      }
+
+      .bar-label {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .timeline {
+        display: grid;
+        gap: 12px;
+      }
+
+      .timeline-item {
+        display: grid;
+        grid-template-columns: 120px 1fr 110px;
+        gap: 12px;
+        padding: 12px 14px;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: #f8fbff;
+        font-size: 14px;
+      }
+
+      .phone {
+        margin-top: 24px;
+        width: 160px;
+        height: 290px;
+        border-radius: 34px;
+        padding: 14px;
+        background: #fff;
+        border: 8px solid rgba(255, 255, 255, 0.4);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+      }
+
+      .phone-screen {
+        height: 100%;
+        border-radius: 24px;
+        background: linear-gradient(180deg, #edf4fb 0%, #dce8f7 100%);
+        padding: 14px;
+        color: var(--ink);
+      }
+
+      .phone-top {
+        font-size: 11px;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 14px;
+      }
+
+      .phone-chip {
+        padding: 8px 10px;
+        margin-bottom: 8px;
+        border-radius: 14px;
+        font-size: 11px;
+        background: rgba(255, 255, 255, 0.78);
+      }
+
+      .footer-note {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .insight-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .full-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 22px;
+      }
+
+      .big-point {
+        font-size: 30px;
+        line-height: 1.2;
+        font-weight: 800;
+        color: var(--ink);
+      }
+
+      .metric-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-top: 18px;
+      }
+
+      .metric-box {
+        padding: 20px;
+        border-radius: 22px;
+        background: linear-gradient(180deg, #fff 0%, #f3f8fd 100%);
+        border: 1px solid var(--line);
+      }
+
+      .metric-box .k {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      .metric-box .v {
+        margin-top: 10px;
+        font-size: 24px;
+        line-height: 1.2;
+        font-weight: 800;
+      }
+
+      .segment-stack {
+        display: grid;
+        gap: 14px;
+      }
+
+      .segment-row {
+        display: grid;
+        grid-template-columns: 88px 1fr 320px;
+        gap: 16px;
+        align-items: center;
+        padding: 18px 20px;
+        border-radius: 22px;
+        background: linear-gradient(180deg, #ffffff 0%, #f3f8fd 100%);
+        border: 1px solid var(--line);
+      }
+
+      .segment-no {
+        width: 64px;
+        height: 64px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(180deg, #dbeafe 0%, #c9e0fb 100%);
+        color: var(--primary-dark);
+        font-size: 28px;
+        font-weight: 800;
+      }
+
+      .segment-row h3 {
+        margin: 0 0 6px;
+        font-size: 28px;
+      }
+
+      .segment-row p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.45;
+      }
+
+      .segment-tag {
+        padding: 12px 14px;
+        border-radius: 16px;
+        background: #0b1f3a;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+        <div class="topbar-title">WCEM ERP Presentation Screens</div>
+      <div class="topbar-nav">
+        <a href="#cover">Cover</a>
+        <a href="#about">About</a>
+        <a href="#need">Need</a>
+        <a href="#gaps">Gaps</a>
+        <a href="#structure">Structure</a>
+        <a href="#admissions">Admissions</a>
+        <a href="#academics">Academics</a>
+        <a href="#exams">Exams</a>
+        <a href="#finance">Finance</a>
+        <a href="#placement">Placement</a>
+        <a href="#compliance">Compliance</a>
+        <a href="#director">Director</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#close">Close</a>
+      </div>
+    </div>
+
+    <main class="page">
+      <section class="slide cover" id="cover">
+        <div class="cover-grid">
+          <div class="cover-panel">
+            <div class="cover-eyebrow">Presented by SrS Logics</div>
+            <h1 class="cover-title">WCEM Premium ERP Proposal</h1>
+            <div class="cover-subtitle">
+              A high-end digital operating system for admissions, academics,
+              examinations, finance, placements, compliance, and leadership
+              control, delivered through web plus installable PWA apps and
+              designed around WCEM's real institutional operations.
+            </div>
+            <div class="cover-meta">
+              <div class="cover-chip">Prepared for Director Meeting</div>
+              <div class="cover-chip">21 June 2026 | 3:00 PM</div>
+              <div class="cover-chip">Wainganga College of Engineering and Management</div>
+            </div>
+            <div class="cover-note">
+              SrS Logics is a founder-led custom software company that builds
+              internal systems around real operating workflows instead of
+              forcing businesses into generic software templates.
+            </div>
+          </div>
+          <div class="cover-panel">
+            <h2 class="cover-side-title">Why SrS Logics for This Proposal</h2>
+            <ul class="cover-list">
+              <li>Founder-led delivery and direct requirement understanding</li>
+              <li>Custom internal systems, dashboards, and workflow platforms</li>
+              <li>Requirement-led software shaped around real operations</li>
+              <li>Web platform plus installable PWA app delivery model</li>
+            </ul>
+            <div class="cover-stack">
+              <div class="cover-stat">
+                <div class="cover-stat-label">Company Positioning</div>
+                <div class="cover-stat-value">Custom software systems built around real business operations</div>
+              </div>
+              <div class="cover-stat">
+                <div class="cover-stat-label">Operating Model</div>
+                <div class="cover-stat-value">Founder-led delivery from requirement review through testing and handover</div>
+              </div>
+              <div class="cover-stat">
+                <div class="cover-stat-label">Engagement Confidence</div>
+                <div class="cover-stat-value">Nagpur-based presence with structured commercial handling and post-launch support</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="about">
+        <div class="slide-header">
+          <div>
+            <div class="eyebrow">About SrS Logics</div>
+            <h1 class="slide-title">Why SrS Logics is credible to build this system</h1>
+            <div class="slide-subtitle">This proposal is being presented by a founder-led software company focused on custom internal systems, workflow platforms, dashboards, and data-backed business applications.</div>
+          </div>
+          <div class="brand">Company Profile</div>
+        </div>
+        <div class="full-grid">
+          <div class="stack">
+            <div class="card dark">
+              <div class="label">Positioning</div>
+              <div class="big-point" style="color:#fff;">Custom software systems built around real business operations, not generic templates.</div>
+            </div>
+            <div class="insight-grid">
+              <div class="card">
+                <h3>Founder-Led Delivery</h3>
+                <ul class="list">
+                  <li>Direct requirement understanding</li>
+                  <li>Structured delivery supervision</li>
+                  <li>Closer alignment with client workflow</li>
+                </ul>
+              </div>
+              <div class="card">
+                <h3>Core Capability</h3>
+                <ul class="list">
+                  <li>Internal platforms</li>
+                  <li>Management dashboards</li>
+                  <li>Workflow systems</li>
+                  <li>Database-backed applications</li>
+                </ul>
+              </div>
+            </div>
+            <div class="metric-strip">
+              <div class="metric-box"><div class="k">Base</div><div class="v">Nagpur, India</div></div>
+              <div class="metric-box"><div class="k">Model</div><div class="v">Founder-led</div></div>
+              <div class="metric-box"><div class="k">Typical Delivery</div><div class="v">4-6 weeks</div></div>
+              <div class="metric-box"><div class="k">Support</div><div class="v">6 months</div></div>
+            </div>
+          </div>
+          <div class="stack">
+            <div class="card">
+              <h3>Why this matters for WCEM</h3>
+              <ul class="list">
+                <li>WCEM does not need off-the-shelf software forced onto college operations.</li>
+                <li>It needs a system shaped around admissions, autonomous exams, fees, placements, compliance, and leadership review.</li>
+                <li>That is exactly the kind of requirement-led software SrS Logics is positioned to build.</li>
+              </ul>
+            </div>
+            <div class="card blue">
+              <h3>Presentation Positioning</h3>
+              <ul class="list">
+                <li>This is a structured institutional ERP proposal.</li>
+                <li>The system is designed around real workflow ownership.</li>
+                <li>Web plus installable PWA delivery is part of the solution model.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Founder Message</h3>
+              <div class="purpose" style="font-size:20px;color:var(--ink);">
+                “Businesses do not need more software for the sake of software.
+                They need systems that reduce confusion, improve control, and
+                continue to perform when operations become more demanding.”
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="need">
+        <div class="slide-header">
+          <div>
+            <div class="eyebrow">Why WCEM Needs This</div>
+            <h1 class="slide-title">WCEM already operates at a scale where a unified ERP is necessary</h1>
+            <div class="slide-subtitle">An autonomous, multi-program institution creates interconnected operational demands across admissions, academics, exams, finance, placements, and compliance.</div>
+          </div>
+          <div class="brand">Institution Context</div>
+        </div>
+        <div class="insight-grid">
+          <div class="card">
+            <h3>Academic Complexity</h3>
+            <div class="big-point">BTech, MTech, Diploma, MBA, and MCA mean multiple parallel academic and administrative flows.</div>
+          </div>
+          <div class="card">
+            <h3>Autonomous Operations</h3>
+            <div class="big-point">Autonomous examination and result responsibilities require stronger digital control than a basic college portal.</div>
+          </div>
+          <div class="card">
+            <h3>Public Service Layers</h3>
+            <ul class="list">
+              <li>Admissions and fee handling</li>
+              <li>Exam notices, hall tickets, results, marksheet verification</li>
+              <li>Placement and student service visibility</li>
+            </ul>
+          </div>
+          <div class="card dark">
+            <div class="label">Leadership Need</div>
+            <div class="big-point" style="color:#fff;">The Director needs one institutional system, not scattered tools and manual follow-up.</div>
+          </div>
+        </div>
+        <div class="metric-strip">
+          <div class="metric-box"><div class="k">Institute Type</div><div class="v">Autonomous</div></div>
+          <div class="metric-box"><div class="k">Affiliation</div><div class="v">RTMNU</div></div>
+          <div class="metric-box"><div class="k">Accreditation</div><div class="v">NAAC A</div></div>
+          <div class="metric-box"><div class="k">Need</div><div class="v">Unified control</div></div>
+        </div>
+      </section>
+
+      <section class="slide" id="gaps">
+        <div class="slide-header">
+          <div>
+            <div class="eyebrow">Current Gaps</div>
+            <h1 class="slide-title">Without a unified ERP, operational friction grows across six critical zones</h1>
+            <div class="slide-subtitle">This is the decision-making slide that shows why the system is not just useful, but necessary.</div>
+          </div>
+          <div class="brand">Problem Statement</div>
+        </div>
+        <div class="insight-grid">
+          <div class="card">
+            <h3>Admissions</h3>
+            <ul class="list">
+              <li>Lead capture and application follow-up can become fragmented.</li>
+              <li>Document verification and fee conversion risk leakage.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Academics</h3>
+            <ul class="list">
+              <li>Timetable, attendance, internal marks, and faculty workflows often live in separate silos.</li>
+              <li>Student visibility becomes weaker.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Examinations</h3>
+            <ul class="list">
+              <li>Hall tickets, evaluation, backlog handling, and result processing demand tight control.</li>
+              <li>Manual dependence increases risk.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Fees & Finance</h3>
+            <ul class="list">
+              <li>Dues, receipts, scholarships, concessions, and reporting need one synchronized ledger view.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Placement</h3>
+            <ul class="list">
+              <li>Eligibility, drives, interview rounds, and offers require a dedicated workflow system.</li>
+            </ul>
+          </div>
+          <div class="card dark">
+            <div class="label">Compliance & Leadership</div>
+            <div class="purpose" style="font-size:21px;color:#fff;">
+              NAAC, IQAC, committees, grievances, and director-level review should not depend on scattered documents and delayed updates.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="structure">
+        <div class="slide-header">
+          <div>
+            <div class="eyebrow">Proposed Solution Structure</div>
+            <h1 class="slide-title">The ERP is easier to understand when presented as seven clear institutional systems</h1>
+            <div class="slide-subtitle">This structure reduces confusion and helps leadership immediately imagine module ownership, rollout sequencing, and value.</div>
+          </div>
+          <div class="brand">ERP Structure</div>
+        </div>
+        <div class="segment-stack">
+          <div class="segment-row"><div class="segment-no">1</div><div><h3>Admissions ERP</h3><p>Lead capture, applications, document verification, seat allocation, admission confirmation, fee conversion.</p></div><div class="segment-tag">Intake & conversion</div></div>
+          <div class="segment-row"><div class="segment-no">2</div><div><h3>Student & Academic ERP</h3><p>Student profile, timetable, attendance, subjects, faculty workload, internal assessment, certificates.</p></div><div class="segment-tag">Academic execution</div></div>
+          <div class="segment-row"><div class="segment-no">3</div><div><h3>Examination ERP</h3><p>Exam forms, hall tickets, seating, evaluation, results, backlog, marksheets, verification.</p></div><div class="segment-tag">Autonomous exam control</div></div>
+          <div class="segment-row"><div class="segment-no">4</div><div><h3>Fees & Finance ERP</h3><p>Fee heads, dues, installments, scholarships, concessions, receipts, finance reporting.</p></div><div class="segment-tag">Collection discipline</div></div>
+          <div class="segment-row"><div class="segment-no">5</div><div><h3>Placement ERP</h3><p>Eligibility, drives, interviews, internships, offers, alumni and employer linkages.</p></div><div class="segment-tag">Career outcomes</div></div>
+          <div class="segment-row"><div class="segment-no">6</div><div><h3>Compliance & Administration ERP</h3><p>NAAC, IQAC, committees, grievances, approvals, repository, audit logs.</p></div><div class="segment-tag">Governance backbone</div></div>
+          <div class="segment-row"><div class="segment-no">7</div><div><h3>Leadership Dashboard</h3><p>Director, Principal, HOD, and admin dashboards with KPIs, alerts, and summary reports.</p></div><div class="segment-tag">Executive control</div></div>
+        </div>
+      </section>
+
+      <section class="slide" id="admissions">
+        <div class="slide-header">
+          <div>
+            <div class="eyebrow">Admissions ERP</div>
+            <h1 class="slide-title">Admissions Console</h1>
+            <div class="slide-subtitle">Lead capture, application verification, seat allocation, admission confirmation, and fee conversion in one premium institutional flow.</div>
+          </div>
+          <div class="brand">WCEM ERP</div>
+        </div>
+        <div class="layout">
+          <div class="stack">
+            <div class="card dark">
+              <div class="label">Purpose</div>
+              <div class="purpose">Turn enquiries into confirmed admissions with faster response, lower leakage, and better visibility.</div>
+            </div>
+            <div class="card">
+              <h4>Users</h4>
+              <ul class="list">
+                <li>Admission team</li>
+                <li>Counsellors</li>
+                <li>Accounts</li>
+                <li>Applicants and parents</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>Key Screens</h4>
+              <ul class="list">
+                <li>Lead dashboard</li>
+                <li>Applicant profile</li>
+                <li>Document verification queue</li>
+                <li>Seat allocation monitor</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mockup">
+            <div class="mockup-top">
+              <div>
+                <h3>Admissions Console</h3>
+                <span>Lead to admission conversion</span>
+              </div>
+              <span>AY 2026-27</span>
+            </div>
+            <div class="mockup-body">
+              <aside class="sidebar">
+                <h4>Modules</h4>
+                <span class="navitem active">Leads</span>
+                <span class="navitem">Applications</span>
+                <span class="navitem">Documents</span>
+                <span class="navitem">Seat Matrix</span>
+                <span class="navitem">Offers</span>
+                <span class="navitem">Payments</span>
+              </aside>
+              <div class="screen">
+                <div class="stats">
+                  <div class="stat primary"><div class="stat-label">Leads</div><div class="stat-value">482</div></div>
+                  <div class="stat"><div class="stat-label">Applied</div><div class="stat-value">221</div></div>
+                  <div class="stat"><div class="stat-label">Verified</div><div class="stat-value">173</div></div>
+                  <div class="stat"><div class="stat-label">Converted</div><div class="stat-value">92</div></div>
+                </div>
+                <div class="panel-grid">
+                  <div class="panel">
+                    <h4>Application Queue</h4>
+                    <div class="table">
+                      <div class="row"><span>Riya Sharma</span><span>CSE | Docs complete</span><span class="badge ok">Verified</span></div>
+                      <div class="row"><span>Aman Patel</span><span>MBA | Fee pending</span><span class="badge warn">Action</span></div>
+                      <div class="row"><span>Neha Kale</span><span>AIML | Seat blocked</span><span class="badge ok">Reserved</span></div>
+                      <div class="row"><span>Rahul Jain</span><span>MCA | Offer issued</span><span class="badge ok">Issued</span></div>
+                    </div>
+                  </div>
+                  <div class="panel">
+                    <h4>Conversion by Source</h4>
+                    <div class="mini-chart">
+                      <div class="bar-wrap"><div class="bar" style="height: 120px;"></div><div class="bar-label">Website</div></div>
+                      <div class="bar-wrap"><div class="bar" style="height: 96px;"></div><div class="bar-label">Counselling</div></div>
+                      <div class="bar-wrap"><div class="bar" style="height: 78px;"></div><div class="bar-label">Referral</div></div>
+                      <div class="bar-wrap"><div class="bar" style="height: 112px;"></div><div class="bar-label">Walk-in</div></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <h4>Today's Priority</h4>
+                  <div class="timeline">
+                    <div class="timeline-item"><strong>11:30 AM</strong><span>Approve 12 verified applications for seat lock</span><span class="badge warn">Pending</span></div>
+                    <div class="timeline-item"><strong>12:15 PM</strong><span>Send reminders to fee-pending applicants</span><span class="badge ok">Queued</span></div>
+                    <div class="timeline-item"><strong>2:00 PM</strong><span>Update intake dashboard for Director review</span><span class="badge ok">Ready</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card blue">
+                <h3>PWA Mobile Experience</h3>
+            <ul class="list">
+              <li>Applicant status tracking</li>
+              <li>Document alerts</li>
+              <li>Fee payment reminders</li>
+              <li>Offer acceptance updates</li>
+            </ul>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="phone-top">Admissions App</div>
+                <div class="phone-chip">Application received</div>
+                <div class="phone-chip">2 documents pending</div>
+                <div class="phone-chip">Seat offer live</div>
+                <div class="phone-chip">Pay admission fee</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="academics">
+        <div class="slide-header">
+          <div>
+            <div class="eyebrow">Student & Academic ERP</div>
+            <h1 class="slide-title">Academic Operations Hub</h1>
+            <div class="slide-subtitle">Student records, timetable, attendance, internal marks, faculty workload, and certificates under one academic operating layer.</div>
+          </div>
+          <div class="brand">Academic Flow</div>
+        </div>
+        <div class="layout">
+          <div class="stack">
+            <div class="card dark">
+              <div class="label">Purpose</div>
+              <div class="purpose">Create one trusted academic record from semester planning to student services.</div>
+            </div>
+            <div class="card">
+              <h4>Main Features</h4>
+              <ul class="list">
+                <li>Student master and semester mapping</li>
+                <li>Timetable and room planning</li>
+                <li>Attendance and internal assessment</li>
+                <li>Certificates and request handling</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>Outcome</h4>
+              <div class="purpose" style="font-size:16px;color:var(--muted);font-weight:600;">Cleaner academic execution with better visibility for students, parents, faculty, and HODs.</div>
+            </div>
+          </div>
+          <div class="mockup">
+            <div class="mockup-top">
+              <div>
+                <h3>Academic Hub</h3>
+                <span>Attendance, timetable, and internal marks</span>
+              </div>
+              <span>Semester VI</span>
+            </div>
+            <div class="mockup-body">
+              <aside class="sidebar">
+                <h4>Modules</h4>
+                <span class="navitem">Profiles</span>
+                <span class="navitem active">Attendance</span>
+                <span class="navitem">Timetable</span>
+                <span class="navitem">Marks</span>
+                <span class="navitem">Mentoring</span>
+                <span class="navitem">Certificates</span>
+              </aside>
+              <div class="screen">
+                <div class="stats">
+                  <div class="stat primary"><div class="stat-label">Attendance</div><div class="stat-value">91%</div></div>
+                  <div class="stat"><div class="stat-label">Faculty Load</div><div class="stat-value">18h</div></div>
+                  <div class="stat"><div class="stat-label">Internal Lock</div><div class="stat-value">82%</div></div>
+                  <div class="stat"><div class="stat-label">Requests</div><div class="stat-value">34</div></div>
+                </div>
+                <div class="panel-grid">
+                  <div class="panel">
+                    <h4>Course Status</h4>
+                    <div class="table">
+                      <div class="row"><span>Data Structures</span><span>Coverage 78%</span><span class="badge ok">On track</span></div>
+                      <div class="row"><span>Software Engg.</span><span>Attendance low cases 5</span><span class="badge warn">Review</span></div>
+                      <div class="row"><span>DBMS Lab</span><span>Internal marks draft</span><span class="badge warn">Lock</span></div>
+                      <div class="row"><span>Mentor Group A</span><span>3 counselling notes</span><span class="badge ok">Updated</span></div>
+                    </div>
+                  </div>
+                  <div class="panel">
+                    <h4>Week Timetable</h4>
+                    <div class="timeline">
+                      <div class="timeline-item"><strong>Mon</strong><span>CSE VI A | DSA | Lab 2</span><span class="badge ok">Live</span></div>
+                      <div class="timeline-item"><strong>Tue</strong><span>SE | Classroom 304</span><span class="badge ok">Scheduled</span></div>
+                      <div class="timeline-item"><strong>Wed</strong><span>Mentor hour | Group A</span><span class="badge ok">Planned</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <h4>Student Service Requests</h4>
+                  <div class="table">
+                    <div class="row"><span>Bonafide Certificate</span><span>12 requests</span><span class="badge ok">Auto approved</span></div>
+                    <div class="row"><span>Attendance Appeal</span><span>4 requests</span><span class="badge warn">Faculty review</span></div>
+                    <div class="row"><span>Section Change</span><span>2 requests</span><span class="badge risk">Approval</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card blue">
+            <h3>PWA Mobile App</h3>
+            <ul class="list">
+              <li>Attendance view</li>
+              <li>Daily timetable</li>
+              <li>Marks and notices</li>
+              <li>Certificate requests</li>
+            </ul>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="phone-top">Student app</div>
+                <div class="phone-chip">Today's classes</div>
+                <div class="phone-chip">Attendance 91%</div>
+                <div class="phone-chip">2 notices unread</div>
+                <div class="phone-chip">Bonafide ready</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="exams">
+        <div class="slide-header">
+          <div>
+            <div class="eyebrow">Examination ERP</div>
+            <h1 class="slide-title">Autonomous Exam Control Room</h1>
+            <div class="slide-subtitle">Exam forms, hall tickets, seating, evaluation, backlog handling, results, and marksheet verification in one secure examination workflow.</div>
+          </div>
+          <div class="brand">Exam Governance</div>
+        </div>
+        <div class="layout">
+          <div class="stack">
+            <div class="card dark">
+              <div class="label">Purpose</div>
+              <div class="purpose">Give WCEM a controlled autonomous exam engine instead of fragmented manual operations.</div>
+            </div>
+            <div class="card">
+              <h4>Main Features</h4>
+              <ul class="list">
+                <li>Eligibility and exam form engine</li>
+                <li>Hall tickets and seating plans</li>
+                <li>Evaluation and moderation workflows</li>
+                <li>Result, revaluation, and marksheet verification</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>Outcome</h4>
+              <div class="purpose" style="font-size:16px;color:var(--muted);font-weight:600;">Faster result turnaround, lower manual risk, and stronger exam discipline.</div>
+            </div>
+          </div>
+          <div class="mockup">
+            <div class="mockup-top">
+              <div>
+                <h3>Exam Control Room</h3>
+                <span>End-to-end autonomous examination workflow</span>
+              </div>
+              <span>Controller of Examinations</span>
+            </div>
+            <div class="mockup-body">
+              <aside class="sidebar">
+                <h4>Modules</h4>
+                <span class="navitem">Exam Forms</span>
+                <span class="navitem">Hall Tickets</span>
+                <span class="navitem">Seating</span>
+                <span class="navitem active">Evaluation</span>
+                <span class="navitem">Results</span>
+                <span class="navitem">Verification</span>
+              </aside>
+              <div class="screen">
+                <div class="stats">
+                  <div class="stat primary"><div class="stat-label">Forms</div><div class="stat-value">812</div></div>
+                  <div class="stat"><div class="stat-label">Halls</div><div class="stat-value">24</div></div>
+                  <div class="stat"><div class="stat-label">Evaluated</div><div class="stat-value">67%</div></div>
+                  <div class="stat"><div class="stat-label">Pending</div><div class="stat-value">2</div></div>
+                </div>
+                <div class="panel-grid">
+                  <div class="panel">
+                    <h4>Evaluation Queue</h4>
+                    <div class="table">
+                      <div class="row"><span>Sem VI CSE</span><span>Moderation pending</span><span class="badge warn">Review</span></div>
+                      <div class="row"><span>ATKT Batch</span><span>Eligibility checked</span><span class="badge ok">Ready</span></div>
+                      <div class="row"><span>MBA End Sem</span><span>18 scripts left</span><span class="badge warn">Open</span></div>
+                      <div class="row"><span>Result Draft</span><span>Controller approval</span><span class="badge risk">Critical</span></div>
+                    </div>
+                  </div>
+                  <div class="panel">
+                    <h4>Exam Timeline</h4>
+                    <div class="timeline">
+                      <div class="timeline-item"><strong>Today</strong><span>Publish hall tickets for backlog students</span><span class="badge ok">Done</span></div>
+                      <div class="timeline-item"><strong>2 PM</strong><span>Lock internal marks import</span><span class="badge warn">Due</span></div>
+                      <div class="timeline-item"><strong>5 PM</strong><span>Release marksheet QR verification</span><span class="badge ok">Planned</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <h4>Result Risk Monitor</h4>
+                  <div class="table">
+                    <div class="row"><span>Missing evaluator entries</span><span>2 subjects</span><span class="badge risk">Resolve</span></div>
+                    <div class="row"><span>Hall allocation conflict</span><span>1 room</span><span class="badge warn">Check</span></div>
+                    <div class="row"><span>Marksheet verification</span><span>Portal live</span><span class="badge ok">Active</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card blue">
+            <h3>PWA Mobile App</h3>
+            <ul class="list">
+              <li>Hall ticket access</li>
+              <li>Exam notices</li>
+              <li>Result publishing alerts</li>
+              <li>Verification status</li>
+            </ul>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="phone-top">Exam app</div>
+                <div class="phone-chip">Hall ticket available</div>
+                <div class="phone-chip">Seat no. A-214</div>
+                <div class="phone-chip">Result published</div>
+                <div class="phone-chip">Apply revaluation</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="finance">
+        <div class="slide-header">
+          <div>
+            <div class="eyebrow">Fees & Finance ERP</div>
+            <h1 class="slide-title">Finance Desk</h1>
+            <div class="slide-subtitle">Fee heads, dues, concessions, scholarships, online payments, receipts, and reporting synchronized with student status and finance control.</div>
+          </div>
+          <div class="brand">Finance Control</div>
+        </div>
+        <div class="layout">
+          <div class="stack">
+            <div class="card dark">
+              <div class="label">Purpose</div>
+              <div class="purpose">Connect student lifecycle with money movement so collections and reporting stay clean.</div>
+            </div>
+            <div class="card">
+              <h4>Main Features</h4>
+              <ul class="list">
+                <li>Program-wise fee configuration</li>
+                <li>Dues, installments, and concessions</li>
+                <li>Online payment and receipts</li>
+                <li>Scholarship adjustment and reports</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>Outcome</h4>
+              <div class="purpose" style="font-size:16px;color:var(--muted);font-weight:600;">Better collection visibility, lower reconciliation effort, and stronger fee discipline.</div>
+            </div>
+          </div>
+          <div class="mockup">
+            <div class="mockup-top">
+              <div>
+                <h3>Finance Desk</h3>
+                <span>Student fee operations and reporting</span>
+              </div>
+              <span>Accounts Office</span>
+            </div>
+            <div class="mockup-body">
+              <aside class="sidebar">
+                <h4>Modules</h4>
+                <span class="navitem active">Collections</span>
+                <span class="navitem">Dues</span>
+                <span class="navitem">Scholarships</span>
+                <span class="navitem">Receipts</span>
+                <span class="navitem">Refunds</span>
+                <span class="navitem">Reports</span>
+              </aside>
+              <div class="screen">
+                <div class="stats">
+                  <div class="stat primary"><div class="stat-label">Today</div><div class="stat-value">12L</div></div>
+                  <div class="stat"><div class="stat-label">Due</div><div class="stat-value">84L</div></div>
+                  <div class="stat"><div class="stat-label">Aid Cases</div><div class="stat-value">126</div></div>
+                  <div class="stat"><div class="stat-label">Refunds</div><div class="stat-value">7</div></div>
+                </div>
+                <div class="panel-grid">
+                  <div class="panel">
+                    <h4>High Priority Accounts</h4>
+                    <div class="table">
+                      <div class="row"><span>Sem III AIML</span><span>Receipt pending</span><span class="badge warn">Collect</span></div>
+                      <div class="row"><span>MBA 1st Year</span><span>Scholarship mapped</span><span class="badge ok">Adjusted</span></div>
+                      <div class="row"><span>Diploma Batch</span><span>Defaulter list 43</span><span class="badge risk">Review</span></div>
+                      <div class="row"><span>MTech Intake</span><span>Concession proposal</span><span class="badge warn">Approve</span></div>
+                    </div>
+                  </div>
+                  <div class="panel">
+                    <h4>Collection Trend</h4>
+                    <div class="mini-chart">
+                      <div class="bar-wrap"><div class="bar" style="height: 84px;"></div><div class="bar-label">Mon</div></div>
+                      <div class="bar-wrap"><div class="bar" style="height: 118px;"></div><div class="bar-label">Tue</div></div>
+                      <div class="bar-wrap"><div class="bar" style="height: 96px;"></div><div class="bar-label">Wed</div></div>
+                      <div class="bar-wrap"><div class="bar" style="height: 136px;"></div><div class="bar-label">Thu</div></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <h4>Finance Summary</h4>
+                  <div class="timeline">
+                    <div class="timeline-item"><strong>Receipts</strong><span>All online receipts synced with student ledger</span><span class="badge ok">Live</span></div>
+                    <div class="timeline-item"><strong>Scholarships</strong><span>126 mapped, 14 awaiting documents</span><span class="badge warn">Check</span></div>
+                    <div class="timeline-item"><strong>Refunds</strong><span>7 cases pending management approval</span><span class="badge warn">Pending</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card blue">
+            <h3>PWA Mobile App</h3>
+            <ul class="list">
+              <li>Fee due alerts</li>
+              <li>Receipt downloads</li>
+              <li>Scholarship status</li>
+              <li>Parent payment reminders</li>
+            </ul>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="phone-top">Parent app</div>
+                <div class="phone-chip">Next due in 3 days</div>
+                <div class="phone-chip">Pay online now</div>
+                <div class="phone-chip">Receipt downloaded</div>
+                <div class="phone-chip">Aid under review</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="placement">
+        <div class="slide-header">
+          <div>
+            <div class="eyebrow">Placement ERP</div>
+            <h1 class="slide-title">Placement Studio</h1>
+            <div class="slide-subtitle">Eligibility rules, drive scheduling, interviews, internships, offers, alumni linkage, and employer engagement in one focused placement system.</div>
+          </div>
+          <div class="brand">Career Outcomes</div>
+        </div>
+        <div class="layout">
+          <div class="stack">
+            <div class="card dark">
+              <div class="label">Purpose</div>
+              <div class="purpose">Run the placement cell like a structured employability and employer-relationship engine.</div>
+            </div>
+            <div class="card">
+              <h4>Main Features</h4>
+              <ul class="list">
+                <li>Eligibility and student employability profile</li>
+                <li>Drive planning and round tracking</li>
+                <li>Offer and internship monitoring</li>
+                <li>Employer and alumni engagement</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>Outcome</h4>
+              <div class="purpose" style="font-size:16px;color:var(--muted);font-weight:600;">Higher placement discipline, faster coordination, and clearer outcome visibility.</div>
+            </div>
+          </div>
+          <div class="mockup">
+            <div class="mockup-top">
+              <div>
+                <h3>Placement Studio</h3>
+                <span>Drive management and offer tracking</span>
+              </div>
+              <span>Training & Placement Cell</span>
+            </div>
+            <div class="mockup-body">
+              <aside class="sidebar">
+                <h4>Modules</h4>
+                <span class="navitem active">Drives</span>
+                <span class="navitem">Eligibility</span>
+                <span class="navitem">Rounds</span>
+                <span class="navitem">Offers</span>
+                <span class="navitem">Internships</span>
+                <span class="navitem">Alumni</span>
+              </aside>
+              <div class="screen">
+                <div class="stats">
+                  <div class="stat primary"><div class="stat-label">Drives</div><div class="stat-value">19</div></div>
+                  <div class="stat"><div class="stat-label">Eligible</div><div class="stat-value">124</div></div>
+                  <div class="stat"><div class="stat-label">Offers</div><div class="stat-value">76</div></div>
+                  <div class="stat"><div class="stat-label">Interns</div><div class="stat-value">44</div></div>
+                </div>
+                <div class="panel-grid">
+                  <div class="panel">
+                    <h4>Active Drives</h4>
+                    <div class="table">
+                      <div class="row"><span>TCS Campus Drive</span><span>Round 2 today</span><span class="badge ok">Running</span></div>
+                      <div class="row"><span>Infosys</span><span>JD released</span><span class="badge ok">Open</span></div>
+                      <div class="row"><span>Persistent</span><span>Interview schedule</span><span class="badge warn">Plan</span></div>
+                      <div class="row"><span>Capgemini</span><span>Offer upload</span><span class="badge ok">Done</span></div>
+                    </div>
+                  </div>
+                  <div class="panel">
+                    <h4>Placement Funnel</h4>
+                    <div class="mini-chart">
+                      <div class="bar-wrap"><div class="bar" style="height: 140px;"></div><div class="bar-label">Applied</div></div>
+                      <div class="bar-wrap"><div class="bar" style="height: 110px;"></div><div class="bar-label">Shortlist</div></div>
+                      <div class="bar-wrap"><div class="bar" style="height: 88px;"></div><div class="bar-label">Interview</div></div>
+                      <div class="bar-wrap"><div class="bar" style="height: 72px;"></div><div class="bar-label">Offer</div></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <h4>Employer and Alumni Actions</h4>
+                  <div class="timeline">
+                    <div class="timeline-item"><strong>Employer</strong><span>Update company outreach history and drive status</span><span class="badge ok">Tracked</span></div>
+                    <div class="timeline-item"><strong>Alumni</strong><span>Mentor session booked for 3rd year students</span><span class="badge ok">Confirmed</span></div>
+                    <div class="timeline-item"><strong>Student</strong><span>12 students missing resume verification</span><span class="badge warn">Act</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card blue">
+            <h3>PWA Mobile App</h3>
+            <ul class="list">
+              <li>Drive alerts</li>
+              <li>Eligibility status</li>
+              <li>Interview schedule</li>
+              <li>Offer acceptance updates</li>
+            </ul>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="phone-top">Placement app</div>
+                <div class="phone-chip">TCS Round 2 at 2 PM</div>
+                <div class="phone-chip">You are eligible</div>
+                <div class="phone-chip">Resume approved</div>
+                <div class="phone-chip">Offer letter ready</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="compliance">
+        <div class="slide-header">
+          <div>
+            <div class="eyebrow">Compliance & Administration ERP</div>
+            <h1 class="slide-title">Quality, Committee & Compliance Center</h1>
+            <div class="slide-subtitle">NAAC, IQAC, committees, grievances, approvals, repository, and audit logs brought together in one governance and administration layer.</div>
+          </div>
+          <div class="brand">Governance Layer</div>
+        </div>
+        <div class="layout">
+          <div class="stack">
+            <div class="card dark">
+              <div class="label">Purpose</div>
+              <div class="purpose">Reduce compliance chaos and create an audit-ready backbone for quality and administration.</div>
+            </div>
+            <div class="card">
+              <h4>Main Features</h4>
+              <ul class="list">
+                <li>NAAC and AQAR evidence repository</li>
+                <li>Committee case management</li>
+                <li>Grievance and approval routing</li>
+                <li>Audit logs and confidential documents</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>Outcome</h4>
+              <div class="purpose" style="font-size:16px;color:var(--muted);font-weight:600;">Better accreditation readiness and stronger institutional governance.</div>
+            </div>
+          </div>
+          <div class="mockup">
+            <div class="mockup-top">
+              <div>
+                <h3>Quality & Admin Center</h3>
+                <span>Evidence, committees, approvals, and cases</span>
+              </div>
+              <span>IQAC & Administration</span>
+            </div>
+            <div class="mockup-body">
+              <aside class="sidebar">
+                <h4>Modules</h4>
+                <span class="navitem active">NAAC</span>
+                <span class="navitem">IQAC</span>
+                <span class="navitem">Committees</span>
+                <span class="navitem">Grievances</span>
+                <span class="navitem">Approvals</span>
+                <span class="navitem">Audit</span>
+              </aside>
+              <div class="screen">
+                <div class="stats">
+                  <div class="stat primary"><div class="stat-label">AQAR</div><div class="stat-value">82%</div></div>
+                  <div class="stat"><div class="stat-label">Cases</div><div class="stat-value">11</div></div>
+                  <div class="stat"><div class="stat-label">Approvals</div><div class="stat-value">28</div></div>
+                  <div class="stat"><div class="stat-label">Evidence</div><div class="stat-value">246</div></div>
+                </div>
+                <div class="panel-grid">
+                  <div class="panel">
+                    <h4>Committee and Case Flow</h4>
+                    <div class="table">
+                      <div class="row"><span>ICC Case</span><span>Hearing scheduled</span><span class="badge warn">Private</span></div>
+                      <div class="row"><span>Grievance Cell</span><span>2 unresolved tickets</span><span class="badge risk">Escalate</span></div>
+                      <div class="row"><span>SC/ST Committee</span><span>Monthly report uploaded</span><span class="badge ok">Done</span></div>
+                      <div class="row"><span>Purchase Approval</span><span>Level 2 pending</span><span class="badge warn">Approve</span></div>
+                    </div>
+                  </div>
+                  <div class="panel">
+                    <h4>NAAC Readiness</h4>
+                    <div class="timeline">
+                      <div class="timeline-item"><strong>Criterion 2</strong><span>Teaching-learning evidence complete</span><span class="badge ok">100%</span></div>
+                      <div class="timeline-item"><strong>Criterion 3</strong><span>Research and extension pending files</span><span class="badge warn">74%</span></div>
+                      <div class="timeline-item"><strong>Criterion 6</strong><span>Governance documents under review</span><span class="badge warn">81%</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <h4>Administrative Repository</h4>
+                  <div class="table">
+                    <div class="row"><span>Minutes and circulars</span><span>Version-controlled archive</span><span class="badge ok">Ready</span></div>
+                    <div class="row"><span>Policy documents</span><span>Secure internal access</span><span class="badge ok">Secured</span></div>
+                    <div class="row"><span>Audit trail</span><span>Every action logged</span><span class="badge ok">Active</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card blue">
+            <h3>PWA Mobile App</h3>
+            <ul class="list">
+              <li>Approval alerts</li>
+              <li>Committee reminders</li>
+              <li>Confidential case status</li>
+              <li>Quality evidence tasks</li>
+            </ul>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="phone-top">Admin app</div>
+                <div class="phone-chip">2 approvals pending</div>
+                <div class="phone-chip">AQAR task overdue</div>
+                <div class="phone-chip">Committee hearing today</div>
+                <div class="phone-chip">Audit trail synced</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="director">
+        <div class="slide-header">
+          <div>
+            <div class="eyebrow">Leadership Dashboard</div>
+            <h1 class="slide-title">Director Control Room</h1>
+            <div class="slide-subtitle">One live institutional dashboard for admissions, academics, examinations, finance, placement, compliance, and mobile approvals.</div>
+          </div>
+          <div class="brand">Executive View</div>
+        </div>
+        <div class="layout">
+          <div class="stack">
+            <div class="card dark">
+              <div class="label">Purpose</div>
+              <div class="purpose">Help the Director monitor exceptions, risks, and KPIs without depending on scattered updates.</div>
+            </div>
+            <div class="card">
+              <h4>Key Insights</h4>
+              <ul class="list">
+                <li>Admissions trend and conversion</li>
+                <li>Attendance and at-risk students</li>
+                <li>Fee dues and collection movement</li>
+                <li>Exam alerts, placement status, compliance pulse</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>Leadership Value</h4>
+              <div class="purpose" style="font-size:16px;color:var(--muted);font-weight:600;">Decision confidence, faster intervention, and better institutional coordination.</div>
+            </div>
+          </div>
+          <div class="mockup">
+            <div class="mockup-top">
+              <div>
+                <h3>Director Dashboard</h3>
+                <span>Institute-wide KPI and alert view</span>
+              </div>
+              <span>WCEM Leadership</span>
+            </div>
+            <div class="mockup-body">
+              <aside class="sidebar">
+                <h4>Views</h4>
+                <span class="navitem active">Overview</span>
+                <span class="navitem">Admissions</span>
+                <span class="navitem">Academics</span>
+                <span class="navitem">Exams</span>
+                <span class="navitem">Finance</span>
+                <span class="navitem">Placement</span>
+              </aside>
+              <div class="screen">
+                <div class="stats">
+                  <div class="stat primary"><div class="stat-label">Admissions</div><div class="stat-value">221</div></div>
+                  <div class="stat"><div class="stat-label">Attendance</div><div class="stat-value">91%</div></div>
+                  <div class="stat"><div class="stat-label">Fee Due</div><div class="stat-value">84L</div></div>
+                  <div class="stat"><div class="stat-label">AQAR</div><div class="stat-value">82%</div></div>
+                </div>
+                <div class="panel-grid">
+                  <div class="panel">
+                    <h4>Leadership Alerts</h4>
+                    <div class="table">
+                      <div class="row"><span>Admissions trend</span><span>18 new confirmations today</span><span class="badge ok">Good</span></div>
+                      <div class="row"><span>Exam alert</span><span>2 moderation approvals pending</span><span class="badge warn">Act</span></div>
+                      <div class="row"><span>Finance alert</span><span>43 high-priority defaulters</span><span class="badge risk">Review</span></div>
+                      <div class="row"><span>Compliance pulse</span><span>Criterion 3 files pending</span><span class="badge warn">Check</span></div>
+                    </div>
+                  </div>
+                  <div class="panel">
+                    <h4>Trend Snapshot</h4>
+                    <div class="mini-chart">
+                      <div class="bar-wrap"><div class="bar" style="height: 94px;"></div><div class="bar-label">Adm</div></div>
+                      <div class="bar-wrap"><div class="bar" style="height: 132px;"></div><div class="bar-label">Attend</div></div>
+                      <div class="bar-wrap"><div class="bar" style="height: 70px;"></div><div class="bar-label">Exam</div></div>
+                      <div class="bar-wrap"><div class="bar" style="height: 112px;"></div><div class="bar-label">Place</div></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <h4>Director Review Actions</h4>
+                  <div class="timeline">
+                    <div class="timeline-item"><strong>Now</strong><span>Approve 2 exam moderation cases from mobile</span><span class="badge warn">Pending</span></div>
+                    <div class="timeline-item"><strong>Today</strong><span>Review admissions conversion by channel</span><span class="badge ok">Ready</span></div>
+                    <div class="timeline-item"><strong>This Week</strong><span>Monitor low-attendance cohort and finance exception list</span><span class="badge ok">Tracked</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card blue">
+            <h3>PWA Mobile App</h3>
+            <ul class="list">
+              <li>Approval notifications</li>
+              <li>Executive KPI snapshots</li>
+              <li>Urgent risk alerts</li>
+              <li>Fast mobile review</li>
+            </ul>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="phone-top">Director app</div>
+                <div class="phone-chip">2 approvals waiting</div>
+                <div class="phone-chip">Fee due high today</div>
+                <div class="phone-chip">Admission trend up</div>
+                <div class="phone-chip">Open dashboard</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-note">These presentation screens are designed for direct screenshot use in the Director deck and can be captured section-wise or slide-wise.</div>
+      </section>
+
+      <section class="slide" id="roadmap">
+        <div class="slide-header">
+          <div>
+            <div class="eyebrow">Implementation Roadmap</div>
+            <h1 class="slide-title">A phased rollout keeps the ERP practical, controlled, and decision-friendly</h1>
+            <div class="slide-subtitle">The rollout should begin with the systems that directly affect admissions, fees, and student records, then scale into academics, exams, leadership, and institutional experience.</div>
+          </div>
+          <div class="brand">Rollout Plan</div>
+        </div>
+        <div class="segment-stack">
+          <div class="segment-row">
+            <div class="segment-no">1</div>
+            <div>
+              <h3>Admissions + Fees + Student Master</h3>
+              <p>Establish intake control, fee discipline, core student records, and the institutional data foundation.</p>
+            </div>
+            <div class="segment-tag">Foundation phase</div>
+          </div>
+          <div class="segment-row">
+            <div class="segment-no">2</div>
+            <div>
+              <h3>Academics + Attendance + Faculty Workflows</h3>
+              <p>Stabilize day-to-day academic execution through timetable, attendance, internal marks, and faculty workflow management.</p>
+            </div>
+            <div class="segment-tag">Academic control</div>
+          </div>
+          <div class="segment-row">
+            <div class="segment-no">3</div>
+            <div>
+              <h3>Examinations + Results + Marksheet Verification</h3>
+              <p>Digitize the autonomous exam backbone and reduce manual risk across result processing and verification.</p>
+            </div>
+            <div class="segment-tag">Exam transformation</div>
+          </div>
+          <div class="segment-row">
+            <div class="segment-no">4</div>
+            <div>
+              <h3>Placement + Compliance + Director Dashboard + PWA</h3>
+              <p>Complete the premium institutional layer with leadership visibility, governance systems, and mobile PWA access.</p>
+            </div>
+            <div class="segment-tag">Strategic maturity</div>
+          </div>
+        </div>
+        <div class="metric-strip">
+          <div class="metric-box"><div class="k">Priority</div><div class="v">Low risk sequencing</div></div>
+          <div class="metric-box"><div class="k">Approach</div><div class="v">Module-wise rollout</div></div>
+          <div class="metric-box"><div class="k">Decision Logic</div><div class="v">Start with control layers</div></div>
+          <div class="metric-box"><div class="k">Outcome</div><div class="v">Faster adoption</div></div>
+        </div>
+      </section>
+
+      <section class="slide cover" id="close">
+        <div class="cover-grid">
+          <div class="cover-panel">
+            <div class="cover-eyebrow">Recommended Next Step</div>
+            <h1 class="cover-title">Approve a discovery workshop for the WCEM ERP blueprint</h1>
+            <div class="cover-subtitle">
+              The immediate goal is to convert this presentation into a real
+              implementation blueprint with final module scope, workflow maps,
+              reporting needs, and rollout governance.
+            </div>
+            <div class="cover-note">
+              This keeps the conversation serious and practical: first align on
+              the institutional operating model, then convert it into a custom
+              ERP execution plan led by SrS Logics.
+            </div>
+          </div>
+          <div class="cover-panel">
+            <h2 class="cover-side-title">What happens next</h2>
+            <ul class="cover-list">
+              <li>Map current workflows with admission, academic, exam, finance, placement, and IQAC stakeholders</li>
+              <li>Freeze Phase 1 and Phase 2 priorities</li>
+              <li>Define the role-wise web and PWA experience</li>
+              <li>Finalize dashboards, reports, approvals, and success KPIs</li>
+            </ul>
+            <div class="cover-stack">
+              <div class="cover-stat">
+                <div class="cover-stat-label">Director Outcome</div>
+                <div class="cover-stat-value">A clear path from presentation to institutional software plan</div>
+              </div>
+              <div class="cover-stat">
+                <div class="cover-stat-label">Proposal Strength</div>
+                <div class="cover-stat-value">Structured, segment-wise, and aligned to WCEM operations</div>
+              </div>
+              <div class="cover-stat">
+                <div class="cover-stat-label">Presented By</div>
+                <div class="cover-stat-value">SrS Logics | Founder-led custom software delivery</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
