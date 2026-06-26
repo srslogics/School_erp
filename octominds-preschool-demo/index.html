@@ -3,29 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OctoMinds Owner Demo | Multi-Centre Preschool ERP by SrS Logics</title>
+  <title>OctoMinds ERP Demo | Multi-Centre Preschool ERP</title>
   <meta name="description" content="A live preschool ERP demo for OctoMinds showing owner dashboard, admissions, branch operations, parent app, fee collections, child progress tracking, and installable PWA apps across 7 centres.">
   <meta name="theme-color" content="#fff5ea">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="OctoMinds ERP">
-  <link rel="icon" type="image/png" sizes="192x192" href="../assets/images/favicon-192.png">
+  <link rel="icon" type="image/svg+xml" href="./icon-192.svg">
   <link rel="apple-touch-icon" href="./icon-192.svg">
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="../assets/css/main.css">
   <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
     html {
       background: #fff7ef;
       color-scheme: light;
+      scroll-behavior: smooth;
+      min-height: 100%;
     }
 
     body {
+      margin: 0;
+      min-height: 100vh;
       background:
         radial-gradient(circle at 14% 12%, rgba(255, 154, 180, 0.28), transparent 22%),
         radial-gradient(circle at 86% 18%, rgba(255, 203, 132, 0.34), transparent 20%),
         radial-gradient(circle at 62% 80%, rgba(255, 171, 115, 0.2), transparent 24%),
         linear-gradient(180deg, #fffaf4 0%, #fff5ea 42%, #fffdf8 100%);
       color: #2f2340;
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
     }
 
     body::before {
@@ -58,16 +72,49 @@
 
     .demo-shell {
       position: relative;
+      overflow: clip;
     }
 
     .demo-shell::before {
+      content: "";
+      position: absolute;
+      width: 22rem;
+      height: 22rem;
+      top: 6rem;
+      right: -8rem;
+      border-radius: 999px;
+      filter: blur(110px);
+      pointer-events: none;
       background: rgba(255, 164, 192, 0.28);
       opacity: 0.3;
     }
 
     .demo-shell::after {
+      content: "";
+      position: absolute;
+      width: 18rem;
+      height: 18rem;
+      top: 52rem;
+      left: -6rem;
+      border-radius: 999px;
+      filter: blur(110px);
+      pointer-events: none;
       background: rgba(255, 199, 112, 0.24);
       opacity: 0.28;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .container {
+      width: min(calc(100% - 2rem), 1180px);
+      margin: 0 auto;
     }
 
     .site-header {
@@ -79,7 +126,19 @@
     }
 
     .site-header::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255, 151, 179, 0.4), rgba(255, 191, 116, 0.4), transparent);
+    }
+
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      min-height: 5.4rem;
     }
 
     .brand {
@@ -114,6 +173,39 @@
     .site-nav a:focus-visible {
       color: #51304d;
       text-shadow: none;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      min-width: 0;
+    }
+
+    .site-nav a {
+      text-decoration: none;
+      font-size: 0.92rem;
+      position: relative;
+      transition: color 180ms ease, opacity 180ms ease;
+    }
+
+    .nav-toggle {
+      display: none;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 1.6rem;
+      height: 2px;
+      margin: 0.28rem 0;
+      background: #7a5d66;
+      border-radius: 999px;
     }
 
     .nav-cta {
@@ -387,6 +479,9 @@
     .demo-hero-copy h1 {
       margin-bottom: 1rem;
       font-size: clamp(2.4rem, 4vw, 4.55rem);
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      font-weight: 600;
+      letter-spacing: -0.03em;
       line-height: 0.98;
     }
 
@@ -590,6 +685,9 @@
       margin-top: 0.2rem;
       margin-bottom: 0.6rem;
       font-size: clamp(1.55rem, 2vw, 2.2rem);
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      font-weight: 600;
+      letter-spacing: -0.03em;
       line-height: 1.04;
       color: #4c314d;
     }
@@ -1164,6 +1262,25 @@
     }
 
     @media (max-width: 720px) {
+      .nav-toggle {
+        display: block;
+      }
+
+      .site-nav {
+        display: none;
+        width: 100%;
+        padding-bottom: 1rem;
+      }
+
+      .site-nav.is-open {
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .site-header .container {
+        flex-wrap: wrap;
+      }
+
       .workspace-topbar {
         flex-direction: column;
         align-items: flex-start;
@@ -2293,6 +2410,30 @@
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker.register("./sw.js").catch(() => {});
+        });
+      }
+
+      const header = document.querySelector(".site-header");
+      const navButton = header?.querySelector(".nav-toggle");
+      const nav = header?.querySelector(".site-nav");
+      if (navButton && nav) {
+        const closeMenu = () => {
+          navButton.setAttribute("aria-expanded", "false");
+          nav.classList.remove("is-open");
+        };
+
+        navButton.addEventListener("click", () => {
+          const isOpen = navButton.getAttribute("aria-expanded") === "true";
+          navButton.setAttribute("aria-expanded", String(!isOpen));
+          nav.classList.toggle("is-open", !isOpen);
+        });
+
+        nav.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", closeMenu);
+        });
+
+        window.addEventListener("resize", () => {
+          if (window.innerWidth > 720) closeMenu();
         });
       }
     })();
