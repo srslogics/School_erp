@@ -1,13 +1,13 @@
-const CACHE_NAME = "octominds-erp-demo-v1";
+const CACHE_NAME = "octominds-erp-demo-v2";
 const APP_SHELL = [
-  "/octominds-preschool-demo/",
-  "/octominds-preschool-demo/index.html",
-  "/octominds-preschool-demo/manifest.webmanifest",
-  "/octominds-preschool-demo/icon-192.svg",
-  "/octominds-preschool-demo/icon-512.svg",
-  "/assets/css/main.css",
-  "/assets/js/site-nav.js",
-  "/assets/images/favicon-192.png"
+  "./",
+  "./index.html",
+  "./health.html",
+  "./manifest.webmanifest",
+  "./icon-192.svg",
+  "./icon-512.svg",
+  "./icon-192.png",
+  "./icon-512.png"
 ];
 
 self.addEventListener("install", (event) => {
@@ -46,7 +46,7 @@ self.addEventListener("fetch", (event) => {
           }
           return networkResponse;
         })
-        .catch(() => caches.match("/octominds-preschool-demo/index.html"));
+        .catch(() => caches.match("./index.html"));
     })
   );
 });

@@ -2,23 +2,23 @@
   "name": "OctoMinds ERP Demo",
   "short_name": "OctoMinds ERP",
   "description": "Installable preschool ERP demo for founder, centre, finance, and parent workflows.",
-  "start_url": "/octominds-preschool-demo/",
-  "scope": "/octominds-preschool-demo/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#fffaf4",
   "theme_color": "#fff5ea",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/octominds-preschool-demo/icon-192.svg",
+      "src": "./icon-192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/octominds-preschool-demo/icon-512.svg",
+      "src": "./icon-512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ]

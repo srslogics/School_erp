@@ -10,7 +10,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="OctoMinds ERP">
   <link rel="icon" type="image/svg+xml" href="./icon-192.svg">
-  <link rel="apple-touch-icon" href="./icon-192.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="./icon-192.png">
   <link rel="manifest" href="./manifest.webmanifest">
   <style>
     *,
@@ -412,6 +413,13 @@
 
     .install-button[hidden] {
       display: none;
+    }
+
+    .install-status {
+      margin: 0;
+      color: #8a6b72;
+      font-size: 0.78rem;
+      text-align: right;
     }
 
     .workspace-stage {
@@ -1421,6 +1429,7 @@
             <span class="pwa-pill">PWA Ready</span>
             <button class="install-button" id="install-app" type="button" hidden>Install App</button>
           </div>
+          <p class="install-status" id="install-status">Installable on mobile and desktop for owner, centres, staff, and parents.</p>
           <p id="workspace-caption">Move across modules from the left sidebar to simulate how the founder would actually use the software day to day.</p>
         </div>
 
@@ -2317,7 +2326,6 @@
     </main>
   </div>
 
-  <script src="../assets/js/site-nav.js"></script>
   <script>
     (() => {
       const personaButtons = document.querySelectorAll(".persona-button");
@@ -2349,6 +2357,7 @@
       const workspaceSubtitle = document.getElementById("workspace-subtitle");
       const workspaceCaption = document.getElementById("workspace-caption");
       const installButton = document.getElementById("install-app");
+      const installStatus = document.getElementById("install-status");
       let deferredInstallPrompt = null;
 
       const activateView = (targetId) => {
@@ -2395,6 +2404,13 @@
         event.preventDefault();
         deferredInstallPrompt = event;
         if (installButton) installButton.hidden = false;
+        if (installStatus) installStatus.textContent = "This browser can install the demo right now. Use the Install App button.";
+      });
+
+      window.addEventListener("appinstalled", () => {
+        deferredInstallPrompt = null;
+        if (installButton) installButton.hidden = true;
+        if (installStatus) installStatus.textContent = "App installed. The founder can now reopen it like a real product from the home screen or desktop.";
       });
 
       if (installButton) {
@@ -2404,12 +2420,19 @@
           await deferredInstallPrompt.userChoice;
           deferredInstallPrompt = null;
           installButton.hidden = true;
+          if (installStatus) installStatus.textContent = "If the prompt was accepted, the app will now appear like a real installed product.";
         });
       }
 
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js").catch(() => {});
+          navigator.serviceWorker.register("./sw.js").then(() => {
+            if (installStatus && !deferredInstallPrompt) {
+              installStatus.textContent = "PWA foundation is active. On supported browsers, install appears from the app button or browser menu.";
+            }
+          }).catch(() => {
+            if (installStatus) installStatus.textContent = "PWA setup needs a refresh after deployment.";
+          });
         });
       }
 
