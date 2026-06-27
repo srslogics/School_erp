@@ -247,7 +247,8 @@
       gap: 0.55rem;
     }
 
-    .mobile-module-nav {
+    .mobile-module-nav,
+    .mobile-control-bar {
       display: none;
     }
 
@@ -1393,14 +1394,22 @@
         display: none;
       }
 
-      .mobile-module-nav {
-        display: flex;
+      .mobile-control-bar {
+        display: block;
         position: sticky;
-        top: 4.8rem;
+        top: 4.85rem;
         z-index: 7;
-        margin: 0 -0.1rem;
-        padding: 0.1rem 0.1rem 0.2rem;
-        background: linear-gradient(180deg, rgba(255, 248, 240, 0.98), rgba(255, 248, 240, 0.9));
+        margin: 0;
+        padding: 0.35rem 0.6rem 0.45rem;
+        background: linear-gradient(180deg, rgba(255, 248, 240, 0.98), rgba(255, 248, 240, 0.92));
+        border-bottom: 1px solid rgba(226, 187, 170, 0.24);
+        backdrop-filter: blur(16px);
+      }
+
+      .mobile-control-bar .mobile-module-nav {
+        display: flex;
+        margin: 0;
+        padding: 0;
       }
 
       .mobile-module-chip {
@@ -1567,6 +1576,9 @@
             <strong>7-centre owner control in one app</strong>
             <span>Admissions, branch operations, fees, parent updates, and progress tracking delivered as a mobile-friendly ERP experience.</span>
           </div>
+        </div>
+
+        <div class="mobile-control-bar">
           <div class="mobile-module-nav" aria-label="Mobile ERP navigation">
             <button class="mobile-module-chip is-active" type="button" data-view-target="overview">Overview</button>
             <button class="mobile-module-chip" type="button" data-view-target="owner-control-room">Control Room</button>
@@ -2506,7 +2518,19 @@
       const installButton = document.getElementById("install-app");
       const installStatus = document.getElementById("install-status");
       const workspaceMain = document.querySelector(".workspace-main");
+      const isIos = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+      const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
       let deferredInstallPrompt = null;
+
+      const setInstallUi = (message, options = {}) => {
+        const { showButton = false, label = "Install App", mode = "prompt" } = options;
+        if (installStatus) installStatus.textContent = message;
+        if (installButton) {
+          installButton.hidden = !showButton;
+          installButton.textContent = label;
+          installButton.dataset.installMode = mode;
+        }
+      };
 
       const activateView = (targetId, options = {}) => {
         const { preserveScroll = false, focusWorkspace = false } = options;
@@ -2519,9 +2543,6 @@
         if (workspaceTitle) workspaceTitle.textContent = view.dataset.viewTitle || "Overview";
         if (workspaceSubtitle) workspaceSubtitle.textContent = view.dataset.viewSubtitle || "";
         if (workspaceCaption) workspaceCaption.textContent = view.dataset.viewCaption || "";
-        if (window.location.hash !== `#${targetId}`) {
-          window.history.replaceState(null, "", `#${targetId}`);
-        }
 
         if (preserveScroll) {
           window.scrollTo({ top: currentScroll, left: 0, behavior: "auto" });
@@ -2553,41 +2574,82 @@
         });
       });
 
-      const initialView = window.location.hash ? window.location.hash.slice(1) : "overview";
-      activateView(document.getElementById(initialView) ? initialView : "overview", { preserveScroll: true });
+      if (window.location.hash) {
+        window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+      }
+      activateView("overview", { preserveScroll: true });
+
+      if (isStandalone) {
+        setInstallUi("App installed. The owner can now reopen it like a real product from the home screen or desktop.");
+      } else if (isIos) {
+        setInstallUi("On iPhone or iPad, use Safari Share and then Add to Home Screen to install this app.", {
+          showButton: true,
+          label: "How to Install",
+          mode: "ios-help"
+        });
+      } else {
+        setInstallUi("PWA foundation is active. On supported browsers, install appears from the app button or browser menu.", {
+          showButton: true,
+          label: "Install Help",
+          mode: "browser-help"
+        });
+      }
 
       window.addEventListener("beforeinstallprompt", (event) => {
         event.preventDefault();
         deferredInstallPrompt = event;
-        if (installButton) installButton.hidden = false;
-        if (installStatus) installStatus.textContent = "This browser can install the demo right now. Use the Install App button.";
+        setInstallUi("This browser can install the demo right now. Use the Install App button.", {
+          showButton: true,
+          label: "Install App",
+          mode: "prompt"
+        });
       });
 
       window.addEventListener("appinstalled", () => {
         deferredInstallPrompt = null;
-        if (installButton) installButton.hidden = true;
-        if (installStatus) installStatus.textContent = "App installed. The owner can now reopen it like a real product from the home screen or desktop.";
+        setInstallUi("App installed. The owner can now reopen it like a real product from the home screen or desktop.");
       });
 
       if (installButton) {
         installButton.addEventListener("click", async () => {
+          if (installButton.dataset.installMode === "ios-help") {
+            setInstallUi("Install on iPhone: tap Share in Safari, then choose Add to Home Screen. The app icon will appear on the home screen.", {
+              showButton: true,
+              label: "How to Install",
+              mode: "ios-help"
+            });
+            return;
+          }
+
+          if (installButton.dataset.installMode === "browser-help" && !deferredInstallPrompt) {
+            setInstallUi("If the install pop-up did not appear yet, open the browser menu and choose Install App or Add to Home screen.", {
+              showButton: true,
+              label: "Install Help",
+              mode: "browser-help"
+            });
+            return;
+          }
+
           if (!deferredInstallPrompt) return;
           deferredInstallPrompt.prompt();
           await deferredInstallPrompt.userChoice;
           deferredInstallPrompt = null;
-          installButton.hidden = true;
-          if (installStatus) installStatus.textContent = "If the prompt was accepted, the app will now appear like a real installed product.";
+          setInstallUi("If the prompt was accepted, the app will now appear like a real installed product.");
         });
       }
 
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker.register("./sw.js").then(() => {
-            if (installStatus && !deferredInstallPrompt) {
-              installStatus.textContent = "PWA foundation is active. On supported browsers, install appears from the app button or browser menu.";
+            if (!deferredInstallPrompt && !isStandalone && !isIos) {
+              setInstallUi("PWA foundation is active. On supported browsers, install appears from the app button or browser menu.", {
+                showButton: true,
+                label: "Install Help",
+                mode: "browser-help"
+              });
             }
           }).catch(() => {
-            if (installStatus) installStatus.textContent = "PWA setup needs a refresh after deployment.";
+            setInstallUi("PWA setup needs a refresh after deployment.");
           });
         });
       }
