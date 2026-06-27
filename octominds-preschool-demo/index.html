@@ -348,6 +348,21 @@
       display: block;
     }
 
+    .mobile-drawer.is-open {
+      display: flex;
+    }
+
+    @media (min-width: 721px) {
+      .mobile-menu-button,
+      .mobile-drawer,
+      .mobile-drawer-backdrop {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+    }
+
     .mobile-drawer-head {
       display: flex;
       align-items: center;
