@@ -31,6 +31,10 @@
       box-sizing: border-box;
     }
 
+    [hidden] {
+      display: none !important;
+    }
+
     html {
       background: #fff7ef;
       color-scheme: light;
@@ -533,6 +537,10 @@
       flex-wrap: wrap;
       justify-content: flex-end;
       align-self: start;
+    }
+
+    .workspace-menu-button {
+      display: none !important;
     }
 
     .pwa-pill,
@@ -1510,6 +1518,13 @@
 
       .topbar-actions {
         justify-content: flex-start;
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+      }
+
+      .workspace-menu-button {
+        display: inline-flex !important;
       }
 
       .install-status {
@@ -1550,6 +1565,13 @@
       .build-pill {
         padding: 0.38rem 0.58rem;
         font-size: 0.66rem;
+      }
+
+      .topbar-actions .install-button,
+      .topbar-actions .pwa-pill,
+      .topbar-actions .build-pill {
+        width: 100%;
+        justify-content: center;
       }
 
       #workspace-caption {
@@ -1603,7 +1625,7 @@
       }
 
       .demo-hero-copy h1 {
-        font-size: clamp(1.85rem, 10vw, 2.45rem);
+        font-size: clamp(1.62rem, 8.8vw, 2.12rem);
         line-height: 1.02;
         margin-bottom: 0.7rem;
       }
@@ -1619,7 +1641,7 @@
       }
 
       .demo-hero-copy > .lead {
-        max-width: 28ch;
+        max-width: 24ch;
       }
 
       .persona-switcher,
@@ -1697,7 +1719,7 @@
         <div class="mobile-drawer-nav">
           <button class="workspace-link is-active" type="button" data-view-target="overview">
             <strong>Overview</strong>
-            <span>Product vision and why this feels like one software.</span>
+            <span>Opening screen for the owner and central team.</span>
           </button>
           <button class="workspace-link" type="button" data-view-target="owner-control-room">
             <strong>Control Room</strong>
@@ -1713,7 +1735,7 @@
           </button>
           <button class="workspace-link" type="button" data-view-target="parent-app">
             <strong>Parent App</strong>
-            <span>Premium family-facing touchpoints.</span>
+            <span>Updates, receipts, notices, and pickup visibility.</span>
           </button>
           <button class="workspace-link" type="button" data-view-target="fees-control">
             <strong>Fees</strong>
@@ -1743,7 +1765,7 @@
         <div class="workspace-nav" aria-label="ERP modules">
           <button class="workspace-link is-active" type="button" data-view-target="overview">
             <strong>Overview</strong>
-            <span>Product vision and why this feels like one software.</span>
+            <span>Opening screen for the owner and central team.</span>
           </button>
           <button class="workspace-link" type="button" data-view-target="owner-control-room">
             <strong>Control Room</strong>
@@ -1759,7 +1781,7 @@
           </button>
           <button class="workspace-link" type="button" data-view-target="parent-app">
             <strong>Parent App</strong>
-            <span>Premium family-facing touchpoints.</span>
+            <span>Updates, receipts, notices, and pickup visibility.</span>
           </button>
           <button class="workspace-link" type="button" data-view-target="fees-control">
             <strong>Fees</strong>
@@ -1781,7 +1803,7 @@
 
         <div class="workspace-meta">
           <strong>Suggested flow</strong>
-          <p>Control Room → Admissions → Centres → Parent App → Fees → Progress.</p>
+          <p>Control Room -> Admissions -> Centres -> Parent App -> Fees -> Progress.</p>
         </div>
       </aside>
 
@@ -1789,15 +1811,16 @@
         <div class="workspace-topbar">
           <div class="workspace-heading">
             <strong id="workspace-title">Overview</strong>
-            <span id="workspace-subtitle">Live product walkthrough · single-app experience</span>
+            <span id="workspace-subtitle">Central school operations overview</span>
           </div>
           <div class="topbar-actions">
-            <span class="pwa-pill">PWA Ready</span>
-            <span class="build-pill" id="build-pill">Build 2026-06-28O1</span>
+            <button class="install-button workspace-menu-button" id="workspace-menu-button" type="button">Menu</button>
+            <span class="pwa-pill">Mobile App Ready</span>
+            <span class="build-pill" id="build-pill" hidden>Build 2026-06-28O1</span>
             <button class="install-button" id="install-app" type="button" hidden>Install App</button>
           </div>
-          <p class="install-status" id="install-status"><span class="status-accent">Installable on mobile and desktop:</span> admin, centres, staff, and parents can all use role-based PWA apps.</p>
-          <p id="workspace-caption">Move across modules to experience how the product will work day to day across all 7 centres.</p>
+          <p class="install-status" id="install-status"><span class="status-accent">Installable on mobile and desktop:</span> admin, centres, staff, and parents can all use role-based apps.</p>
+          <p id="workspace-caption">Check admissions, centres, fees, parent communication, and child progress across all 7 centres from one place.</p>
           <div class="mobile-top-summary">
             <strong>7-centre school operations in one app</strong>
             <span>Admissions, branch operations, fees, parent updates, and progress tracking delivered as a mobile-friendly ERP experience.</span>
@@ -1824,13 +1847,13 @@
         </div>
 
         <div class="workspace-stage">
-      <section class="hero demo-hero workspace-view is-active" id="overview" data-view-title="Overview" data-view-subtitle="Live product walkthrough · single-app experience" data-view-caption="Move across modules to experience how the product will work day to day across all 7 centres.">
+      <section class="hero demo-hero workspace-view is-active" id="overview" data-view-title="Overview" data-view-subtitle="Central school operations overview" data-view-caption="Check admissions, centres, fees, parent communication, and child progress across all 7 centres from one place.">
         <div class="container demo-hero-grid">
           <div class="demo-hero-copy">
-            <span class="demo-label">Live Product Demo · 7-centre preschool chain</span>
-            <h1>OctoMinds can run on one <span class="accent-text">multi-centre preschool control system</span>, not scattered tools.</h1>
+            <span class="demo-label">OctoMinds ERP · 7-centre operations</span>
+            <h1>One central system for <span class="accent-text">all OctoMinds centres</span>.</h1>
             <p class="lead">
-              This live demo presents a preschool-specific operating system for admissions, parent communication, branch operations, child development tracking, collections, compliance, and centre-wide visibility across all 7 centres.
+              This system brings admissions, parent communication, branch operations, child development tracking, collections, compliance, and centre-wide visibility into one working environment for all 7 centres.
             </p>
 
             <div class="persona-switcher" role="tablist" aria-label="Demo perspectives">
@@ -1934,7 +1957,7 @@
         <div class="container demo-section-card">
           <span class="eyebrow">Preschool ERP module map</span>
           <h2>The 7-module preschool version of the institutional system.</h2>
-          <p class="section-intro">This is the scope behind the screens shown in the live demo.</p>
+          <p class="section-intro">This is the rollout scope behind the screens shown here.</p>
 
           <div class="module-grid">
             <article class="module-card">
@@ -2458,10 +2481,10 @@
         </div>
       </section>
 
-      <section class="section-frame workspace-view" id="parent-app" data-view-title="Parent App" data-view-subtitle="Premium family-facing experience" data-view-caption="The parent app is a brand layer as much as an operational layer. It should quietly reinforce trust, consistency, and visibility.">
+      <section class="section-frame workspace-view" id="parent-app" data-view-title="Parent App" data-view-subtitle="Family communication, receipts, and daily visibility" data-view-caption="The parent app should keep families informed, reassured, and connected to the school without message confusion.">
         <div class="container demo-panel">
           <span class="eyebrow">Screen 4</span>
-          <h2>The parent app should feel calm, premium, and trust-building.</h2>
+          <h2>The parent app should feel calm, clear, and trust-building.</h2>
           <p class="section-intro">This is what parents will feel, not just what the school will manage. It will be delivered as an installable PWA.</p>
 
           <div class="mobile-stack">
@@ -2668,7 +2691,7 @@
       <section class="section-frame workspace-view" id="rollout-plan" data-view-title="Rollout Plan" data-view-subtitle="Launch roadmap for the first release" data-view-caption="This screen keeps the implementation grounded. The school should leave the discussion seeing both the product and the path to rollout.">
         <div class="container demo-panel">
           <span class="eyebrow">What we should build first</span>
-          <h2>Recommended live demo scope for the school discussion.</h2>
+          <h2>Recommended first release scope for the school discussion.</h2>
           <p class="section-intro">Launch the high-impact screens first, then expand.</p>
 
           <div class="report-grid">
@@ -2693,7 +2716,7 @@
             </article>
             <article class="timeline-card">
               <h3>Step 2 · Clickable preview</h3>
-              <p>Build the live preview with centre-wise data and realistic branch names so the school can react to something tangible.</p>
+              <p>Build the preview with centre-wise data and realistic branch names so the school can review real operating flow.</p>
             </article>
             <article class="timeline-card">
               <h3>Step 3 · MVP build</h3>
@@ -2702,7 +2725,7 @@
           </div>
 
           <p class="footer-note">
-            This page is a preschool-specific multi-centre ERP demo tailored for OctoMinds.
+            This page shows the OctoMinds multi-centre ERP experience for everyday school operations.
           </p>
         </div>
       </section>
@@ -2718,7 +2741,7 @@
       const personaText = {
         owner: "The central dashboard should feel like a command centre: centre-wise occupancy, admissions funnel movement, pending collections, open parent issues, and branch performance in one place.",
         manager: "The centre manager view should help one branch run smoothly each day with attendance, staff coverage, pickups, parent follow-ups, and zero confusion about what needs attention next.",
-        parent: "The parent experience should feel premium and calm: attendance, updates, receipts, notices, pickup confidence, and progress visibility without overwhelming families."
+        parent: "The parent experience should feel calm and clear: attendance, updates, receipts, notices, pickup confidence, and progress visibility without overwhelming families."
       };
 
       personaButtons.forEach((button) => {
@@ -2742,6 +2765,7 @@
       const workspaceSubtitle = document.getElementById("workspace-subtitle");
       const workspaceCaption = document.getElementById("workspace-caption");
       const installButton = document.getElementById("install-app");
+      const workspaceMenuButton = document.getElementById("workspace-menu-button");
       const installStatus = document.getElementById("install-status");
       const buildPill = document.getElementById("build-pill");
       const mobileInstallCard = document.getElementById("mobile-install-card");
@@ -2788,6 +2812,7 @@
         mobileDrawerBackdrop.classList.toggle("is-open", open);
         mobileMenuButton.setAttribute("aria-expanded", String(open));
         mobileMenuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        workspaceMenuButton?.setAttribute("aria-expanded", String(open));
       };
 
       const activateView = (targetId, options = {}) => {
@@ -2850,14 +2875,14 @@
       } else if (isIos) {
         setInstallUi("On iPhone or iPad, use Safari Share and then Add to Home Screen to install this app.", {
           showButton: true,
-          label: "How to Install",
+          label: "Install App",
           mode: "ios-help"
         });
         setMobileInstallCard("Install on iPhone", "Tap Share in Safari.", "Then choose Add to Home Screen.");
       } else {
-        setInstallUi("PWA foundation is active. On supported browsers, install appears from the app button or browser menu.", {
+        setInstallUi("Install on phone or desktop for admin, centres, staff, and parents.", {
           showButton: true,
-          label: "Install Help",
+          label: "Install App",
           mode: "browser-help"
         });
         setMobileInstallCard("Install on Android", "Use the Install App button if the browser shows it.", "If not, open the browser menu and choose Install App or Add to Home screen.");
@@ -2885,7 +2910,7 @@
           if (installButton.dataset.installMode === "ios-help") {
             setInstallUi("Install on iPhone: tap Share in Safari, then choose Add to Home Screen. The app icon will appear on the home screen.", {
               showButton: true,
-              label: "How to Install",
+              label: "Install App",
               mode: "ios-help"
             });
             setMobileInstallCard("Install on iPhone", "Tap Share in Safari.", "Then choose Add to Home Screen.");
@@ -2895,7 +2920,7 @@
           if (installButton.dataset.installMode === "browser-help" && !deferredInstallPrompt) {
             setInstallUi("If the install pop-up did not appear yet, open the browser menu and choose Install App or Add to Home screen.", {
               showButton: true,
-              label: "Install Help",
+              label: "Install App",
               mode: "browser-help"
             });
             setMobileInstallCard("Install from browser menu", "Open the browser menu on the phone.", "Choose Install App or Add to Home screen.");
@@ -2916,9 +2941,9 @@
           navigator.serviceWorker.register(`./sw.js?build=${buildVersion}`).then((registration) => {
             registration.update().catch(() => {});
             if (!deferredInstallPrompt && !isStandalone && !isIos) {
-              setInstallUi("PWA foundation is active. On supported browsers, install appears from the app button or browser menu.", {
+              setInstallUi("Install on phone or desktop for admin, centres, staff, and parents.", {
                 showButton: true,
-                label: "Install Help",
+                label: "Install App",
                 mode: "browser-help"
               });
               setMobileInstallCard("Install on Android", "Use the Install App button if it appears.", "If not, open the browser menu and choose Install App or Add to Home screen.");
@@ -2932,6 +2957,11 @@
 
       mobileMenuButton?.addEventListener("click", () => {
         const isOpen = mobileMenuButton.getAttribute("aria-expanded") === "true";
+        setMobileDrawer(!isOpen);
+      });
+
+      workspaceMenuButton?.addEventListener("click", () => {
+        const isOpen = mobileMenuButton?.getAttribute("aria-expanded") === "true";
         setMobileDrawer(!isOpen);
       });
 
