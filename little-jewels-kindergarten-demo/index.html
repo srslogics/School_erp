@@ -1,0 +1,3134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Little Jewels Kindergarten ERP Demo</title>
+  <meta name="description" content="Little Jewels Kindergarten ERP demo for admissions, parent communication, child progress, events, and day-to-day school operations.">
+  <meta name="theme-color" content="#fcf4e8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Little Jewels ERP">
+  <link rel="icon" type="image/svg+xml" href="./icon-192.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="./icon-192.png">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <style>
+    :root {
+      --bg: #fcf4e8;
+      --bg-soft: #fff9f1;
+      --surface: rgba(255, 252, 247, 0.92);
+      --surface-strong: rgba(255, 247, 237, 0.97);
+      --surface-tint: rgba(123, 45, 75, 0.07);
+      --border: rgba(164, 124, 86, 0.2);
+      --shadow: 0 24px 60px rgba(119, 79, 49, 0.14);
+      --text: #34212d;
+      --text-soft: #6a5b60;
+      --maroon: #732645;
+      --maroon-deep: #4d2233;
+      --gold: #d9a64d;
+      --gold-soft: #f0d7a5;
+      --mint: #d8efe4;
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --content-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+      color-scheme: light;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 14%, rgba(217, 166, 77, 0.22), transparent 18%),
+        radial-gradient(circle at 87% 13%, rgba(115, 38, 69, 0.14), transparent 16%),
+        radial-gradient(circle at 76% 78%, rgba(217, 166, 77, 0.12), transparent 18%),
+        linear-gradient(180deg, #fffaf3 0%, #fcf4e8 48%, #fffcf7 100%);
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      background:
+        linear-gradient(rgba(115, 38, 69, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(217, 166, 77, 0.03) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(circle at center, black 36%, transparent 85%);
+    }
+
+    body::after {
+      background:
+        radial-gradient(circle at 0% 100%, rgba(115, 38, 69, 0.06), transparent 24%),
+        radial-gradient(circle at 100% 0%, rgba(217, 166, 77, 0.1), transparent 22%);
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(calc(100% - 1.4rem), var(--content-width));
+      margin: 0 auto;
+      padding: 1rem 0 2rem;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.1rem;
+      border-radius: 28px;
+      background: rgba(255, 251, 245, 0.9);
+      border: 1px solid rgba(115, 38, 69, 0.08);
+      box-shadow: 0 16px 36px rgba(144, 108, 76, 0.12);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      min-width: 0;
+    }
+
+    .brand-badge {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 1.05rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--maroon), var(--gold));
+      color: #fff9f2;
+      font-weight: 700;
+      box-shadow: 0 12px 24px rgba(115, 38, 69, 0.24);
+    }
+
+    .brand-copy {
+      min-width: 0;
+    }
+
+    .brand-copy strong {
+      display: block;
+      color: var(--maroon-deep);
+      font-size: 1rem;
+      line-height: 1.1;
+    }
+
+    .brand-copy span {
+      display: block;
+      color: #8a7162;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 0.15rem;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill,
+    .install-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .pill {
+      padding: 0.48rem 0.74rem;
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid var(--border);
+      color: var(--maroon);
+      font-size: 0.74rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .install-button {
+      padding: 0.72rem 1rem;
+      border: 1px solid rgba(115, 38, 69, 0.14);
+      background: linear-gradient(135deg, var(--maroon), #9b5b3b);
+      color: #fff9f2;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .install-button[hidden] {
+      display: none;
+    }
+
+    .mobile-menu-button {
+      display: none;
+      width: 3.4rem;
+      height: 3.4rem;
+      border-radius: 1.3rem;
+      border: 0;
+      background: linear-gradient(135deg, var(--maroon-deep), #8c563c);
+      box-shadow: 0 14px 30px rgba(115, 38, 69, 0.24);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .mobile-menu-button span {
+      display: block;
+      width: 0.38rem;
+      height: 0.38rem;
+      margin: 0.14rem 0;
+      border-radius: 999px;
+      background: #fff9f2;
+    }
+
+    .mobile-drawer-backdrop,
+    .mobile-drawer {
+      display: none;
+    }
+
+    .mobile-drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(27, 19, 25, 0.42);
+      backdrop-filter: blur(6px);
+      z-index: 30;
+    }
+
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(86vw, 22rem);
+      height: 100dvh;
+      padding: 1rem;
+      background: linear-gradient(180deg, rgba(255, 252, 247, 0.99), rgba(255, 246, 236, 0.99));
+      border-left: 1px solid rgba(115, 38, 69, 0.1);
+      box-shadow: -24px 0 50px rgba(67, 43, 28, 0.18);
+      z-index: 31;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .mobile-drawer.is-open,
+    .mobile-drawer-backdrop.is-open {
+      display: block;
+    }
+
+    .mobile-drawer.is-open {
+      display: flex;
+    }
+
+    .mobile-drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .mobile-drawer-head strong {
+      color: var(--maroon-deep);
+      font-size: 1rem;
+    }
+
+    .mobile-drawer-close {
+      width: 2.7rem;
+      height: 2.7rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--maroon);
+      font: inherit;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .mobile-drawer-nav {
+      display: grid;
+      gap: 0.65rem;
+      min-height: 0;
+      overflow-y: auto;
+      padding-right: 0.15rem;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      overscroll-behavior: contain;
+    }
+
+    .app-layout {
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+      align-items: start;
+    }
+
+    .sidebar,
+    .workspace {
+      background: linear-gradient(180deg, rgba(255, 252, 247, 0.94), rgba(255, 246, 236, 0.92));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 1rem;
+      padding: 1rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .sidebar-brand,
+    .sidebar-note,
+    .note-card,
+    .hero-panel,
+    .hero-main,
+    .section-card,
+    .metric-card,
+    .feed-item,
+    .experience-card,
+    .timeline-card,
+    .install-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .sidebar-brand {
+      padding: 1rem;
+      background: linear-gradient(135deg, rgba(115, 38, 69, 0.08), rgba(217, 166, 77, 0.18));
+      border-color: rgba(115, 38, 69, 0.12);
+    }
+
+    .sidebar-brand strong,
+    .sidebar-note strong,
+    .nav-link strong,
+    .workspace-title strong,
+    .metric-card strong,
+    .feed-item strong,
+    .experience-card strong,
+    .timeline-card strong {
+      display: block;
+      color: var(--maroon-deep);
+    }
+
+    .sidebar-brand strong {
+      margin-bottom: 0.24rem;
+    }
+
+    .sidebar-brand span,
+    .sidebar-note p,
+    .nav-link span,
+    .note-card p,
+    .hero-main p,
+    .hero-panel p,
+    .section-card p,
+    .metric-card p,
+    .feed-item p,
+    .experience-card p,
+    .timeline-card p,
+    .install-card p {
+      margin: 0;
+      color: var(--text-soft);
+    }
+
+    .sidebar-nav {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .nav-link {
+      width: 100%;
+      text-align: left;
+      padding: 0.92rem 1rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.62);
+      color: #735d68;
+      cursor: pointer;
+      font: inherit;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+
+    .nav-link strong {
+      font-size: 0.95rem;
+      margin-bottom: 0.18rem;
+    }
+
+    .nav-link span {
+      display: block;
+      font-size: 0.82rem;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible,
+    .nav-link.is-active {
+      background: linear-gradient(135deg, rgba(115, 38, 69, 0.12), rgba(217, 166, 77, 0.22));
+      border-color: rgba(115, 38, 69, 0.18);
+      color: var(--maroon-deep);
+      transform: translateY(-1px);
+    }
+
+    .sidebar-note {
+      padding: 0.95rem 1rem;
+    }
+
+    .sidebar-note strong {
+      margin-bottom: 0.3rem;
+      font-size: 0.92rem;
+    }
+
+    .workspace {
+      overflow: hidden;
+      min-height: 74vh;
+    }
+
+    .workspace-topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1rem;
+      align-items: start;
+      padding: 1rem 1.1rem;
+      background: rgba(255, 249, 241, 0.94);
+      border-bottom: 1px solid rgba(208, 177, 141, 0.32);
+    }
+
+    .workspace-title span,
+    .install-status {
+      color: var(--text-soft);
+      font-size: 0.84rem;
+    }
+
+    .workspace-actions {
+      display: none;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+
+    .install-status {
+      grid-column: 1 / -1;
+    }
+
+    .workspace-stage {
+      padding: 1rem;
+    }
+
+    .workspace-view {
+      display: none;
+      animation: fadeSlide 220ms ease;
+    }
+
+    .workspace-view.is-active {
+      display: block;
+    }
+
+    @keyframes fadeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.44rem 0.82rem;
+      border-radius: 999px;
+      background: rgba(115, 38, 69, 0.08);
+      border: 1px solid rgba(115, 38, 69, 0.12);
+      color: var(--maroon);
+      font-size: 0.74rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2 {
+      margin: 0.55rem 0 0.75rem;
+      font-family: "Iowan Old Style", Georgia, serif;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--maroon-deep);
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 4vw, 4.1rem);
+      line-height: 0.98;
+      max-width: 10ch;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 2.1vw, 2.2rem);
+      line-height: 1.04;
+    }
+
+    .hero-grid,
+    .two-col,
+    .metric-grid,
+    .experience-grid,
+    .timeline-grid {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .hero-grid {
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+    }
+
+    .hero-main,
+    .hero-panel,
+    .section-card,
+    .note-card,
+    .install-card {
+      padding: 1.2rem;
+    }
+
+    .note-card,
+    .install-card {
+      margin-bottom: 0.85rem;
+    }
+
+    .note-card strong,
+    .install-card strong {
+      display: block;
+      margin-bottom: 0.28rem;
+      color: var(--maroon-deep);
+    }
+
+    .section-card > p,
+    .hero-main > p {
+      max-width: 44rem;
+    }
+
+    .hero-main {
+      background:
+        radial-gradient(circle at top right, rgba(217, 166, 77, 0.16), transparent 26%),
+        linear-gradient(180deg, rgba(255, 251, 246, 0.96), rgba(255, 245, 236, 0.94));
+    }
+
+    .hero-main p {
+      max-width: 34rem;
+      font-size: 1rem;
+    }
+
+    .metric-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 1rem;
+    }
+
+    .metric-card,
+    .feed-item,
+    .experience-card,
+    .timeline-card {
+      padding: 1rem;
+    }
+
+    .metric-card span,
+    .timeline-card span {
+      display: block;
+      color: #9b7a56;
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .metric-card strong {
+      margin-top: 0.3rem;
+      font-size: 1.24rem;
+    }
+
+    .feed-list,
+    .mini-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.72rem;
+    }
+
+    .feed-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.36rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      border: 1px solid rgba(208, 177, 141, 0.4);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--maroon);
+    }
+
+    .status-pill.good {
+      background: rgba(244, 228, 183, 0.88);
+      color: #6d551d;
+      border-color: rgba(217, 166, 77, 0.34);
+    }
+
+    .status-pill.warn {
+      background: rgba(250, 233, 193, 0.84);
+      color: #7c5d26;
+      border-color: rgba(217, 166, 77, 0.34);
+    }
+
+    .status-pill.alert {
+      background: rgba(115, 38, 69, 0.12);
+      color: var(--maroon);
+      border-color: rgba(115, 38, 69, 0.18);
+    }
+
+    .two-col {
+      grid-template-columns: minmax(0, 1.05fr) minmax(290px, 0.95fr);
+      margin-top: 1rem;
+    }
+
+    .experience-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 1rem;
+    }
+
+    .timeline-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 1rem;
+    }
+
+    .ops-grid,
+    .board-grid,
+    .split-panel,
+    .phone-grid,
+    .child-grid,
+    .finance-grid {
+      display: grid;
+      gap: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .ops-grid,
+    .board-grid,
+    .phone-grid,
+    .child-grid,
+    .finance-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .split-panel {
+      grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+    }
+
+    .ui-card,
+    .queue-card,
+    .mini-table,
+    .phone-card,
+    .child-card,
+    .finance-card,
+    .calendar-card {
+      padding: 1rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .ui-card h3,
+    .queue-card h3,
+    .mini-table h3,
+    .phone-card h3,
+    .child-card h3,
+    .finance-card h3,
+    .calendar-card h3 {
+      margin: 0 0 0.8rem;
+      color: var(--maroon-deep);
+      font-size: 1rem;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-group {
+      display: flex;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.44rem 0.68rem;
+      border-radius: 999px;
+      border: 1px solid rgba(115, 38, 69, 0.12);
+      background: rgba(255, 252, 247, 0.9);
+      color: var(--maroon);
+      font-size: 0.74rem;
+      white-space: nowrap;
+    }
+
+    .chip.active {
+      background: linear-gradient(135deg, rgba(115, 38, 69, 0.12), rgba(217, 166, 77, 0.2));
+      border-color: rgba(115, 38, 69, 0.18);
+    }
+
+    .action-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.58rem 0.82rem;
+      border-radius: 999px;
+      border: 1px solid rgba(115, 38, 69, 0.12);
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--maroon);
+      font: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .action-button.is-done {
+      background: linear-gradient(135deg, rgba(115, 38, 69, 0.12), rgba(217, 166, 77, 0.2));
+      border-color: rgba(115, 38, 69, 0.18);
+    }
+
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .kpi-tile {
+      padding: 0.9rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .kpi-tile span,
+    .row-label,
+    .amount-label,
+    .bar-label,
+    .stage-label,
+    .day-label {
+      display: block;
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9b7a56;
+    }
+
+    .kpi-tile strong,
+    .phone-stat strong,
+    .amount-value,
+    .child-score strong {
+      display: block;
+      margin-top: 0.22rem;
+      color: var(--maroon-deep);
+      font-size: 1.18rem;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .summary-tile {
+      padding: 0.95rem;
+      border-radius: 22px;
+      border: 1px solid rgba(115, 38, 69, 0.1);
+      background:
+        radial-gradient(circle at top right, rgba(217, 166, 77, 0.16), transparent 38%),
+        linear-gradient(180deg, rgba(255, 252, 247, 0.92), rgba(255, 246, 236, 0.88));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    }
+
+    .summary-tile span {
+      display: block;
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9b7a56;
+    }
+
+    .summary-tile strong {
+      display: block;
+      margin-top: 0.26rem;
+      color: var(--maroon-deep);
+      font-size: 1.36rem;
+      line-height: 1;
+    }
+
+    .summary-tile p {
+      margin: 0.3rem 0 0;
+      font-size: 0.86rem;
+      color: var(--text-soft);
+    }
+
+    .data-rows,
+    .queue-list,
+    .message-list,
+    .timeline-list,
+    .finance-list,
+    .parent-task-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .data-row,
+    .queue-item,
+    .message-item,
+    .finance-item,
+    .parent-task {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.8rem;
+      padding: 0.8rem 0.85rem;
+      border-radius: 18px;
+      border: 1px solid rgba(208, 177, 141, 0.28);
+      background: rgba(255, 250, 245, 0.78);
+    }
+
+    .data-row p,
+    .queue-item p,
+    .message-item p,
+    .finance-item p,
+    .parent-task p {
+      margin: 0.2rem 0 0;
+      color: var(--text-soft);
+      font-size: 0.9rem;
+    }
+
+    .data-row strong,
+    .queue-item strong,
+    .message-item strong,
+    .finance-item strong,
+    .parent-task strong {
+      display: block;
+      color: var(--maroon-deep);
+    }
+
+    .status-dot {
+      width: 0.7rem;
+      height: 0.7rem;
+      margin-top: 0.18rem;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--maroon), var(--gold));
+      box-shadow: 0 0 0 5px rgba(115, 38, 69, 0.08);
+    }
+
+    .mini-table table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    .mini-table {
+      overflow-x: auto;
+    }
+
+    .mini-table th,
+    .mini-table td {
+      text-align: left;
+      padding: 0.78rem 0.4rem;
+      border-bottom: 1px solid rgba(208, 177, 141, 0.24);
+    }
+
+    .mini-table th {
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9b7a56;
+      font-weight: 600;
+    }
+
+    .mini-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .phone-card {
+      background: linear-gradient(180deg, rgba(255, 251, 246, 0.98), rgba(255, 244, 236, 0.95));
+    }
+
+    .phone-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .avatar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .avatar {
+      width: 2.3rem;
+      height: 2.3rem;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--maroon), var(--gold));
+      color: #fff9f2;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .phone-screen {
+      border-radius: 22px;
+      border: 1px solid rgba(208, 177, 141, 0.28);
+      background: rgba(255, 255, 255, 0.84);
+      padding: 0.9rem;
+    }
+
+    .phone-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .phone-stat {
+      padding: 0.8rem;
+      border-radius: 18px;
+      background: rgba(255, 248, 241, 0.94);
+      border: 1px solid rgba(208, 177, 141, 0.28);
+    }
+
+    .story-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+    }
+
+    .story-tile {
+      min-height: 5.5rem;
+      padding: 0.7rem;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(115, 38, 69, 0.14), rgba(217, 166, 77, 0.2));
+      color: var(--maroon-deep);
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    .progress-bars {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 0.7rem;
+    }
+
+    .bar-track {
+      height: 0.7rem;
+      border-radius: 999px;
+      background: rgba(217, 166, 77, 0.18);
+      overflow: hidden;
+      margin-top: 0.36rem;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(135deg, var(--maroon), var(--gold));
+    }
+
+    .child-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .child-score {
+      padding: 0.85rem 1rem;
+      border-radius: 18px;
+      background: rgba(255, 249, 241, 0.92);
+      border: 1px solid rgba(208, 177, 141, 0.3);
+      min-width: 10rem;
+    }
+
+    .observation-card {
+      padding: 0.9rem;
+      border-radius: 18px;
+      background: rgba(255, 251, 246, 0.86);
+      border: 1px solid rgba(208, 177, 141, 0.26);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.8rem;
+    }
+
+    .day-card {
+      min-height: 7rem;
+      padding: 0.8rem;
+      border-radius: 20px;
+      border: 1px solid rgba(208, 177, 141, 0.24);
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .day-card strong {
+      display: block;
+      margin: 0.3rem 0 0.35rem;
+      color: var(--maroon-deep);
+    }
+
+    .day-card p {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 0.9rem;
+    }
+
+    .amount-line {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.8rem;
+      padding: 0.72rem 0;
+      border-bottom: 1px solid rgba(208, 177, 141, 0.22);
+    }
+
+    .amount-line:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .finance-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      padding: 1rem;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(115, 38, 69, 0.12), rgba(217, 166, 77, 0.2));
+      border: 1px solid rgba(115, 38, 69, 0.12);
+      margin-bottom: 1rem;
+    }
+
+    .demo-toast {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 60;
+      max-width: min(24rem, calc(100vw - 2rem));
+      padding: 0.85rem 1rem;
+      border-radius: 18px;
+      border: 1px solid rgba(115, 38, 69, 0.14);
+      background: rgba(77, 34, 51, 0.94);
+      color: #fff9f2;
+      box-shadow: 0 18px 38px rgba(67, 43, 28, 0.24);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease;
+      font-size: 0.9rem;
+    }
+
+    .demo-toast.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mini-list li {
+      position: relative;
+      padding-left: 1rem;
+      color: var(--text-soft);
+    }
+
+    .mini-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55rem;
+      width: 0.42rem;
+      height: 0.42rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--maroon), var(--gold));
+    }
+
+    @media (max-width: 1020px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .hero-grid,
+      .two-col,
+      .timeline-grid,
+      .split-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-grid,
+      .experience-grid,
+      .ops-grid,
+      .board-grid,
+      .phone-grid,
+      .child-grid,
+      .finance-grid,
+      .calendar-grid,
+      .summary-grid,
+      .kpi-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        width: min(calc(100% - 1rem), var(--content-width));
+        padding-top: 0.8rem;
+      }
+
+      .site-header {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 0.82rem 0.9rem;
+        padding-right: 0.9rem;
+      }
+
+      .header-actions {
+        display: none;
+      }
+
+      .brand {
+        flex: 1;
+        min-width: 0;
+        max-width: calc(100% - 4rem);
+        width: auto;
+      }
+
+      .brand-copy {
+        max-width: 100%;
+      }
+
+      .brand-copy strong {
+        font-size: 0.84rem;
+        line-height: 1.15;
+      }
+
+      .brand-copy span {
+        font-size: 0.58rem;
+        letter-spacing: 0.06em;
+        line-height: 1.2;
+        white-space: normal;
+      }
+
+      .mobile-menu-button {
+        display: inline-flex;
+        flex-shrink: 0;
+        position: static;
+        width: 3.05rem;
+        height: 3.05rem;
+        margin-left: 0.65rem;
+        z-index: 41;
+      }
+
+      .app-layout {
+        margin-top: 0.8rem;
+      }
+
+      .workspace-topbar {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+        padding: 0.88rem 0.92rem;
+      }
+
+      .workspace-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+      }
+
+      .workspace-actions #mobile-build-pill {
+        display: none;
+      }
+
+      .workspace-actions .pill {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .workspace-actions .install-button {
+        grid-column: 1 / -1;
+        width: 100%;
+      }
+
+      .workspace-stage {
+        padding: 0.65rem;
+      }
+
+      .hero-main,
+      .hero-panel,
+      .section-card,
+      .note-card,
+      .install-card {
+        padding: 1rem;
+        border-radius: 22px;
+      }
+
+      .hero-panel,
+      .install-card {
+        display: none;
+      }
+
+      .metric-grid,
+      .experience-grid,
+      .ops-grid,
+      .board-grid,
+      .phone-grid,
+      .child-grid,
+      .finance-grid,
+      .calendar-grid,
+      .summary-grid,
+      .story-strip,
+      .phone-stat-grid,
+      .kpi-strip {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: clamp(1.95rem, 10vw, 2.7rem);
+        line-height: 1.02;
+      }
+
+      h2 {
+        font-size: clamp(1.35rem, 7vw, 1.92rem);
+      }
+
+      .hero-main > p {
+        max-width: 27ch;
+      }
+
+      .metric-card strong {
+        font-size: 1.12rem;
+      }
+
+      .feed-item {
+        flex-direction: column;
+      }
+
+      .workspace-title span,
+      .install-status {
+        font-size: 0.8rem;
+      }
+
+      .install-status {
+        display: none;
+      }
+
+      .section-card > p,
+      .hero-main > p,
+      .note-card p,
+      .hero-panel p,
+      .queue-item p,
+      .data-row p,
+      .parent-task p,
+      .message-item p,
+      .finance-item p,
+      .day-card p {
+        font-size: 0.86rem;
+      }
+
+      .queue-item,
+      .data-row,
+      .message-item,
+      .finance-item,
+      .parent-task {
+        padding: 0.74rem 0.78rem;
+      }
+
+      .summary-tile {
+        padding: 0.85rem 0.88rem;
+      }
+
+      .summary-tile strong {
+        font-size: 1.2rem;
+      }
+
+      .mini-table table {
+        min-width: 28rem;
+      }
+
+      .mini-table,
+      .calendar-card,
+      .queue-card,
+      .ui-card,
+      .phone-card,
+      .child-card,
+      .finance-card {
+        border-radius: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="brand">
+        <span class="brand-badge">LJ</span>
+        <div class="brand-copy">
+          <strong>Little Jewels ERP</strong>
+          <span>Jain International School, Nagpur</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <span class="pill">PWA Ready</span>
+        <span class="pill" id="build-pill">Build 2026-06-28LJ3</span>
+        <button class="install-button" id="install-app" type="button" hidden>Install App</button>
+      </div>
+
+      <button class="mobile-menu-button" id="mobile-menu-button" type="button" aria-expanded="false" aria-controls="mobile-drawer" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
+    <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile navigation">
+      <div class="mobile-drawer-head">
+        <strong>Little Jewels ERP</strong>
+        <button class="mobile-drawer-close" id="mobile-drawer-close" type="button" aria-label="Close menu">×</button>
+      </div>
+      <div class="mobile-drawer-nav">
+        <button class="nav-link is-active" type="button" data-view-target="overview"><strong>Overview</strong><span>Opening view for the owner and front office.</span></button>
+        <button class="nav-link" type="button" data-view-target="dashboard"><strong>Central Dashboard</strong><span>Daily school-wide visibility and front-office priorities.</span></button>
+        <button class="nav-link" type="button" data-view-target="admissions"><strong>Admissions</strong><span>Program-wise enquiries, visits, and conversion.</span></button>
+        <button class="nav-link" type="button" data-view-target="parent-app"><strong>Parent App</strong><span>Updates, photos, receipts, leave, and notices.</span></button>
+        <button class="nav-link" type="button" data-view-target="progress"><strong>Child Progress</strong><span>Holistic growth, journals, and readiness visibility.</span></button>
+        <button class="nav-link" type="button" data-view-target="care-log"><strong>Daily Care Logs</strong><span>Meals, nap, health, medicine, and safe pickup.</span></button>
+        <button class="nav-link" type="button" data-view-target="events"><strong>Events & Activities</strong><span>Celebrations, workshops, sports, and gallery flow.</span></button>
+        <button class="nav-link" type="button" data-view-target="operations"><strong>Owner Control</strong><span>Class strength, staff balance, safety logs, and planning.</span></button>
+        <button class="nav-link" type="button" data-view-target="fees"><strong>Fees & Receipts</strong><span>Parent-friendly finance visibility.</span></button>
+      </div>
+    </aside>
+
+    <main class="app-layout">
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <strong>Little Jewels Central Console</strong>
+          <span>Warm school operations, calmer parent communication, stronger child progress visibility, and smoother daily routines.</span>
+        </div>
+
+        <div class="sidebar-nav">
+          <button class="nav-link is-active" type="button" data-view-target="overview"><strong>Overview</strong><span>Opening view for the owner and front office.</span></button>
+          <button class="nav-link" type="button" data-view-target="dashboard"><strong>Central Dashboard</strong><span>Daily school-wide visibility and front-office priorities.</span></button>
+          <button class="nav-link" type="button" data-view-target="admissions"><strong>Admissions</strong><span>Program-wise enquiries, visits, and conversion.</span></button>
+          <button class="nav-link" type="button" data-view-target="parent-app"><strong>Parent App</strong><span>Updates, photos, receipts, leave, and notices.</span></button>
+          <button class="nav-link" type="button" data-view-target="progress"><strong>Child Progress</strong><span>Holistic growth, journals, and readiness visibility.</span></button>
+          <button class="nav-link" type="button" data-view-target="care-log"><strong>Daily Care Logs</strong><span>Meals, nap, health, medicine, and safe pickup.</span></button>
+          <button class="nav-link" type="button" data-view-target="events"><strong>Events & Activities</strong><span>Celebrations, workshops, sports, and gallery flow.</span></button>
+          <button class="nav-link" type="button" data-view-target="operations"><strong>Owner Control</strong><span>Class strength, staff balance, safety logs, and planning.</span></button>
+          <button class="nav-link" type="button" data-view-target="fees"><strong>Fees & Receipts</strong><span>Parent-friendly finance visibility.</span></button>
+        </div>
+
+        <div class="sidebar-note">
+          <strong>Why This Works</strong>
+          <p>This demo mirrors how Little Jewels can actually run: caring parent communication, visible admissions, simple fee tracking, child progress, and calmer daily routines.</p>
+        </div>
+      </aside>
+
+      <section class="workspace">
+        <div class="workspace-topbar">
+          <div class="workspace-title">
+            <strong id="workspace-title">Overview</strong>
+            <span id="workspace-subtitle">Little Jewels ERP live view</span>
+          </div>
+          <div class="workspace-actions">
+            <span class="pill">PWA Ready</span>
+            <span class="pill" id="mobile-build-pill">Build 2026-06-28LJ3</span>
+            <button class="install-button" id="mobile-install-app" type="button" hidden>Install App</button>
+          </div>
+          <p class="install-status" id="install-status">Install on phone or desktop for staff and parents.</p>
+        </div>
+
+        <div class="workspace-stage">
+          <section class="workspace-view is-active" id="overview" data-view-title="Overview" data-view-subtitle="Little Jewels ERP live view">
+            <div class="note-card">
+              <strong>Designed for Little Jewels</strong>
+              <p>This demo is shaped around how Little Jewels actually runs every day: warm parent communication, careful child records, smooth admissions, and clear front-office control.</p>
+            </div>
+
+            <div class="hero-grid">
+              <div class="hero-main">
+                <span class="eyebrow">Little Jewels Live Demo</span>
+                <h1>A kinder, calmer ERP for Little Jewels Kindergarten.</h1>
+                <p>This platform brings admissions, daily updates, fees, child progress, events, and parent trust into one calm school system.</p>
+
+                <div class="kpi-strip">
+                  <article class="kpi-tile">
+                    <span>Today attendance</span>
+                    <strong>94%</strong>
+                  </article>
+                  <article class="kpi-tile">
+                    <span>New enquiries</span>
+                    <strong>12</strong>
+                  </article>
+                  <article class="kpi-tile">
+                    <span>Parent reads</span>
+                    <strong>41</strong>
+                  </article>
+                  <article class="kpi-tile">
+                    <span>Core modules</span>
+                    <strong>8 active</strong>
+                  </article>
+                </div>
+              </div>
+
+              <aside class="hero-panel">
+                <ul class="feed-list">
+                  <li class="feed-item">
+                    <div>
+                      <strong>Admission calls ready</strong>
+                      <p>12 new Pre-Nursery and Nursery enquiries need follow-up before tomorrow.</p>
+                    </div>
+                    <span class="status-pill warn">Queue</span>
+                  </li>
+                  <li class="feed-item">
+                    <div>
+                      <strong>Parent app update live</strong>
+                      <p>Tulip Room photos, snack note, and activity summary were opened by 41 families.</p>
+                    </div>
+                    <span class="status-pill good">Live</span>
+                  </li>
+                  <li class="feed-item">
+                    <div>
+                      <strong>Workshop album approved</strong>
+                      <p>Craft and sensory workshop images are ready for parent release.</p>
+                    </div>
+                    <span class="status-pill">Media</span>
+                  </li>
+                </ul>
+              </aside>
+            </div>
+
+            <div class="split-panel">
+              <section class="mini-table">
+                <div class="toolbar">
+                  <h3>Live class snapshot</h3>
+                  <div class="toolbar-group">
+                    <span class="chip active">Today</span>
+                    <span class="chip">This week</span>
+                  </div>
+                </div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Class</th>
+                      <th>Present</th>
+                      <th>Updates sent</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Tulip Room</td>
+                      <td>24 / 25</td>
+                      <td>18</td>
+                      <td><span class="status-pill good">Smooth</span></td>
+                    </tr>
+                    <tr>
+                      <td>Daffodil</td>
+                      <td>19 / 21</td>
+                      <td>16</td>
+                      <td><span class="status-pill">Running</span></td>
+                    </tr>
+                    <tr>
+                      <td>Sunflower</td>
+                      <td>17 / 19</td>
+                      <td>13</td>
+                      <td><span class="status-pill warn">2 late</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+
+              <section class="queue-card">
+                <div class="toolbar">
+                  <h3>Owner-ready view</h3>
+                  <button class="action-button" type="button">Export Summary</button>
+                </div>
+                <ul class="queue-list">
+                  <li class="queue-item">
+                    <div>
+                      <strong>Admissions moving</strong>
+                      <p>4 parent visits confirmed for Saturday counselling slots.</p>
+                    </div>
+                    <span class="status-pill good">4 visits</span>
+                  </li>
+                  <li class="queue-item">
+                    <div>
+                      <strong>Parent confidence high</strong>
+                      <p>Most recent class update open rate is higher than last week.</p>
+                    </div>
+                    <span class="status-pill">92%</span>
+                  </li>
+                  <li class="queue-item">
+                    <div>
+                      <strong>Fee follow-up controlled</strong>
+                      <p>Only 7 families need reminders and all receipts are synced.</p>
+                    </div>
+                    <span class="status-pill warn">7 due</span>
+                  </li>
+                  <li class="queue-item">
+                    <div>
+                      <strong>Teacher ratio monitor active</strong>
+                      <p>Live staffing ratios and pickup safety checks are green for all classrooms.</p>
+                    </div>
+                    <span class="status-pill good">Compliant</span>
+                  </li>
+                </ul>
+              </section>
+            </div>
+          </section>
+
+          <section class="workspace-view" id="dashboard" data-view-title="Central Dashboard" data-view-subtitle="Daily school-wide visibility">
+            <div class="section-card">
+              <span class="eyebrow">Screen 1</span>
+              <h2>Central dashboard for school leadership and admin.</h2>
+              <p>This is the clean daily operating view: enquiries, fee follow-ups, parent concerns, event readiness, and child-safety notes surfaced without heavy reporting clutter.</p>
+
+              <div class="metric-grid">
+                <article class="metric-card">
+                  <span>Open enquiries</span>
+                  <strong>46</strong>
+                  <p>Program-wise admissions funnel across all active classes.</p>
+                </article>
+                <article class="metric-card">
+                  <span>Receipts issued today</span>
+                  <strong>28</strong>
+                  <p>Fast parent confirmations with instant finance visibility.</p>
+                </article>
+                <article class="metric-card">
+                  <span>Open parent concerns</span>
+                  <strong>5</strong>
+                  <p>Pickup notes, leave approvals, and classroom follow-ups.</p>
+                </article>
+              </div>
+
+              <div class="ops-grid">
+                <section class="queue-card">
+                  <div class="toolbar">
+                    <h3>Priority queue</h3>
+                    <div class="toolbar-group">
+                    <button class="chip active" id="dashboard-priority-urgent" type="button">Urgent</button>
+                    <button class="chip" id="dashboard-priority-today" type="button">Today</button>
+                    </div>
+                  </div>
+                  <ul class="queue-list" id="dashboard-priority-list">
+                    <li class="queue-item"><div><strong>Pickup note pending</strong><p>2 children have alternate guardian requests awaiting acknowledgement.</p></div><span class="status-pill warn">Action</span></li>
+                    <li class="queue-item"><div><strong>Fee reminder due</strong><p>7 families need a gentle payment reminder with receipt history.</p></div><span class="status-pill alert">Due</span></li>
+                    <li class="queue-item"><div><strong>Event message ready</strong><p>Tomorrow's workshop reminder can be sent with one tap to all relevant parents.</p></div><span class="status-pill good">Ready</span></li>
+                  </ul>
+                </section>
+
+                <section class="mini-table">
+                  <div class="toolbar">
+                    <h3>Centre operations</h3>
+                    <button class="action-button" type="button">View all</button>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Area</th>
+                        <th>Owner</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admissions-pipeline-body">
+                      <tr>
+                        <td>Admissions desk</td>
+                        <td>Ritu</td>
+                        <td><span class="status-pill good">On track</span></td>
+                      </tr>
+                      <tr>
+                        <td>Transport notes</td>
+                        <td>Front office</td>
+                        <td><span class="status-pill">Watching</span></td>
+                      </tr>
+                      <tr>
+                        <td>Fee recovery</td>
+                        <td>Finance</td>
+                        <td><span class="status-pill warn">Follow-up</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
+
+              <div class="board-grid">
+                <section class="ui-card">
+                  <h3>Morning summary</h3>
+                  <ul class="data-rows">
+                    <li class="data-row">
+                      <div>
+                        <span class="row-label">Safety</span>
+                        <strong>No unresolved gate or pickup exceptions</strong>
+                        <p>Only 2 alternate guardians awaiting final confirmation.</p>
+                      </div>
+                      <span class="status-dot"></span>
+                    </li>
+                    <li class="data-row">
+                      <div>
+                        <span class="row-label">Communication</span>
+                        <strong>18 class updates queued</strong>
+                        <p>Snacks, activity highlights, and tomorrow's event notice.</p>
+                      </div>
+                      <span class="status-dot"></span>
+                    </li>
+                  </ul>
+                </section>
+
+                <section class="ui-card">
+                  <h3>Why this feels real</h3>
+                  <ul class="mini-list">
+                    <li>Leadership gets one clean morning summary</li>
+                    <li>Parent trust issues surface before they escalate</li>
+                    <li>Admin no longer chases updates across calls and WhatsApp</li>
+                    <li>Admissions and finance stay visible in the same place</li>
+                  </ul>
+                </section>
+              </div>
+            </div>
+          </section>
+
+          <section class="workspace-view" id="admissions" data-view-title="Admissions" data-view-subtitle="Program-wise enquiries to confirmed admissions">
+            <div class="section-card">
+              <span class="eyebrow">Screen 2</span>
+              <h2>This keeps every admission enquiry moving clearly from first call to confirmed seat.</h2>
+              <p>The team can see which parent enquired, which class they want, what follow-up is pending, and what is needed before the child is fully admitted.</p>
+
+              <div class="summary-grid">
+                <article class="summary-tile">
+                  <span>New enquiries</span>
+                  <strong>12</strong>
+                  <p>Fresh website and call leads for this week.</p>
+                </article>
+                <article class="summary-tile">
+                  <span>Visits fixed</span>
+                  <strong>9</strong>
+                  <p>Parent walkthroughs already arranged by the team.</p>
+                </article>
+                <article class="summary-tile">
+                  <span>Closures near finish</span>
+                  <strong>4</strong>
+                  <p>Families close to fee confirmation and profile creation.</p>
+                </article>
+              </div>
+
+              <div class="split-panel">
+                <section class="mini-table">
+                  <div class="toolbar">
+                    <h3>Active enquiry pipeline</h3>
+                    <div class="toolbar-group">
+                      <button class="chip active" id="admissions-filter-all" type="button">All programs</button>
+                      <button class="chip" id="admissions-filter-nursery" type="button">Nursery</button>
+                    </div>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Parent</th>
+                        <th>Program</th>
+                        <th>Next step</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Mehta family</td>
+                        <td>Pre-Nursery</td>
+                        <td>School visit</td>
+                        <td><span class="status-pill good">Tomorrow</span></td>
+                      </tr>
+                      <tr>
+                        <td>Arora family</td>
+                        <td>Nursery</td>
+                        <td>Document call</td>
+                        <td><span class="status-pill warn">Pending</span></td>
+                      </tr>
+                      <tr>
+                        <td>Reddy family</td>
+                        <td>Jr. KG</td>
+                        <td>Fee counselling</td>
+                        <td><span class="status-pill">Saturday</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+
+                <section class="queue-card">
+                  <div class="toolbar">
+                    <h3>Admission stages</h3>
+                    <button class="action-button" type="button">Add enquiry</button>
+                  </div>
+                  <ul class="timeline-list">
+                    <li class="data-row">
+                      <div>
+                        <span class="stage-label">Step 1</span>
+                        <strong>Capture interest</strong>
+                        <p>Website, call, referral, and walk-in enquiries enter one clean queue.</p>
+                      </div>
+                      <span class="status-pill">18 leads</span>
+                    </li>
+                    <li class="data-row">
+                      <div>
+                        <span class="stage-label">Step 2</span>
+                        <strong>Visit and counselling</strong>
+                        <p>Track visit timing, class fit, parent concerns, and next follow-up.</p>
+                      </div>
+                      <span class="status-pill good">9 active</span>
+                    </li>
+                    <li class="data-row">
+                      <div>
+                        <span class="stage-label">Step 3</span>
+                        <strong>Finish admission</strong>
+                        <p>Document checklist, fee confirmation, and child profile creation.</p>
+                      </div>
+                      <span class="status-pill warn">4 closing</span>
+                    </li>
+                  </ul>
+                </section>
+              </div>
+
+              <div class="board-grid">
+                <section class="ui-card">
+                  <div class="toolbar">
+                    <h3>Today's counselling slots</h3>
+                    <button class="action-button" type="button">Assign slot</button>
+                  </div>
+                  <ul class="queue-list" id="admissions-channel-list">
+                    <li class="queue-item">
+                      <div>
+                        <strong>10:30 AM • Mehta family</strong>
+                        <p>Pre-Nursery walkthrough with curriculum discussion.</p>
+                      </div>
+                      <span class="status-pill good">Confirmed</span>
+                    </li>
+                    <li class="queue-item">
+                      <div>
+                        <strong>12:15 PM • Reddy family</strong>
+                        <p>Fee counselling and classroom readiness questions.</p>
+                      </div>
+                      <span class="status-pill">Hold</span>
+                    </li>
+                  </ul>
+                </section>
+
+                <section class="ui-card">
+                  <h3>Conversion summary</h3>
+                  <div class="kpi-strip" style="margin-top:0;">
+                    <article class="kpi-tile">
+                      <span>This week</span>
+                      <strong>18 leads</strong>
+                    </article>
+                    <article class="kpi-tile">
+                      <span>Visits fixed</span>
+                      <strong>9</strong>
+                    </article>
+                    <article class="kpi-tile">
+                      <span>Forms completed</span>
+                      <strong>6</strong>
+                    </article>
+                    <article class="kpi-tile">
+                      <span>Admissions closed</span>
+                      <strong>4</strong>
+                    </article>
+                  </div>
+                </section>
+              </div>
+
+              <div class="board-grid">
+                <section class="ui-card">
+                  <div class="toolbar">
+                    <h3>Follow-up reminders</h3>
+                    <div class="toolbar-group">
+                      <button class="chip active" id="admissions-channel-email" type="button">Email</button>
+                      <button class="chip" id="admissions-channel-whatsapp" type="button">WhatsApp</button>
+                      <button class="chip" id="admissions-channel-call" type="button">Call</button>
+                    </div>
+                  </div>
+                  <ul class="queue-list">
+                    <li class="queue-item">
+                      <div>
+                        <strong>Visit reminder</strong>
+                        <p>A reminder goes before the visit with the map, needed documents, and timing note.</p>
+                      </div>
+                      <span class="status-pill good">Sent</span>
+                    </li>
+                    <li class="queue-item">
+                      <div>
+                        <strong>Language choice</strong>
+                        <p>The same admission note can be shared in English, Hindi, or Marathi.</p>
+                      </div>
+                      <span class="status-pill">3 languages</span>
+                    </li>
+                  </ul>
+                </section>
+
+                <section class="ui-card">
+                  <h3>Digital forms and onboarding</h3>
+                  <ul class="mini-list">
+                    <li>Online registration forms with document upload</li>
+                    <li>Health and allergy information captured before start date</li>
+                    <li>Emergency contact and authorized pickup list pre-approved</li>
+                    <li>Child profile auto-created once admission is confirmed</li>
+                  </ul>
+                </section>
+              </div>
+            </div>
+          </section>
+
+          <section class="workspace-view" id="parent-app" data-view-title="Parent App" data-view-subtitle="Daily updates, fees, reminders, and parent communication">
+            <div class="section-card">
+              <span class="eyebrow">Screen 3</span>
+              <h2>This is the parent's everyday window into the school.</h2>
+              <p>Instead of depending on scattered calls and messages, parents can check updates, receipts, reminders, pickup changes, and class communication in one place.</p>
+
+              <div class="summary-grid">
+                <article class="summary-tile">
+                  <span>Families active</span>
+                  <strong>41</strong>
+                  <p>Parents who opened class communication today.</p>
+                </article>
+                <article class="summary-tile">
+                  <span>Unread notices</span>
+                  <strong>2</strong>
+                  <p>Important reminders still waiting to be seen.</p>
+                </article>
+                <article class="summary-tile">
+                  <span>Pickup changes</span>
+                  <strong>2</strong>
+                  <p>Requests needing review before dispersal.</p>
+                </article>
+              </div>
+
+              <div class="phone-grid">
+                <section class="phone-card">
+                  <div class="phone-top">
+                    <div class="avatar-row">
+                      <span class="avatar">A</span>
+                      <div>
+                        <strong>Anaya's parent app</strong>
+                        <p style="margin:0;color:var(--text-soft);">Tulip Room • Opened 5 mins ago</p>
+                      </div>
+                    </div>
+                    <span class="status-pill good">Connected</span>
+                  </div>
+                  <div class="phone-screen">
+                    <div class="phone-stat-grid">
+                      <div class="phone-stat">
+                        <span>Unread</span>
+                        <strong id="parent-unread-count">2</strong>
+                      </div>
+                      <div class="phone-stat">
+                        <span>Dues</span>
+                        <strong id="parent-dues-count">₹0</strong>
+                      </div>
+                    </div>
+                    <ul class="message-list">
+                      <li class="message-item">
+                        <div>
+                          <strong>Snack & activity update</strong>
+                          <p>Anaya enjoyed fruit break and completed color sorting.</p>
+                        </div>
+                        <span class="status-pill">09:40</span>
+                      </li>
+                      <li class="message-item">
+                        <div>
+                          <strong>Tomorrow reminder</strong>
+                          <p>Bring one blue craft item for ocean-theme class activity.</p>
+                        </div>
+                        <span class="status-pill warn">New</span>
+                      </li>
+                    </ul>
+                    <div class="story-strip">
+                      <div class="story-tile">Photo album approved</div>
+                      <div class="story-tile">Bus note confirmed</div>
+                      <div class="story-tile">Receipt downloaded</div>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="ui-card">
+                  <div class="toolbar">
+                    <h3>What parents can do here</h3>
+                    <button class="action-button" id="parent-send-notice" type="button">Send notice</button>
+                  </div>
+                  <ul class="parent-task-list">
+                    <li class="parent-task">
+                      <div>
+                        <strong>Daily classroom updates</strong>
+                        <p>Photos, snack notes, and learning highlights shared class-wise.</p>
+                      </div>
+                      <span class="status-pill good">Live</span>
+                    </li>
+                    <li class="parent-task">
+                      <div>
+                        <strong>Receipts and dues</strong>
+                        <p>Payment history and downloadable receipts without front-desk dependency.</p>
+                      </div>
+                      <span class="status-pill">Synced</span>
+                    </li>
+                    <li class="parent-task">
+                      <div>
+                        <strong>Pickup and leave confidence</strong>
+                        <p>Alternate pickup approvals and leave trail in one place.</p>
+                      </div>
+                      <span class="status-pill warn">2 pending</span>
+                    </li>
+                    <li class="parent-task">
+                      <div>
+                        <strong>Events and gallery</strong>
+                        <p>Celebrations and workshop albums released through a trusted channel.</p>
+                      </div>
+                      <span class="status-pill good">Ready</span>
+                    </li>
+                  </ul>
+                </section>
+              </div>
+
+              <div class="board-grid">
+                <section class="ui-card">
+                  <div class="toolbar">
+                    <h3>Extra parent conveniences</h3>
+                    <button class="action-button" type="button">Post update</button>
+                  </div>
+                  <ul class="queue-list">
+                    <li class="queue-item">
+                      <div>
+                        <strong>Learning journal shared privately</strong>
+                        <p>Parents can comment on milestones without the update becoming public to other families.</p>
+                      </div>
+                      <span class="status-pill good">Secure</span>
+                    </li>
+                    <li class="queue-item">
+                      <div>
+                        <strong>Message translation</strong>
+                        <p>Class reminders can be shown in the family's preferred language.</p>
+                      </div>
+                      <span class="status-pill">Enabled</span>
+                    </li>
+                  </ul>
+                </section>
+
+                <section class="mini-table">
+                  <div class="toolbar">
+                    <h3>Parent self-service</h3>
+                    <button class="action-button" id="parent-open-app" type="button">Open app</button>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Feature</th>
+                        <th>Status</th>
+                        <th>Used today</th>
+                      </tr>
+                    </thead>
+                    <tbody id="progress-journal-body">
+                      <tr>
+                        <td>Leave request</td>
+                        <td><span class="status-pill good">Live</span></td>
+                        <td>3</td>
+                      </tr>
+                      <tr>
+                        <td>Pickup change</td>
+                        <td><span class="status-pill">Tracked</span></td>
+                        <td>2</td>
+                      </tr>
+                      <tr>
+                        <td>Digital payment</td>
+                        <td><span class="status-pill good">Live</span></td>
+                        <td>9</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
+            </div>
+          </section>
+
+          <section class="workspace-view" id="progress" data-view-title="Child Progress" data-view-subtitle="Holistic growth and readiness visibility">
+            <div class="section-card">
+              <span class="eyebrow">Screen 4</span>
+              <h2>This shows child progress in a simple, caring, early-years format.</h2>
+              <p>Teachers can record observations through the month, and parents can understand growth without the screen feeling like an exam report.</p>
+
+              <div class="summary-grid">
+                <article class="summary-tile">
+                  <span>Portfolios updated</span>
+                  <strong>26</strong>
+                  <p>Children with fresh notes or observations this week.</p>
+                </article>
+                <article class="summary-tile">
+                  <span>Parent shares</span>
+                  <strong>14</strong>
+                  <p>Progress summaries already shared with families.</p>
+                </article>
+                <article class="summary-tile">
+                  <span>Review flags</span>
+                  <strong>3</strong>
+                  <p>Children the team wants to observe more closely.</p>
+                </article>
+              </div>
+
+              <div class="child-grid">
+                <section class="child-card">
+                  <div class="child-header">
+                    <div>
+                      <h3 style="margin:0;">Anaya Sharma</h3>
+                      <p style="margin:0.18rem 0 0;color:var(--text-soft);">Tulip Room • Monthly readiness snapshot</p>
+                    </div>
+                    <div class="child-score">
+                      <span>Overall growth</span>
+                      <strong>Strong</strong>
+                    </div>
+                  </div>
+                  <div class="progress-bars">
+                    <div>
+                      <span class="bar-label">Language confidence</span>
+                      <div class="bar-track"><div class="bar-fill" style="width:78%"></div></div>
+                    </div>
+                    <div>
+                      <span class="bar-label">Fine motor</span>
+                      <div class="bar-track"><div class="bar-fill" style="width:84%"></div></div>
+                    </div>
+                    <div>
+                      <span class="bar-label">Social settling</span>
+                      <div class="bar-track"><div class="bar-fill" style="width:88%"></div></div>
+                    </div>
+                    <div>
+                      <span class="bar-label">Routine independence</span>
+                      <div class="bar-track"><div class="bar-fill" style="width:73%"></div></div>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="child-card">
+                  <h3>Teacher observation summary</h3>
+                  <div class="observation-card">
+                    <strong style="display:block;color:var(--maroon-deep);margin-bottom:0.35rem;">This month</strong>
+                    <p style="margin:0;color:var(--text-soft);">Anaya participates more confidently during circle time, follows transitions better, and now completes fine-motor tasks with less teacher support.</p>
+                  </div>
+                  <ul class="mini-list" style="margin-top:0.9rem;">
+                    <li>Parent summary ready in clear language</li>
+                    <li>Class readiness note attached for next transition review</li>
+                    <li>Printable progress report available in school branding</li>
+                  </ul>
+                </section>
+              </div>
+
+              <div class="board-grid">
+                <section class="mini-table">
+                  <div class="toolbar">
+                    <h3>Milestone timeline</h3>
+                    <button class="action-button" type="button">Share to parent</button>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Month</th>
+                        <th>Focus</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>April</td>
+                        <td>Settling routine</td>
+                        <td><span class="status-pill good">Stable</span></td>
+                      </tr>
+                      <tr>
+                        <td>May</td>
+                        <td>Fine motor</td>
+                        <td><span class="status-pill good">Improved</span></td>
+                      </tr>
+                      <tr>
+                        <td>June</td>
+                        <td>Circle time speech</td>
+                        <td><span class="status-pill warn">Watch</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+
+                <section class="ui-card">
+                  <h3>Parent-facing summary</h3>
+                  <ul class="queue-list" id="care-pickup-list">
+                    <li class="queue-item">
+                      <div>
+                        <strong>Strength this month</strong>
+                        <p>Anaya now joins group activities without hesitation and follows transitions more smoothly.</p>
+                      </div>
+                    </li>
+                    <li class="queue-item">
+                      <div>
+                        <strong>Next support area</strong>
+                        <p>Encourage more sentence-length responses during story prompts and home reading time.</p>
+                      </div>
+                    </li>
+                  </ul>
+                </section>
+              </div>
+
+              <div class="board-grid">
+                <section class="ui-card">
+                  <div class="toolbar">
+                    <h3>Documentation and planning</h3>
+                    <div class="toolbar-group">
+                      <button class="chip active" id="progress-plan-weekly" type="button">Weekly</button>
+                      <button class="chip" id="progress-plan-monthly" type="button">Monthly</button>
+                    </div>
+                  </div>
+                  <ul class="mini-list">
+                    <li>Observation links directly to learning goals and class planning</li>
+                    <li>Teacher can convert observation into next-step activity in one tap</li>
+                    <li>Family comments are preserved in the child's long-term journal</li>
+                    <li>Printable development portfolio stays school-branded</li>
+                  </ul>
+                </section>
+
+                <section class="mini-table">
+                  <div class="toolbar">
+                    <h3>Learning journal feed</h3>
+                    <button class="action-button" type="button">Add observation</button>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Observation</th>
+                        <th>Linked goal</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>27 Jun</td>
+                        <td>Circle time sharing</td>
+                        <td>Language</td>
+                      </tr>
+                      <tr>
+                        <td>24 Jun</td>
+                        <td>Clay grip control</td>
+                        <td>Fine motor</td>
+                      </tr>
+                      <tr>
+                        <td>20 Jun</td>
+                        <td>Partner play confidence</td>
+                        <td>Social</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
+            </div>
+          </section>
+
+          <section class="workspace-view" id="care-log" data-view-title="Daily Care Logs" data-view-subtitle="Meals, nap, medicine, incidents, and pickup safety">
+            <div class="section-card">
+              <span class="eyebrow">Screen 5</span>
+              <h2>This gives teachers one clean place to record the child's day.</h2>
+              <p>Meals, rest, medicine, minor incidents, hygiene notes, and pickup verification can all be logged here and shared with the right parent context.</p>
+
+              <div class="summary-grid">
+                <article class="summary-tile">
+                  <span>Meals logged</span>
+                  <strong>57</strong>
+                  <p>Snack and lunch entries already recorded today.</p>
+                </article>
+                <article class="summary-tile">
+                  <span>Health watches</span>
+                  <strong>3</strong>
+                  <p>Medicine, allergy, or note-based care items open.</p>
+                </article>
+                <article class="summary-tile">
+                  <span>Pickup checks</span>
+                  <strong>2</strong>
+                  <p>Guardian changes needing verification before handover.</p>
+                </article>
+              </div>
+
+              <div class="phone-grid">
+                <section class="phone-card">
+                  <div class="phone-top">
+                    <div class="avatar-row">
+                      <span class="avatar">T</span>
+                      <div>
+                        <strong>Tulip Room routine log</strong>
+                        <p style="margin:0;color:var(--text-soft);">Teacher console • Updated 2 mins ago</p>
+                      </div>
+                    </div>
+                    <span class="status-pill good">Live</span>
+                  </div>
+                  <div class="phone-screen">
+                    <ul class="message-list">
+                      <li class="message-item">
+                        <div>
+                          <strong>Snack logged</strong>
+                          <p>Anaya finished fruit bowl and milk at 10:05 AM.</p>
+                        </div>
+                        <span class="status-pill">Meal</span>
+                      </li>
+                      <li class="message-item">
+                        <div>
+                          <strong>Rest update</strong>
+                          <p>Nap started 1:12 PM, woke up 2:05 PM in good mood.</p>
+                        </div>
+                        <span class="status-pill">Rest</span>
+                      </li>
+                      <li class="message-item">
+                        <div>
+                          <strong>Pickup verified</strong>
+                          <p>Alternate guardian matched against approved family list.</p>
+                        </div>
+                        <span class="status-pill good">Safe</span>
+                      </li>
+                    </ul>
+                  </div>
+                </section>
+
+                <section class="mini-table">
+                  <div class="toolbar">
+                    <h3>Health and routine register</h3>
+                    <button class="action-button" id="care-log-item" type="button">Log item</button>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Type</th>
+                        <th>Child</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Medicine</td>
+                        <td>Kiara</td>
+                        <td>09:20</td>
+                        <td><span class="status-pill warn">Parent note</span></td>
+                      </tr>
+                      <tr>
+                        <td>Allergy watch</td>
+                        <td>Aryan</td>
+                        <td>10:45</td>
+                        <td><span class="status-pill good">Stable</span></td>
+                      </tr>
+                      <tr>
+                        <td>Minor incident</td>
+                        <td>Samaira</td>
+                        <td>11:18</td>
+                        <td><span class="status-pill">Logged</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
+
+              <div class="board-grid">
+                <section class="ui-card">
+                  <h3>What the school handles here</h3>
+                  <ul class="mini-list">
+                    <li>Meals, naps, toilet, and wellness updates flow to the parent app</li>
+                    <li>Medication and incidents require staff acknowledgement trail</li>
+                    <li>Authorized pickup list is checked before handover</li>
+                    <li>Daily routines feed into secure child history for teachers</li>
+                  </ul>
+                </section>
+
+                <section class="queue-card">
+                  <div class="toolbar">
+                    <h3>Safe pickup queue</h3>
+                    <button class="action-button" id="care-verify-guardian" type="button">Verify guardian</button>
+                  </div>
+                  <ul class="queue-list">
+                    <li class="queue-item">
+                      <div>
+                        <strong>Rohan's uncle added</strong>
+                        <p>Guardian photo and OTP verified in parent app before dismissal.</p>
+                      </div>
+                      <span class="status-pill good">Approved</span>
+                    </li>
+                    <li class="queue-item">
+                      <div>
+                        <strong>Mia pickup change request</strong>
+                        <p>Front desk waiting for second parent confirmation.</p>
+                      </div>
+                      <span class="status-pill warn">Pending</span>
+                    </li>
+                  </ul>
+                </section>
+              </div>
+            </div>
+          </section>
+
+          <section class="workspace-view" id="events" data-view-title="Events & Activities" data-view-subtitle="Celebrations, workshops, sports, and media flow">
+            <div class="section-card">
+              <span class="eyebrow">Screen 6</span>
+              <h2>This helps the team plan and share every school event properly.</h2>
+              <p>Workshops, celebrations, sports days, parent visits, and class activities can be prepared here with reminders, approvals, photos, and follow-up tasks in one flow.</p>
+
+              <div class="summary-grid">
+                <article class="summary-tile">
+                  <span>Events ahead</span>
+                  <strong>3</strong>
+                  <p>This week's activity moments already lined up.</p>
+                </article>
+                <article class="summary-tile">
+                  <span>Albums pending</span>
+                  <strong>2</strong>
+                  <p>Photo sets waiting for final release approval.</p>
+                </article>
+                <article class="summary-tile">
+                  <span>Notices drafted</span>
+                  <strong>4</strong>
+                  <p>Parent communication ready to go out on time.</p>
+                </article>
+              </div>
+
+              <div class="calendar-card">
+                <div class="toolbar">
+                  <h3>Event board</h3>
+                  <div class="toolbar-group">
+                    <button class="chip active" id="events-range-week" type="button">This week</button>
+                    <button class="chip" id="events-range-month" type="button">Next month</button>
+                  </div>
+                </div>
+                <div class="calendar-grid" id="events-calendar-grid">
+                  <article class="day-card">
+                    <span class="day-label">Mon</span>
+                    <strong>Music & movement</strong>
+                    <p>Teacher notes queued, parent reminder ready.</p>
+                  </article>
+                  <article class="day-card">
+                    <span class="day-label">Wed</span>
+                    <strong>Ocean craft day</strong>
+                    <p>Blue item reminder scheduled for all sections.</p>
+                  </article>
+                  <article class="day-card">
+                    <span class="day-label">Sat</span>
+                    <strong>Parent visit morning</strong>
+                    <p>Admissions team and class walkthrough slots assigned.</p>
+                  </article>
+                </div>
+              </div>
+
+              <div class="board-grid">
+                <section class="queue-card">
+                  <h3>Media approval flow</h3>
+                  <ul class="queue-list">
+                    <li class="queue-item">
+                      <div>
+                        <strong>Craft workshop album</strong>
+                        <p>18 photos uploaded and awaiting final release approval.</p>
+                      </div>
+                      <span class="status-pill warn">Review</span>
+                    </li>
+                    <li class="queue-item">
+                      <div>
+                        <strong>Sports practice clip</strong>
+                        <p>Teacher highlight added for short parent story post.</p>
+                      </div>
+                      <span class="status-pill">Editing</span>
+                    </li>
+                  </ul>
+                </section>
+
+                <section class="ui-card">
+                  <h3>Event workflow</h3>
+                  <ul class="mini-list">
+                    <li>Create event tasks, costume notes, and role assignments</li>
+                    <li>Collect photos and teacher notes by class before release</li>
+                    <li>Push approved moments to parents without messy manual sharing</li>
+                  </ul>
+                </section>
+              </div>
+
+              <div class="board-grid">
+                <section class="mini-table">
+                  <div class="toolbar">
+                    <h3>Task readiness</h3>
+                    <button class="action-button" type="button">Open planner</button>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Task</th>
+                        <th>Owner</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Costume reminder</td>
+                        <td>Class teacher</td>
+                        <td><span class="status-pill good">Sent</span></td>
+                      </tr>
+                      <tr>
+                        <td>Photo shortlisting</td>
+                        <td>Media desk</td>
+                        <td><span class="status-pill">Ongoing</span></td>
+                      </tr>
+                      <tr>
+                        <td>Parent notice</td>
+                        <td>Front office</td>
+                        <td><span class="status-pill warn">Draft</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+
+                <section class="ui-card">
+                  <h3>Why this helps</h3>
+                  <ul class="mini-list">
+                    <li>Parents receive cleaner reminders before activity days</li>
+                    <li>Teachers upload notes and photos without WhatsApp confusion</li>
+                    <li>Owner sees event execution quality, not just a calendar entry</li>
+                  </ul>
+                </section>
+              </div>
+            </div>
+          </section>
+
+          <section class="workspace-view" id="operations" data-view-title="Owner Control" data-view-subtitle="Class strength, staffing, safety logs, and planning">
+            <div class="section-card">
+              <span class="eyebrow">Screen 7</span>
+              <h2>This is the owner's quick control room for daily school balance.</h2>
+              <p>Instead of calling different people to understand whether classrooms are full, staff are balanced, or any safety notes need attention, the owner can see the important picture here in one clean screen.</p>
+
+              <div class="summary-grid">
+                <article class="summary-tile">
+                  <span>Rooms safe</span>
+                  <strong>3/3</strong>
+                  <p>All active classrooms currently within support comfort.</p>
+                </article>
+                <article class="summary-tile">
+                  <span>Admin due soon</span>
+                  <strong>1</strong>
+                  <p>One staff renewal note approaching next month.</p>
+                </article>
+                <article class="summary-tile">
+                  <span>Incidents closed</span>
+                  <strong>100%</strong>
+                  <p>Every minor issue recorded and acknowledged properly.</p>
+                </article>
+              </div>
+
+              <div class="finance-grid">
+                <section class="ui-card">
+                  <div class="toolbar">
+                    <h3>Class balance today</h3>
+                    <div class="toolbar-group">
+                      <button class="chip active" id="operations-range-today" type="button">Today</button>
+                      <button class="chip" id="operations-range-forecast" type="button">Forecast</button>
+                    </div>
+                  </div>
+                  <div class="progress-bars" id="operations-ratio-bars">
+                    <div>
+                      <span class="bar-label">Tulip Room staff balance</span>
+                      <div class="bar-track"><div class="bar-fill" style="width:72%"></div></div>
+                    </div>
+                    <div>
+                      <span class="bar-label">Daffodil staff balance</span>
+                      <div class="bar-track"><div class="bar-fill" style="width:81%"></div></div>
+                    </div>
+                    <div>
+                      <span class="bar-label">Sunflower staff balance</span>
+                      <div class="bar-track"><div class="bar-fill" style="width:69%"></div></div>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="mini-table">
+                  <div class="toolbar">
+                    <h3>Children and staff view</h3>
+                    <button class="action-button" type="button">Open roster</button>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Class</th>
+                        <th>Children</th>
+                        <th>Staff</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Tulip Room</td>
+                        <td>25</td>
+                        <td>3</td>
+                        <td><span class="status-pill good">Safe</span></td>
+                      </tr>
+                      <tr>
+                        <td>Daffodil</td>
+                        <td>21</td>
+                        <td>2</td>
+                        <td><span class="status-pill warn">Tight</span></td>
+                      </tr>
+                      <tr>
+                        <td>Sunflower</td>
+                        <td>19</td>
+                        <td>2</td>
+                        <td><span class="status-pill good">Safe</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
+
+              <div class="board-grid">
+                <section class="queue-card">
+                  <div class="toolbar">
+                    <h3>Safety and admin notes</h3>
+                    <button class="action-button" type="button">Export log</button>
+                  </div>
+                  <ul class="queue-list">
+                    <li class="queue-item">
+                      <div>
+                        <strong>Incident register updated</strong>
+                        <p>All minor incidents recorded with staff note and parent acknowledgement.</p>
+                      </div>
+                      <span class="status-pill good">Complete</span>
+                    </li>
+                    <li class="queue-item">
+                      <div>
+                        <strong>Staff document renewal</strong>
+                        <p>One first-aid certification needs renewal next month.</p>
+                      </div>
+                      <span class="status-pill warn">Due soon</span>
+                    </li>
+                    <li class="queue-item">
+                      <div>
+                        <strong>Holiday schedule updated</strong>
+                        <p>The next holiday plan has been applied across all classes together.</p>
+                      </div>
+                      <span class="status-pill">Updated</span>
+                    </li>
+                  </ul>
+                </section>
+
+                <section class="ui-card">
+                  <h3>Why this helps the owner</h3>
+                  <ul class="mini-list">
+                    <li>See quickly if any class is overloaded or under-supported</li>
+                    <li>Catch safety or incident notes before they become bigger issues</li>
+                    <li>Check staff and classroom balance without asking every team member</li>
+                    <li>Stay ready for future expansion if the school adds more branches</li>
+                  </ul>
+                </section>
+              </div>
+            </div>
+          </section>
+
+          <section class="workspace-view" id="fees" data-view-title="Fees & Receipts" data-view-subtitle="Simple, parent-friendly finance visibility">
+            <div class="section-card">
+              <span class="eyebrow">Screen 8</span>
+              <h2>This keeps fees clear for both the office team and parents.</h2>
+              <p>The school can track collections, pending amounts, and receipts, while parents get a simple view of dues and payment history without repeated follow-up calls.</p>
+
+              <div class="summary-grid">
+                <article class="summary-tile">
+                  <span>Collected today</span>
+                  <strong>₹86K</strong>
+                  <p>Today's finance picture without opening a full ledger.</p>
+                </article>
+                <article class="summary-tile">
+                  <span>Families due</span>
+                  <strong>7</strong>
+                  <p>Only a small reminder queue still needs handling.</p>
+                </article>
+                <article class="summary-tile">
+                  <span>Receipts sent</span>
+                  <strong>28</strong>
+                  <p>Auto receipts already delivered after payment entries.</p>
+                </article>
+              </div>
+
+              <div class="finance-banner">
+                <div>
+                  <strong style="display:block;color:var(--maroon-deep);">Today's finance snapshot</strong>
+                  <p style="margin:0.22rem 0 0;color:var(--text-soft);">Receipts are auto-synced, reminders are branded, and parents can check dues without calling the front desk.</p>
+                </div>
+                <span class="status-pill good">28 receipts issued</span>
+              </div>
+
+              <div class="finance-grid">
+                <section class="finance-card">
+                  <h3>Collections</h3>
+                  <div class="amount-line">
+                    <div>
+                      <span class="amount-label">Collected today</span>
+                      <strong class="amount-value">₹86,000</strong>
+                    </div>
+                    <span class="status-pill good">On track</span>
+                  </div>
+                  <div class="amount-line">
+                    <div>
+                      <span class="amount-label">Pending follow-up</span>
+                      <strong class="amount-value">₹24,500</strong>
+                    </div>
+                    <span class="status-pill warn">7 families</span>
+                  </div>
+                  <div class="amount-line">
+                    <div>
+                      <span class="amount-label">Auto receipts sent</span>
+                      <strong class="amount-value">28</strong>
+                    </div>
+                    <span class="status-pill">Synced</span>
+                  </div>
+                </section>
+
+                <section class="mini-table">
+                  <div class="toolbar">
+                    <h3>Recent ledger</h3>
+                    <button class="action-button" type="button">Download receipts</button>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Family</th>
+                        <th>Amount</th>
+                        <th>Mode</th>
+                        <th>Receipt</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Sharma</td>
+                        <td>₹12,500</td>
+                        <td>UPI</td>
+                        <td><span class="status-pill good">Sent</span></td>
+                      </tr>
+                      <tr>
+                        <td>Kapoor</td>
+                        <td>₹9,000</td>
+                        <td>Card</td>
+                        <td><span class="status-pill good">Sent</span></td>
+                      </tr>
+                      <tr>
+                        <td>Arora</td>
+                        <td>₹6,500</td>
+                        <td>Cash</td>
+                        <td><span class="status-pill">Printed</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
+
+              <div class="board-grid">
+                <section class="queue-card">
+                  <div class="toolbar">
+                    <h3>Reminder queue</h3>
+                    <button class="action-button" id="fees-send-reminders" type="button">Send reminders</button>
+                  </div>
+                  <ul class="queue-list">
+                    <li class="queue-item">
+                      <div>
+                        <strong>Kapadia family</strong>
+                        <p>Installment reminder due tomorrow with receipt history attached.</p>
+                      </div>
+                      <span class="status-pill warn">Tomorrow</span>
+                    </li>
+                    <li class="queue-item">
+                      <div>
+                        <strong>Jain family</strong>
+                        <p>Soft follow-up after missed payment window last week.</p>
+                      </div>
+                      <span class="status-pill">Review</span>
+                    </li>
+                  </ul>
+                </section>
+
+                <section class="ui-card">
+                  <h3>Payment mix</h3>
+                  <div class="progress-bars">
+                    <div>
+                      <span class="bar-label">UPI</span>
+                      <div class="bar-track"><div class="bar-fill" style="width:52%"></div></div>
+                    </div>
+                    <div>
+                      <span class="bar-label">Card</span>
+                      <div class="bar-track"><div class="bar-fill" style="width:28%"></div></div>
+                    </div>
+                    <div>
+                      <span class="bar-label">Cash</span>
+                      <div class="bar-track"><div class="bar-fill" style="width:20%"></div></div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <div class="board-grid">
+                <section class="mini-table">
+                  <div class="toolbar">
+                    <h3>Advanced billing rules</h3>
+                    <button class="action-button" id="fees-edit-plan" type="button">Edit plan</button>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Rule</th>
+                        <th>Applies to</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Split billing</td>
+                        <td>Separated guardians</td>
+                        <td><span class="status-pill good">Active</span></td>
+                      </tr>
+                      <tr>
+                        <td>Sibling discount</td>
+                        <td>2+ children</td>
+                        <td><span class="status-pill">Applied</span></td>
+                      </tr>
+                      <tr>
+                        <td>Subsidy support</td>
+                        <td>Eligible families</td>
+                        <td><span class="status-pill warn">Review</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+
+                <section class="ui-card">
+                  <h3>Modern finance extras</h3>
+                  <ul class="mini-list">
+                    <li>In-app payments with auto-reconciliation</li>
+                    <li>Split invoices when guardians pay separately</li>
+                    <li>Subsidy and concession tracking for eligible families</li>
+                    <li>Export-ready accounts for finance software integration</li>
+                  </ul>
+                </section>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="demo-toast" id="demo-toast" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      const buildVersion = "2026-06-28LJ3";
+      const workspaceLinks = document.querySelectorAll("[data-view-target]");
+      const workspaceViews = document.querySelectorAll(".workspace-view");
+      const workspaceTitle = document.getElementById("workspace-title");
+      const workspaceSubtitle = document.getElementById("workspace-subtitle");
+      const installButtons = document.querySelectorAll("#install-app, #mobile-install-app");
+      const installStatus = document.getElementById("install-status");
+      const buildPills = document.querySelectorAll("#build-pill, #mobile-build-pill");
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileDrawer = document.getElementById("mobile-drawer");
+      const mobileDrawerBackdrop = document.getElementById("mobile-drawer-backdrop");
+      const mobileDrawerClose = document.getElementById("mobile-drawer-close");
+      const workspace = document.querySelector(".workspace");
+      const demoToast = document.getElementById("demo-toast");
+      const isIos = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+      const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+      let deferredInstallPrompt = null;
+      let toastTimer = null;
+
+      buildPills.forEach((pill) => {
+        pill.textContent = `Build ${buildVersion}`;
+      });
+
+      const setMobileDrawer = (open) => {
+        if (!mobileDrawer || !mobileDrawerBackdrop || !mobileMenuButton) return;
+        mobileDrawer.classList.toggle("is-open", open);
+        mobileDrawerBackdrop.classList.toggle("is-open", open);
+        mobileMenuButton.setAttribute("aria-expanded", String(open));
+      };
+
+      const setInstallUi = (message, options = {}) => {
+        const { showButton = false, label = "Install App", mode = "prompt" } = options;
+        if (installStatus) installStatus.textContent = message;
+        installButtons.forEach((button) => {
+          button.hidden = !showButton;
+          button.textContent = label;
+          button.dataset.installMode = mode;
+        });
+      };
+
+      const showToast = (message) => {
+        if (!demoToast) return;
+        demoToast.textContent = message;
+        demoToast.classList.add("is-visible");
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => {
+          demoToast.classList.remove("is-visible");
+        }, 1800);
+      };
+
+      const setChipGroup = (activeButton, buttonIds) => {
+        buttonIds.forEach((id) => {
+          document.getElementById(id)?.classList.toggle("active", id === activeButton);
+        });
+      };
+
+      const activateView = (targetId, options = {}) => {
+        const { preserveScroll = false, focusWorkspace = false } = options;
+        const view = document.getElementById(targetId);
+        if (!view) return;
+        const currentScroll = window.scrollY;
+
+        workspaceViews.forEach((item) => {
+          item.classList.toggle("is-active", item.id === targetId);
+        });
+
+        workspaceLinks.forEach((item) => {
+          item.classList.toggle("is-active", item.dataset.viewTarget === targetId);
+        });
+
+        workspaceTitle.textContent = view.dataset.viewTitle || "Overview";
+        workspaceSubtitle.textContent = view.dataset.viewSubtitle || "";
+
+        if (window.innerWidth <= 720) {
+          setMobileDrawer(false);
+        }
+
+        if (preserveScroll) {
+          window.scrollTo({ top: currentScroll, left: 0, behavior: "auto" });
+        } else if (focusWorkspace && window.innerWidth <= 720) {
+          workspace?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      };
+
+      workspaceLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          activateView(link.dataset.viewTarget, { focusWorkspace: true });
+        });
+      });
+
+      document.getElementById("dashboard-priority-urgent")?.addEventListener("click", () => {
+        setChipGroup("dashboard-priority-urgent", ["dashboard-priority-urgent", "dashboard-priority-today"]);
+        const list = document.getElementById("dashboard-priority-list");
+        if (list) {
+          list.innerHTML = `
+            <li class="queue-item"><div><strong>Pickup note pending</strong><p>2 children have alternate guardian requests awaiting acknowledgement.</p></div><span class="status-pill warn">Action</span></li>
+            <li class="queue-item"><div><strong>Fee reminder due</strong><p>7 families need a gentle payment reminder with receipt history.</p></div><span class="status-pill alert">Due</span></li>
+            <li class="queue-item"><div><strong>Event message ready</strong><p>Tomorrow's workshop reminder can be sent with one tap to all relevant parents.</p></div><span class="status-pill good">Ready</span></li>
+          `;
+        }
+        showToast("Urgent queue loaded");
+      });
+
+      document.getElementById("dashboard-priority-today")?.addEventListener("click", () => {
+        setChipGroup("dashboard-priority-today", ["dashboard-priority-urgent", "dashboard-priority-today"]);
+        const list = document.getElementById("dashboard-priority-list");
+        if (list) {
+          list.innerHTML = `
+            <li class="queue-item"><div><strong>3 parent app replies received</strong><p>Families responded to tomorrow's ocean craft reminder.</p></div><span class="status-pill good">Seen</span></li>
+            <li class="queue-item"><div><strong>1 new gate note</strong><p>Front office logged an early pickup request for 1:30 PM.</p></div><span class="status-pill">Logged</span></li>
+            <li class="queue-item"><div><strong>Attendance synced</strong><p>All classroom totals matched teacher registers.</p></div><span class="status-pill good">Done</span></li>
+          `;
+        }
+        showToast("Today's queue loaded");
+      });
+
+      document.getElementById("admissions-filter-all")?.addEventListener("click", () => {
+        setChipGroup("admissions-filter-all", ["admissions-filter-all", "admissions-filter-nursery"]);
+        const body = document.getElementById("admissions-pipeline-body");
+        if (body) {
+          body.innerHTML = `
+            <tr><td>Mehta family</td><td>Pre-Nursery</td><td>School visit</td><td><span class="status-pill good">Tomorrow</span></td></tr>
+            <tr><td>Arora family</td><td>Nursery</td><td>Document call</td><td><span class="status-pill warn">Pending</span></td></tr>
+            <tr><td>Reddy family</td><td>Jr. KG</td><td>Fee counselling</td><td><span class="status-pill">Saturday</span></td></tr>
+          `;
+        }
+        showToast("All program leads loaded");
+      });
+
+      document.getElementById("admissions-filter-nursery")?.addEventListener("click", () => {
+        setChipGroup("admissions-filter-nursery", ["admissions-filter-all", "admissions-filter-nursery"]);
+        const body = document.getElementById("admissions-pipeline-body");
+        if (body) {
+          body.innerHTML = `
+            <tr><td>Arora family</td><td>Nursery</td><td>Document call</td><td><span class="status-pill warn">Pending</span></td></tr>
+            <tr><td>Kapoor family</td><td>Nursery</td><td>Campus tour</td><td><span class="status-pill good">Today</span></td></tr>
+            <tr><td>Deshmukh family</td><td>Nursery</td><td>Fee note</td><td><span class="status-pill">Follow-up</span></td></tr>
+          `;
+        }
+        showToast("Nursery leads filtered");
+      });
+
+      const admissionsChannelList = document.getElementById("admissions-channel-list");
+      const setAdmissionsChannel = (activeId, items, toast) => {
+        setChipGroup(activeId, ["admissions-channel-email", "admissions-channel-whatsapp", "admissions-channel-call"]);
+        if (admissionsChannelList) admissionsChannelList.innerHTML = items;
+        showToast(toast);
+      };
+
+      document.getElementById("admissions-channel-email")?.addEventListener("click", () => setAdmissionsChannel("admissions-channel-email", `
+        <li class="queue-item"><div><strong>Visit reminder sequence</strong><p>Auto-reminder sent 24 hours before visit with map, documents, and uniform note.</p></div><span class="status-pill good">Sent</span></li>
+        <li class="queue-item"><div><strong>Lead nurture translation</strong><p>Parent can receive the same admission note in English, Hindi, or Marathi.</p></div><span class="status-pill">3 languages</span></li>
+      `, "Email automations loaded"));
+      document.getElementById("admissions-channel-whatsapp")?.addEventListener("click", () => setAdmissionsChannel("admissions-channel-whatsapp", `
+        <li class="queue-item"><div><strong>WhatsApp reminder draft</strong><p>Short pre-visit reminder with parking instructions and counselor name.</p></div><span class="status-pill warn">Queued</span></li>
+        <li class="queue-item"><div><strong>Document chase</strong><p>Pending birth certificate note prepared for 2 families.</p></div><span class="status-pill">2 chats</span></li>
+      `, "WhatsApp flow loaded"));
+      document.getElementById("admissions-channel-call")?.addEventListener("click", () => setAdmissionsChannel("admissions-channel-call", `
+        <li class="queue-item"><div><strong>Callback window booked</strong><p>Front office will call the Arora family between 4 and 5 PM.</p></div><span class="status-pill good">Booked</span></li>
+        <li class="queue-item"><div><strong>Counsellor script ready</strong><p>Fee, transport, and settling questions added to the call note.</p></div><span class="status-pill">Ready</span></li>
+      `, "Call flow loaded"));
+
+      document.getElementById("parent-open-app")?.addEventListener("click", (event) => {
+        event.currentTarget.classList.add("is-done");
+        const unread = document.getElementById("parent-unread-count");
+        const dues = document.getElementById("parent-dues-count");
+        if (unread) unread.textContent = "1";
+        if (dues) dues.textContent = "₹1,800";
+        showToast("Parent app opened with live family state");
+      });
+
+      document.getElementById("parent-send-notice")?.addEventListener("click", (event) => {
+        event.currentTarget.classList.add("is-done");
+        showToast("Notice sent to selected parents");
+      });
+
+      const progressJournalBody = document.getElementById("progress-journal-body");
+      document.getElementById("progress-plan-weekly")?.addEventListener("click", () => {
+        setChipGroup("progress-plan-weekly", ["progress-plan-weekly", "progress-plan-monthly"]);
+        if (progressJournalBody) {
+          progressJournalBody.innerHTML = `
+            <tr><td>27 Jun</td><td>Circle time sharing</td><td>Language</td></tr>
+            <tr><td>24 Jun</td><td>Clay grip control</td><td>Fine motor</td></tr>
+            <tr><td>20 Jun</td><td>Partner play confidence</td><td>Social</td></tr>
+          `;
+        }
+        showToast("Weekly journal loaded");
+      });
+      document.getElementById("progress-plan-monthly")?.addEventListener("click", () => {
+        setChipGroup("progress-plan-monthly", ["progress-plan-weekly", "progress-plan-monthly"]);
+        if (progressJournalBody) {
+          progressJournalBody.innerHTML = `
+            <tr><td>Jun</td><td>Settling and speech confidence</td><td>Language</td></tr>
+            <tr><td>May</td><td>Grip, scissors, and clay work</td><td>Fine motor</td></tr>
+            <tr><td>Apr</td><td>Partner play and routines</td><td>Social</td></tr>
+          `;
+        }
+        showToast("Monthly journal loaded");
+      });
+
+      document.getElementById("care-log-item")?.addEventListener("click", (event) => {
+        event.currentTarget.classList.add("is-done");
+        showToast("Routine item logged and shared to family app");
+      });
+      document.getElementById("care-verify-guardian")?.addEventListener("click", (event) => {
+        event.currentTarget.classList.add("is-done");
+        const pickupList = document.getElementById("care-pickup-list");
+        if (pickupList) {
+          pickupList.innerHTML = `
+            <li class="queue-item"><div><strong>Rohan's uncle added</strong><p>Guardian photo and OTP verified in parent app before dismissal.</p></div><span class="status-pill good">Approved</span></li>
+            <li class="queue-item"><div><strong>Mia pickup change request</strong><p>Second parent confirmation received and front desk notified.</p></div><span class="status-pill good">Cleared</span></li>
+          `;
+        }
+        showToast("Guardian verified successfully");
+      });
+
+      const eventsGrid = document.getElementById("events-calendar-grid");
+      document.getElementById("events-range-week")?.addEventListener("click", () => {
+        setChipGroup("events-range-week", ["events-range-week", "events-range-month"]);
+        if (eventsGrid) {
+          eventsGrid.innerHTML = `
+            <article class="day-card"><span class="day-label">Mon</span><strong>Music & movement</strong><p>Teacher notes queued, parent reminder ready.</p></article>
+            <article class="day-card"><span class="day-label">Wed</span><strong>Ocean craft day</strong><p>Blue item reminder scheduled for all sections.</p></article>
+            <article class="day-card"><span class="day-label">Sat</span><strong>Parent visit morning</strong><p>Admissions team and class walkthrough slots assigned.</p></article>
+          `;
+        }
+        showToast("This week's event board loaded");
+      });
+      document.getElementById("events-range-month")?.addEventListener("click", () => {
+        setChipGroup("events-range-month", ["events-range-week", "events-range-month"]);
+        if (eventsGrid) {
+          eventsGrid.innerHTML = `
+            <article class="day-card"><span class="day-label">Jul</span><strong>Grandparents day</strong><p>Performance notes and seating plan in progress.</p></article>
+            <article class="day-card"><span class="day-label">Jul</span><strong>Monsoon art week</strong><p>Material checklist and gallery release draft ready.</p></article>
+            <article class="day-card"><span class="day-label">Aug</span><strong>Sports showcase</strong><p>Teacher assignments and parent invitations queued.</p></article>
+          `;
+        }
+        showToast("Next month's event board loaded");
+      });
+
+      document.getElementById("operations-range-today")?.addEventListener("click", () => {
+        setChipGroup("operations-range-today", ["operations-range-today", "operations-range-forecast"]);
+        const fills = document.querySelectorAll("#operations-ratio-bars .bar-fill");
+        fills[0] && (fills[0].style.width = "72%");
+        fills[1] && (fills[1].style.width = "81%");
+        fills[2] && (fills[2].style.width = "69%");
+        showToast("Today's ratio board loaded");
+      });
+      document.getElementById("operations-range-forecast")?.addEventListener("click", () => {
+        setChipGroup("operations-range-forecast", ["operations-range-today", "operations-range-forecast"]);
+        const fills = document.querySelectorAll("#operations-ratio-bars .bar-fill");
+        fills[0] && (fills[0].style.width = "84%");
+        fills[1] && (fills[1].style.width = "88%");
+        fills[2] && (fills[2].style.width = "76%");
+        showToast("Forecast ratio pressure loaded");
+      });
+
+      document.getElementById("fees-send-reminders")?.addEventListener("click", (event) => {
+        event.currentTarget.classList.add("is-done");
+        showToast("Reminders sent to due families");
+      });
+      document.getElementById("fees-edit-plan")?.addEventListener("click", (event) => {
+        event.currentTarget.classList.add("is-done");
+        showToast("Billing rules panel updated");
+      });
+
+      activateView("overview", { preserveScroll: true });
+      setMobileDrawer(false);
+
+      if (isStandalone) {
+        setInstallUi("App installed. It can now be reopened like a real product from the home screen or desktop.");
+      } else if (isIos) {
+        setInstallUi("On iPhone or iPad, use Safari Share and then Add to Home Screen to install this app.", {
+          showButton: true,
+          label: "How to Install",
+          mode: "ios-help"
+        });
+      } else {
+        setInstallUi("Installable on mobile and desktop for admin, admissions, teachers, finance, and parents.", {
+          showButton: true,
+          label: "Install Help",
+          mode: "browser-help"
+        });
+      }
+
+      window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        deferredInstallPrompt = event;
+        setInstallUi("This browser can install the Little Jewels demo right now. Use the Install App button.", {
+          showButton: true,
+          label: "Install App",
+          mode: "prompt"
+        });
+      });
+
+      window.addEventListener("appinstalled", () => {
+        deferredInstallPrompt = null;
+        setInstallUi("App installed. It can now be reopened like a real product from the home screen or desktop.");
+      });
+
+      installButtons.forEach((button) => {
+        button.addEventListener("click", async () => {
+          if (button.dataset.installMode === "ios-help") {
+            setInstallUi("Install on iPhone: tap Share in Safari, then choose Add to Home Screen.", {
+              showButton: true,
+              label: "How to Install",
+              mode: "ios-help"
+            });
+            return;
+          }
+
+          if (button.dataset.installMode === "browser-help" && !deferredInstallPrompt) {
+            setInstallUi("If the pop-up did not appear yet, open the browser menu and choose Install App or Add to Home screen.", {
+              showButton: true,
+              label: "Install Help",
+              mode: "browser-help"
+            });
+            return;
+          }
+
+          if (!deferredInstallPrompt) return;
+          deferredInstallPrompt.prompt();
+          await deferredInstallPrompt.userChoice;
+          deferredInstallPrompt = null;
+          setInstallUi("If the prompt was accepted, the app should now appear like a real installed product.");
+        });
+      });
+
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register(`./sw.js?build=${buildVersion}`).then((registration) => {
+            registration.update().catch(() => {});
+          }).catch(() => {});
+        });
+      }
+
+      mobileMenuButton?.addEventListener("click", () => {
+        const isOpen = mobileMenuButton.getAttribute("aria-expanded") === "true";
+        setMobileDrawer(!isOpen);
+      });
+
+      mobileDrawerClose?.addEventListener("click", () => setMobileDrawer(false));
+      mobileDrawerBackdrop?.addEventListener("click", () => setMobileDrawer(false));
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 720) setMobileDrawer(false);
+      });
+      window.addEventListener("pagehide", () => setMobileDrawer(false));
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") setMobileDrawer(false);
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -2,12 +2,512 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=./octominds-preschool-demo/">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>School ERP Demo</title>
-  <link rel="canonical" href="./octominds-preschool-demo/">
+  <title>School ERP Demo Studio</title>
+  <meta name="description" content="Launch separate ERP demo experiences for Little Jewels Kindergarten and OctoMinds Preschool without mixing brands.">
+  <style>
+    :root {
+      --bg: #f8f2ea;
+      --surface: rgba(255, 252, 247, 0.9);
+      --surface-strong: rgba(255, 248, 240, 0.96);
+      --border: rgba(126, 86, 59, 0.14);
+      --text: #2e1f24;
+      --text-soft: #6b5b60;
+      --maroon: #732645;
+      --gold: #d8a24a;
+      --rose: #f0d8db;
+      --shadow: 0 28px 64px rgba(104, 72, 48, 0.14);
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+      color-scheme: light;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(216, 162, 74, 0.22), transparent 22%),
+        radial-gradient(circle at 88% 8%, rgba(115, 38, 69, 0.14), transparent 20%),
+        linear-gradient(180deg, #fffaf4 0%, #f8f2ea 56%, #fffdf9 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(115, 38, 69, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(216, 162, 74, 0.03) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(circle at center, black 34%, transparent 82%);
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(calc(100% - 1.4rem), var(--width));
+      margin: 0 auto;
+      padding: 1rem 0 2rem;
+    }
+
+    .header,
+    .hero,
+    .card,
+    .note {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.1rem;
+      border-radius: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .badge {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--maroon), var(--gold));
+      color: #fffaf3;
+      font-weight: 700;
+      box-shadow: 0 14px 28px rgba(115, 38, 69, 0.22);
+      flex-shrink: 0;
+    }
+
+    .brand-copy strong,
+    .hero-copy strong,
+    .card strong,
+    .note strong {
+      display: block;
+      color: var(--text);
+    }
+
+    .brand-copy strong {
+      font-size: 1rem;
+    }
+
+    .brand-copy span,
+    .hero-copy p,
+    .card p,
+    .note p,
+    .meta,
+    .stat span,
+    .quick-link {
+      color: var(--text-soft);
+    }
+
+    .brand-copy span,
+    .meta {
+      font-size: 0.74rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .header-pills,
+    .hero-actions,
+    .card-actions,
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .pill,
+    .button,
+    .ghost-button,
+    .quick-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .pill {
+      padding: 0.48rem 0.75rem;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--maroon);
+      font-size: 0.73rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      margin-top: 1rem;
+      padding: 1.35rem;
+      border-radius: var(--radius-xl);
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 1rem;
+      background:
+        radial-gradient(circle at top right, rgba(216, 162, 74, 0.16), transparent 26%),
+        linear-gradient(180deg, rgba(255, 252, 247, 0.95), rgba(255, 244, 234, 0.96));
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.44rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(115, 38, 69, 0.12);
+      background: rgba(115, 38, 69, 0.08);
+      color: var(--maroon);
+      font-size: 0.74rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2 {
+      margin: 0.6rem 0 0.75rem;
+      font-family: "Iowan Old Style", Georgia, serif;
+      letter-spacing: -0.03em;
+      color: #4d2233;
+    }
+
+    h1 {
+      font-size: clamp(2.3rem, 4vw, 4.5rem);
+      line-height: 0.97;
+      max-width: 11ch;
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 2vw, 2.1rem);
+      line-height: 1.04;
+    }
+
+    .hero-copy p {
+      max-width: 36rem;
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .button,
+    .ghost-button {
+      padding: 0.82rem 1.1rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+    }
+
+    .button {
+      background: linear-gradient(135deg, var(--maroon), #975f3c);
+      color: #fff9f3;
+      box-shadow: 0 16px 32px rgba(115, 38, 69, 0.2);
+    }
+
+    .ghost-button {
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--maroon);
+      border-color: rgba(115, 38, 69, 0.12);
+    }
+
+    .hero-panel,
+    .card,
+    .note {
+      border-radius: var(--radius-lg);
+    }
+
+    .hero-panel {
+      padding: 1.2rem;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.66);
+    }
+
+    .stats {
+      margin-top: 1rem;
+    }
+
+    .stat {
+      min-width: 8.5rem;
+      padding: 0.95rem 1rem;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--maroon);
+      font-size: 1.12rem;
+      margin-bottom: 0.16rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .card {
+      padding: 1.25rem;
+    }
+
+    .card[data-primary="true"] {
+      background:
+        radial-gradient(circle at top right, rgba(216, 162, 74, 0.15), transparent 24%),
+        linear-gradient(180deg, rgba(255, 251, 246, 0.98), rgba(255, 244, 234, 0.95));
+    }
+
+    .meta {
+      display: block;
+      margin-bottom: 0.55rem;
+    }
+
+    .card p {
+      margin: 0 0 1rem;
+      max-width: 38rem;
+    }
+
+    .list {
+      list-style: none;
+      margin: 0 0 1rem;
+      padding: 0;
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .list li {
+      position: relative;
+      padding-left: 1rem;
+      color: var(--text-soft);
+    }
+
+    .list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.52rem;
+      width: 0.4rem;
+      height: 0.4rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--maroon), var(--gold));
+    }
+
+    .card-actions {
+      margin-top: auto;
+    }
+
+    .quick-link {
+      padding: 0.72rem 0.98rem;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .note {
+      margin-top: 1rem;
+      padding: 1rem 1.1rem;
+      background: linear-gradient(135deg, rgba(240, 216, 219, 0.44), rgba(255, 245, 232, 0.9));
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        width: min(calc(100% - 1rem), var(--width));
+        padding-top: 0.8rem;
+      }
+
+      .header {
+        padding: 0.9rem;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .brand {
+        width: 100%;
+      }
+
+      .brand-copy strong {
+        font-size: 0.95rem;
+      }
+
+      .brand-copy span {
+        font-size: 0.62rem;
+        letter-spacing: 0.08em;
+        white-space: normal;
+        line-height: 1.35;
+        max-width: 16rem;
+      }
+
+      .header-pills {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .pill {
+        width: 100%;
+        min-width: 0;
+        font-size: 0.67rem;
+        padding-inline: 0.55rem;
+      }
+
+      .hero,
+      .card,
+      .note {
+        border-radius: 24px;
+      }
+
+      .hero {
+        padding: 1rem;
+      }
+
+      .card {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 11vw, 2.9rem);
+        max-width: 9.5ch;
+      }
+
+      .hero-copy p {
+        max-width: 28ch;
+      }
+
+      .button,
+      .ghost-button,
+      .quick-link {
+        width: 100%;
+      }
+
+      .hero-actions,
+      .card-actions {
+        flex-direction: column;
+      }
+
+      .stats {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
-  <p>If you are not redirected automatically, <a href="./octominds-preschool-demo/">open the School ERP demo</a>.</p>
+  <div class="page">
+    <header class="header">
+      <div class="brand">
+        <span class="badge">ERP</span>
+        <div class="brand-copy">
+          <strong>School ERP Demo Studio</strong>
+          <span>Separate branded experiences in one shared repo</span>
+        </div>
+      </div>
+
+      <div class="header-pills">
+        <span class="pill">2 Demo Tracks</span>
+        <span class="pill">No Brand Mixing</span>
+        <span class="pill">PWA Ready</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Live Demo Entry</span>
+        <h1>Pick the school demo you want to present.</h1>
+        <p>The repo now has separate launch paths, so Little Jewels and OctoMinds stay visually and structurally independent. That means you can share the right experience with the right owner without confusion.</p>
+
+        <div class="hero-actions" style="margin-top:1rem;">
+          <a class="button" href="./little-jewels-kindergarten-demo/">Open Little Jewels Demo</a>
+          <a class="ghost-button" href="./octominds-preschool-demo/">Open OctoMinds Demo</a>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <strong>Little Jewels</strong>
+            <span>Maroon, gold, calmer premium kindergarten feel</span>
+          </div>
+          <div class="stat">
+            <strong>OctoMinds</strong>
+            <span>Separate preschool multi-centre presentation flow</span>
+          </div>
+          <div class="stat">
+            <strong>Installable</strong>
+            <span>Each demo can be shown as a PWA-style product preview</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-panel">
+        <span class="meta">Recommended First Share</span>
+        <h2>Little Jewels should now be your primary first impression.</h2>
+        <p style="margin:0;">It has its own color language, kinder tone, parent-first structure, and a more premium live-software feel instead of looking like a generic institutional dashboard.</p>
+      </aside>
+    </section>
+
+    <section class="grid">
+      <article class="card" data-primary="true">
+        <span class="meta">Primary Demo</span>
+        <strong>Little Jewels Kindergarten ERP</strong>
+        <p>Rebuilt as a warmer, more polished kindergarten-specific experience with dedicated sections for overview, dashboard, admissions, parent app, child progress, events, and fees.</p>
+        <ul class="list">
+          <li>Uses Little Jewels-inspired maroon and gold tones</li>
+          <li>Feels softer, safer, and more parent-trust driven</li>
+          <li>Better suited for owner presentation than a generic ERP screen</li>
+        </ul>
+        <div class="card-actions">
+          <a class="button" href="./little-jewels-kindergarten-demo/">Launch Little Jewels</a>
+          <a class="quick-link" href="./little-jewels-kindergarten-demo/health.html">Health Check</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="meta">Separate Demo</span>
+        <strong>OctoMinds Preschool ERP</strong>
+        <p>Kept isolated in its own folder so the earlier multi-centre preschool pitch remains available without contaminating the Little Jewels presentation or branding.</p>
+        <ul class="list">
+          <li>Still accessible when you need the 7-centre preschool flow</li>
+          <li>No longer forced as the default landing experience</li>
+          <li>Can be shared independently with its own route</li>
+        </ul>
+        <div class="card-actions">
+          <a class="ghost-button" href="./octominds-preschool-demo/">Launch OctoMinds</a>
+          <a class="quick-link" href="./octominds-preschool-demo/health.html">Health Check</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="note">
+      <strong>What changed</strong>
+      <p>The shared homepage no longer redirects straight into OctoMinds. It now acts as a proper demo launcher, with Little Jewels positioned as the cleaner premium presentation and OctoMinds preserved as a separate option.</p>
+    </section>
+  </div>
 </body>
 </html>

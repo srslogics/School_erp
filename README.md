@@ -7,19 +7,26 @@ This repo is intentionally separated from the SrS Logics website and now contain
 ## What Is Included
 
 - `octominds-preschool-demo/`
-  Standalone founder-facing preschool ERP demo
+  Standalone OctoMinds preschool ERP demo
+- `little-jewels-kindergarten-demo/`
+  Separate Little Jewels Kindergarten ERP demo scaffold
 - `index.html`
   Root redirect into the demo
 
 ## Demo Features
 
-- founder control room
+- leadership control room
 - admissions workflows
 - centre operations
 - parent app experience
 - fees and collections
 - child progress tracking
 - installable PWA setup
+
+## Current Demo Paths
+
+- `http://127.0.0.1:4173/octominds-preschool-demo/`
+- `http://127.0.0.1:4173/little-jewels-kindergarten-demo/`
 
 ## Local Preview
 
@@ -31,3 +38,4 @@ Open:
 
 - `http://127.0.0.1:4173/`
 - `http://127.0.0.1:4173/octominds-preschool-demo/`
+- `http://127.0.0.1:4173/little-jewels-kindergarten-demo/`
