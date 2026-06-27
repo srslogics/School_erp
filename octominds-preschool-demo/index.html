@@ -183,8 +183,7 @@
       text-shadow: none;
     }
 
-    .brand-tag,
-    .site-nav a {
+    .brand-tag {
       color: #6c545f;
     }
 
@@ -192,67 +191,6 @@
       font-size: 0.74rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-    }
-
-    .site-nav a:hover,
-    .site-nav a:focus-visible {
-      color: #51304d;
-      text-shadow: none;
-    }
-
-    .site-nav {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      min-width: 0;
-    }
-
-    .site-nav a {
-      text-decoration: none;
-      font-size: 0.92rem;
-      position: relative;
-      transition: color 180ms ease, opacity 180ms ease;
-    }
-
-    .nav-toggle {
-      display: none;
-      border: 0;
-      background: transparent;
-      padding: 0;
-      cursor: pointer;
-    }
-
-    .nav-toggle span {
-      display: block;
-      width: 1.6rem;
-      height: 2px;
-      margin: 0.28rem 0;
-      background: #7a5d66;
-      border-radius: 999px;
-    }
-
-    .nav-cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.78rem 1rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 154, 181, 0.28);
-      background: linear-gradient(135deg, rgba(255, 219, 229, 0.95), rgba(255, 241, 212, 0.98));
-      color: #74465e;
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 600;
-      white-space: nowrap;
-      transition: transform 160ms ease, box-shadow 160ms ease;
-    }
-
-    .nav-cta:hover,
-    .nav-cta:focus-visible {
-      transform: translateY(-1px);
-      box-shadow: 0 14px 24px rgba(240, 184, 150, 0.2);
     }
 
     .app-workspace {
@@ -1315,12 +1253,8 @@
         width: min(calc(100% - 1rem), 1180px);
       }
 
-      .nav-toggle {
-        display: block;
-      }
-
       .brand {
-        max-width: calc(100% - 3.75rem);
+        max-width: 100%;
       }
 
       .brand-name {
@@ -1332,19 +1266,9 @@
         letter-spacing: 0.1em;
       }
 
-      .site-nav {
-        display: none;
-        width: 100%;
-        padding-bottom: 1rem;
-      }
-
-      .site-nav.is-open {
-        display: grid;
-        gap: 0.75rem;
-      }
-
       .site-header .container {
-        flex-wrap: wrap;
+        min-height: auto;
+        padding: 1rem 0;
       }
 
       .workspace-topbar {
@@ -1417,10 +1341,6 @@
       .mini-tab {
         width: 100%;
       }
-
-      .nav-cta {
-        width: 100%;
-      }
     }
   </style>
 </head>
@@ -1436,21 +1356,6 @@
           </span>
         </a>
 
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-
-        <nav class="site-nav" id="primary-nav" aria-label="Primary">
-          <a href="#owner-control-room" data-view-link="owner-control-room">Control Room</a>
-          <a href="#branch-operations" data-view-link="branch-operations">Centres</a>
-          <a href="#admissions-engine" data-view-link="admissions-engine">Admissions</a>
-          <a href="#parent-app" data-view-link="parent-app">Parent App</a>
-          <a href="#fees-control" data-view-link="fees-control">Fees</a>
-          <a href="#child-progress" data-view-link="child-progress">Progress</a>
-          <a class="nav-cta" href="#module-map" data-view-link="module-map">View ERP Scope</a>
-        </nav>
       </div>
     </header>
 
@@ -2438,7 +2343,6 @@
       const tabs = document.querySelectorAll(".mini-tab");
       const screens = document.querySelectorAll(".demo-screen");
       const workspaceLinks = document.querySelectorAll("[data-view-target]");
-      const topNavLinks = document.querySelectorAll("[data-view-link]");
       const workspaceViews = document.querySelectorAll(".workspace-view");
       const workspaceTitle = document.getElementById("workspace-title");
       const workspaceSubtitle = document.getElementById("workspace-subtitle");
@@ -2475,13 +2379,6 @@
 
       workspaceLinks.forEach((link) => {
         link.addEventListener("click", () => activateView(link.dataset.viewTarget));
-      });
-
-      topNavLinks.forEach((link) => {
-        link.addEventListener("click", (event) => {
-          event.preventDefault();
-          activateView(link.dataset.viewLink);
-        });
       });
 
       const initialView = window.location.hash ? window.location.hash.slice(1) : "overview";
@@ -2523,29 +2420,6 @@
         });
       }
 
-      const header = document.querySelector(".site-header");
-      const navButton = header?.querySelector(".nav-toggle");
-      const nav = header?.querySelector(".site-nav");
-      if (navButton && nav) {
-        const closeMenu = () => {
-          navButton.setAttribute("aria-expanded", "false");
-          nav.classList.remove("is-open");
-        };
-
-        navButton.addEventListener("click", () => {
-          const isOpen = navButton.getAttribute("aria-expanded") === "true";
-          navButton.setAttribute("aria-expanded", String(!isOpen));
-          nav.classList.toggle("is-open", !isOpen);
-        });
-
-        nav.querySelectorAll("a").forEach((link) => {
-          link.addEventListener("click", closeMenu);
-        });
-
-        window.addEventListener("resize", () => {
-          if (window.innerWidth > 720) closeMenu();
-        });
-      }
     })();
   </script>
 </body>
