@@ -247,6 +247,10 @@
       gap: 0.55rem;
     }
 
+    .mobile-module-nav {
+      display: none;
+    }
+
     .workspace-link {
       width: 100%;
       text-align: left;
@@ -282,6 +286,61 @@
       transform: translateY(-1px);
     }
 
+    .mobile-module-nav {
+      gap: 0.6rem;
+      padding-top: 0.25rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .mobile-module-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .mobile-module-chip {
+      flex: 0 0 auto;
+      padding: 0.72rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(228, 189, 172, 0.42);
+      background: rgba(255, 255, 255, 0.66);
+      color: #654f59;
+      font: inherit;
+      font-size: 0.84rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+
+    .mobile-module-chip.is-active,
+    .mobile-module-chip:focus-visible {
+      background: linear-gradient(135deg, rgba(255, 214, 223, 0.92), rgba(255, 239, 207, 0.94));
+      border-color: rgba(255, 150, 177, 0.42);
+      color: #51304d;
+      transform: translateY(-1px);
+    }
+
+    .mobile-top-summary {
+      padding: 0.85rem 0.95rem;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255, 221, 229, 0.96), rgba(255, 241, 210, 0.96));
+      border: 1px solid rgba(233, 184, 171, 0.42);
+      color: #57364f;
+    }
+
+    .mobile-top-summary strong {
+      display: block;
+      font-size: 0.96rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .mobile-top-summary span {
+      display: block;
+      color: #6b5660;
+      font-size: 0.82rem;
+    }
+
     .workspace-meta {
       padding: 0.95rem 1rem;
       border-radius: 22px;
@@ -310,6 +369,10 @@
       padding: 1rem 1.2rem;
       background: rgba(255, 248, 240, 0.92);
       border-bottom: 1px solid rgba(226, 187, 170, 0.35);
+    }
+
+    .mobile-top-summary {
+      display: none;
     }
 
     .workspace-topbar strong {
@@ -1249,8 +1312,18 @@
     }
 
     @media (max-width: 720px) {
+      html,
+      body {
+        scroll-padding-top: 8.5rem;
+      }
+
       .container {
         width: min(calc(100% - 1rem), 1180px);
+      }
+
+      .demo-shell::before,
+      .demo-shell::after {
+        opacity: 0.18;
       }
 
       .brand {
@@ -1268,12 +1341,18 @@
 
       .site-header .container {
         min-height: auto;
-        padding: 1rem 0;
+        padding: 0.85rem 0;
       }
 
       .workspace-topbar {
         grid-template-columns: 1fr;
-        padding: 0.95rem 1rem;
+        gap: 0.7rem;
+        padding: 0.82rem 0.9rem 0.9rem;
+        position: sticky;
+        top: 0;
+        z-index: 8;
+        backdrop-filter: blur(18px);
+        box-shadow: 0 10px 24px rgba(214, 174, 149, 0.14);
       }
 
       .topbar-actions {
@@ -1285,16 +1364,52 @@
       }
 
       .workspace-stage {
-        padding: 0.75rem;
+        padding: 0.6rem;
       }
 
       .workspace-sidebar {
-        padding: 0.85rem;
-        border-radius: 24px;
+        display: none;
       }
 
-      .workspace-link {
-        padding: 0.86rem 0.92rem;
+      .workspace-main {
+        border-radius: 24px;
+        min-height: auto;
+      }
+
+      .workspace-heading {
+        gap: 0.08rem;
+      }
+
+      .workspace-topbar strong {
+        font-size: 1.02rem;
+      }
+
+      .workspace-topbar span,
+      .workspace-topbar p {
+        font-size: 0.8rem;
+      }
+
+      #workspace-caption {
+        display: none;
+      }
+
+      .mobile-module-nav {
+        display: flex;
+        position: sticky;
+        top: 4.8rem;
+        z-index: 7;
+        margin: 0 -0.1rem;
+        padding: 0.1rem 0.1rem 0.2rem;
+        background: linear-gradient(180deg, rgba(255, 248, 240, 0.98), rgba(255, 248, 240, 0.9));
+      }
+
+      .mobile-module-chip {
+        padding: 0.68rem 0.86rem;
+        font-size: 0.8rem;
+      }
+
+      .mobile-top-summary {
+        display: block;
       }
 
       .demo-hero-copy,
@@ -1327,8 +1442,15 @@
       }
 
       .demo-hero-copy h1 {
-        font-size: clamp(2rem, 12vw, 3rem);
-        line-height: 1.02;
+        font-size: clamp(2rem, 11vw, 2.85rem);
+        line-height: 1.01;
+        margin-bottom: 0.85rem;
+      }
+
+      .demo-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.11em;
+        padding: 0.42rem 0.72rem;
       }
 
       .screen-nav {
@@ -1340,6 +1462,24 @@
       .persona-button,
       .mini-tab {
         width: 100%;
+      }
+
+      .mini-stat strong {
+        font-size: 1.1rem;
+      }
+
+      .feed-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .status-pill,
+      .score-pill {
+        align-self: flex-start;
+      }
+
+      .app-workspace {
+        margin-top: 0.85rem;
       }
     }
   </style>
@@ -1423,6 +1563,21 @@
           </div>
           <p class="install-status" id="install-status"><span class="status-accent">Installable on mobile and desktop:</span> owner, centres, staff, and parents can all use role-based PWA apps.</p>
           <p id="workspace-caption">Move across modules from the left sidebar to simulate how the owner would actually use the software day to day.</p>
+          <div class="mobile-top-summary">
+            <strong>7-centre owner control in one app</strong>
+            <span>Admissions, branch operations, fees, parent updates, and progress tracking delivered as a mobile-friendly ERP experience.</span>
+          </div>
+          <div class="mobile-module-nav" aria-label="Mobile ERP navigation">
+            <button class="mobile-module-chip is-active" type="button" data-view-target="overview">Overview</button>
+            <button class="mobile-module-chip" type="button" data-view-target="owner-control-room">Control Room</button>
+            <button class="mobile-module-chip" type="button" data-view-target="admissions-engine">Admissions</button>
+            <button class="mobile-module-chip" type="button" data-view-target="branch-operations">Centres</button>
+            <button class="mobile-module-chip" type="button" data-view-target="parent-app">Parent App</button>
+            <button class="mobile-module-chip" type="button" data-view-target="fees-control">Fees</button>
+            <button class="mobile-module-chip" type="button" data-view-target="child-progress">Progress</button>
+            <button class="mobile-module-chip" type="button" data-view-target="module-map">ERP Scope</button>
+            <button class="mobile-module-chip" type="button" data-view-target="rollout-plan">Rollout Plan</button>
+          </div>
         </div>
 
         <div class="workspace-stage">
@@ -2343,17 +2498,21 @@
       const tabs = document.querySelectorAll(".mini-tab");
       const screens = document.querySelectorAll(".demo-screen");
       const workspaceLinks = document.querySelectorAll("[data-view-target]");
+      const viewLinks = document.querySelectorAll("[data-view-link]");
       const workspaceViews = document.querySelectorAll(".workspace-view");
       const workspaceTitle = document.getElementById("workspace-title");
       const workspaceSubtitle = document.getElementById("workspace-subtitle");
       const workspaceCaption = document.getElementById("workspace-caption");
       const installButton = document.getElementById("install-app");
       const installStatus = document.getElementById("install-status");
+      const workspaceMain = document.querySelector(".workspace-main");
       let deferredInstallPrompt = null;
 
-      const activateView = (targetId) => {
+      const activateView = (targetId, options = {}) => {
+        const { preserveScroll = false, focusWorkspace = false } = options;
         const view = document.getElementById(targetId);
         if (!view) return;
+        const currentScroll = window.scrollY;
 
         workspaceViews.forEach((item) => item.classList.toggle("is-active", item.id === targetId));
         workspaceLinks.forEach((item) => item.classList.toggle("is-active", item.dataset.viewTarget === targetId));
@@ -2362,6 +2521,12 @@
         if (workspaceCaption) workspaceCaption.textContent = view.dataset.viewCaption || "";
         if (window.location.hash !== `#${targetId}`) {
           window.history.replaceState(null, "", `#${targetId}`);
+        }
+
+        if (preserveScroll) {
+          window.scrollTo({ top: currentScroll, left: 0, behavior: "auto" });
+        } else if (focusWorkspace && window.innerWidth <= 720) {
+          workspaceMain?.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       };
 
@@ -2378,11 +2543,18 @@
       });
 
       workspaceLinks.forEach((link) => {
-        link.addEventListener("click", () => activateView(link.dataset.viewTarget));
+        link.addEventListener("click", () => activateView(link.dataset.viewTarget, { focusWorkspace: true }));
+      });
+
+      viewLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          activateView(link.dataset.viewLink, { focusWorkspace: true });
+        });
       });
 
       const initialView = window.location.hash ? window.location.hash.slice(1) : "overview";
-      activateView(document.getElementById(initialView) ? initialView : "overview");
+      activateView(document.getElementById(initialView) ? initialView : "overview", { preserveScroll: true });
 
       window.addEventListener("beforeinstallprompt", (event) => {
         event.preventDefault();
