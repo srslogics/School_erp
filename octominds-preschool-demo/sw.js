@@ -1,4 +1,4 @@
-const CACHE_NAME = "octominds-erp-demo-v2";
+const CACHE_NAME = "octominds-erp-demo-v3";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -33,20 +33,57 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (request.method !== "GET") return;
+  const url = new URL(request.url);
+  const isSameOrigin = url.origin === self.location.origin;
+  const isNavigation = request.mode === "navigate" || (request.headers.get("accept") || "").includes("text/html");
+
+  if (!isSameOrigin) {
+    return;
+  }
+
+  if (isNavigation) {
+    event.respondWith(
+      fetch(request, { cache: "no-store" })
+        .then((networkResponse) => {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put("./index.html", responseClone);
+            cache.put(request, networkResponse.clone());
+          });
+          return networkResponse;
+        })
+        .catch(async () => {
+          const cachedResponse = await caches.match(request);
+          if (cachedResponse) return cachedResponse;
+          return caches.match("./index.html");
+        })
+    );
+    return;
+  }
 
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
-      if (cachedResponse) return cachedResponse;
-
-      return fetch(request)
+      const networkFetch = fetch(request)
         .then((networkResponse) => {
-          const responseClone = networkResponse.clone();
-          if (request.url.startsWith(self.location.origin)) {
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, responseClone));
+          if (networkResponse && networkResponse.ok) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, responseClone);
+            });
           }
           return networkResponse;
         })
-        .catch(() => caches.match("./index.html"));
+
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      return networkFetch.catch(() => {
+        if ((request.headers.get("accept") || "").includes("image/")) {
+          return caches.match("./icon-192.png");
+        }
+        return caches.match("./index.html");
+      });
     })
   );
 });

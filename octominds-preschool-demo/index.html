@@ -2880,7 +2880,8 @@
 
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js").then(() => {
+          navigator.serviceWorker.register(`./sw.js?build=${buildVersion}`).then((registration) => {
+            registration.update().catch(() => {});
             if (!deferredInstallPrompt && !isStandalone && !isIos) {
               setInstallUi("PWA foundation is active. On supported browsers, install appears from the app button or browser menu.", {
                 showButton: true,
