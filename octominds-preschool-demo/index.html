@@ -159,6 +159,7 @@
       justify-content: space-between;
       gap: 1.5rem;
       min-height: 5.4rem;
+      position: relative;
     }
 
     .brand {
@@ -314,7 +315,7 @@
       flex-shrink: 0;
     }
 
-    .mobile-menu-button span {
+    .mobile-menu-button > span {
       display: block;
       width: 0.34rem;
       height: 0.34rem;
@@ -1503,10 +1504,18 @@
       .site-header .container {
         min-height: auto;
         padding: 0.85rem 0;
+        padding-right: 4.5rem;
       }
 
       .mobile-menu-button {
         display: inline-flex;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        width: 3.05rem;
+        height: 3.05rem;
+        border-radius: 1.2rem;
       }
 
       .workspace-topbar {
@@ -1521,10 +1530,6 @@
         display: grid;
         grid-template-columns: 1fr;
         width: 100%;
-      }
-
-      .workspace-menu-button {
-        display: inline-flex !important;
       }
 
       .install-status {
@@ -1814,18 +1819,17 @@
             <span id="workspace-subtitle">Central school operations overview</span>
           </div>
           <div class="topbar-actions">
-            <button class="install-button workspace-menu-button" id="workspace-menu-button" type="button">Menu</button>
             <span class="pwa-pill">Mobile App Ready</span>
             <span class="build-pill" id="build-pill" hidden>Build 2026-06-28O1</span>
             <button class="install-button" id="install-app" type="button" hidden>Install App</button>
           </div>
           <p class="install-status" id="install-status"><span class="status-accent">Installable on mobile and desktop:</span> admin, centres, staff, and parents can all use role-based apps.</p>
           <p id="workspace-caption">Check admissions, centres, fees, parent communication, and child progress across all 7 centres from one place.</p>
-          <div class="mobile-top-summary">
+          <div class="mobile-top-summary" id="mobile-top-summary">
             <strong>7-centre school operations in one app</strong>
             <span>Admissions, branch operations, fees, parent updates, and progress tracking delivered as a mobile-friendly ERP experience.</span>
           </div>
-          <div class="mobile-quick-stats">
+          <div class="mobile-quick-stats" id="mobile-quick-stats">
             <div class="mini-stat">
               <span>Centres</span>
               <strong>7</strong>
@@ -2765,9 +2769,10 @@
       const workspaceSubtitle = document.getElementById("workspace-subtitle");
       const workspaceCaption = document.getElementById("workspace-caption");
       const installButton = document.getElementById("install-app");
-      const workspaceMenuButton = document.getElementById("workspace-menu-button");
       const installStatus = document.getElementById("install-status");
       const buildPill = document.getElementById("build-pill");
+      const mobileTopSummary = document.getElementById("mobile-top-summary");
+      const mobileQuickStats = document.getElementById("mobile-quick-stats");
       const mobileInstallCard = document.getElementById("mobile-install-card");
       const mobileInstallLine1 = document.getElementById("mobile-install-line-1");
       const mobileInstallLine2 = document.getElementById("mobile-install-line-2");
@@ -2798,7 +2803,9 @@
 
       const setMobileInstallCard = (title, line1, line2 = "") => {
         if (!mobileInstallCard || !mobileInstallLine1 || !mobileInstallLine2) return;
-        mobileInstallCard.hidden = !isMobileViewport.matches;
+        const activeView = document.querySelector(".workspace-view.is-active");
+        const isOverview = activeView?.id === "overview";
+        mobileInstallCard.hidden = !(isMobileViewport.matches && isOverview);
         const titleNode = mobileInstallCard.querySelector("strong");
         if (titleNode) titleNode.textContent = title;
         mobileInstallLine1.textContent = line1;
@@ -2812,7 +2819,6 @@
         mobileDrawerBackdrop.classList.toggle("is-open", open);
         mobileMenuButton.setAttribute("aria-expanded", String(open));
         mobileMenuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-        workspaceMenuButton?.setAttribute("aria-expanded", String(open));
       };
 
       const activateView = (targetId, options = {}) => {
@@ -2826,6 +2832,10 @@
         if (workspaceTitle) workspaceTitle.textContent = view.dataset.viewTitle || "Overview";
         if (workspaceSubtitle) workspaceSubtitle.textContent = view.dataset.viewSubtitle || "";
         if (workspaceCaption) workspaceCaption.textContent = view.dataset.viewCaption || "";
+        const showMobileOverviewExtras = isMobileViewport.matches && targetId === "overview";
+        if (mobileTopSummary) mobileTopSummary.hidden = !showMobileOverviewExtras;
+        if (mobileQuickStats) mobileQuickStats.hidden = !showMobileOverviewExtras;
+        if (mobileInstallCard) mobileInstallCard.hidden = !showMobileOverviewExtras;
 
         if (window.innerWidth <= 720) {
           setMobileDrawer(false);
@@ -2957,11 +2967,6 @@
 
       mobileMenuButton?.addEventListener("click", () => {
         const isOpen = mobileMenuButton.getAttribute("aria-expanded") === "true";
-        setMobileDrawer(!isOpen);
-      });
-
-      workspaceMenuButton?.addEventListener("click", () => {
-        const isOpen = mobileMenuButton?.getAttribute("aria-expanded") === "true";
         setMobileDrawer(!isOpen);
       });
 

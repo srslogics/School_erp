@@ -215,7 +215,7 @@
       z-index: 45;
     }
 
-    .mobile-menu-button span {
+    .mobile-menu-button > span:not(.mobile-menu-label) {
       display: block;
       width: 0.38rem;
       height: 0.38rem;
@@ -471,7 +471,7 @@
     }
 
     .workspace-menu-button {
-      display: none;
+      display: none !important;
     }
 
     .install-status {
@@ -1183,7 +1183,7 @@
       .site-header {
         position: relative;
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: space-between;
         padding: 0.82rem 0.9rem;
         padding-right: 4.4rem;
@@ -1223,13 +1223,12 @@
 
       .mobile-menu-button {
         display: inline-flex;
-        flex-shrink: 0;
-        position: fixed;
-        top: 1rem;
-        right: 1rem;
+        position: absolute;
+        top: 50%;
+        right: 0.9rem;
+        transform: translateY(-50%);
         width: 3.05rem;
         height: 3.05rem;
-        margin-left: 0;
         z-index: 45;
       }
 
@@ -1251,11 +1250,6 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: 0.6rem;
-      }
-
-      .workspace-menu-button {
-        display: inline-flex;
-        width: 100%;
       }
 
       .workspace-actions #mobile-build-pill {
@@ -1456,7 +1450,6 @@
             <span id="workspace-subtitle">School operations overview</span>
           </div>
           <div class="workspace-actions">
-            <button class="install-button workspace-menu-button" id="workspace-menu-button" type="button">Menu</button>
             <span class="pill">Mobile App Ready</span>
             <span class="pill" id="mobile-build-pill" hidden>Build 2026-06-28LJ7</span>
             <button class="install-button" id="mobile-install-app" type="button" hidden>Install App</button>
@@ -2845,7 +2838,6 @@
       const installStatus = document.getElementById("install-status");
       const buildPills = document.querySelectorAll("#build-pill, #mobile-build-pill");
       const mobileMenuButton = document.getElementById("mobile-menu-button");
-      const workspaceMenuButton = document.getElementById("workspace-menu-button");
       const mobileDrawer = document.getElementById("mobile-drawer");
       const mobileDrawerBackdrop = document.getElementById("mobile-drawer-backdrop");
       const mobileDrawerClose = document.getElementById("mobile-drawer-close");
@@ -2866,7 +2858,6 @@
         mobileDrawerBackdrop.classList.toggle("is-open", open);
         mobileMenuButton.setAttribute("aria-expanded", String(open));
         mobileMenuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-        workspaceMenuButton?.setAttribute("aria-expanded", String(open));
         document.body.classList.toggle("drawer-open", open);
       };
 
@@ -3178,11 +3169,6 @@
 
       mobileMenuButton?.addEventListener("click", () => {
         const isOpen = mobileMenuButton.getAttribute("aria-expanded") === "true";
-        setMobileDrawer(!isOpen);
-      });
-
-      workspaceMenuButton?.addEventListener("click", () => {
-        const isOpen = mobileMenuButton?.getAttribute("aria-expanded") === "true";
         setMobileDrawer(!isOpen);
       });
 
