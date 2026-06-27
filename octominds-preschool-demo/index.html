@@ -327,13 +327,15 @@
       top: 0;
       right: 0;
       width: min(86vw, 22rem);
-      height: 100vh;
+      height: 100dvh;
       padding: 1rem;
       background: linear-gradient(180deg, rgba(255, 251, 245, 0.98), rgba(255, 243, 231, 0.98));
       border-left: 1px solid rgba(221, 178, 160, 0.32);
       box-shadow: -24px 0 50px rgba(88, 56, 61, 0.18);
       z-index: 31;
-      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
 
     .mobile-drawer.is-open,
@@ -369,6 +371,12 @@
     .mobile-drawer-nav {
       display: grid;
       gap: 0.6rem;
+      min-height: 0;
+      overflow-y: auto;
+      padding-right: 0.15rem;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      touch-action: pan-y;
     }
 
     .mobile-module-nav {
