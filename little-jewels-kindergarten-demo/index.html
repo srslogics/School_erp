@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Little Jewels Kindergarten ERP Demo</title>
   <meta name="description" content="Little Jewels Kindergarten ERP demo for admissions, parent communication, child progress, events, and day-to-day school operations.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Little Jewels ERP Demo">
+  <meta property="og:description" content="A live Little Jewels preschool ERP demo for admissions, parent app, child progress, fees, events, and owner control.">
+  <meta property="og:image" content="./little-jewels-og-preview.png?v=lj7">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Little Jewels ERP">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Little Jewels ERP Demo">
+  <meta name="twitter:description" content="A live Little Jewels preschool ERP demo for admissions, parent app, child progress, fees, events, and owner control.">
+  <meta name="twitter:image" content="./little-jewels-og-preview.png?v=lj7">
   <meta name="theme-color" content="#fcf4e8">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -115,18 +126,12 @@
       min-width: 0;
     }
 
-    .brand-badge {
-      width: 3rem;
-      height: 3rem;
-      border-radius: 1.05rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    .brand-logo {
+      width: 8rem;
+      height: auto;
+      display: block;
       flex-shrink: 0;
-      background: linear-gradient(135deg, var(--maroon), var(--gold));
-      color: #fff9f2;
-      font-weight: 700;
-      box-shadow: 0 12px 24px rgba(115, 38, 69, 0.24);
+      filter: drop-shadow(0 10px 18px rgba(115, 38, 69, 0.14));
     }
 
     .brand-copy {
@@ -1184,6 +1189,11 @@
         min-width: 0;
         max-width: calc(100% - 4rem);
         width: auto;
+        gap: 0.58rem;
+      }
+
+      .brand-logo {
+        width: 5.8rem;
       }
 
       .brand-copy {
@@ -1358,7 +1368,7 @@
   <div class="page">
     <header class="site-header">
       <div class="brand">
-        <span class="brand-badge">LJ</span>
+        <img class="brand-logo" src="./little-jewels-logo.png" alt="Little Jewels logo">
         <div class="brand-copy">
           <strong>Little Jewels ERP</strong>
           <span>Jain International School, Nagpur</span>
@@ -1367,7 +1377,7 @@
 
       <div class="header-actions">
         <span class="pill">PWA Ready</span>
-        <span class="pill" id="build-pill">Build 2026-06-28LJ4</span>
+        <span class="pill" id="build-pill">Build 2026-06-28LJ7</span>
         <button class="install-button" id="install-app" type="button" hidden>Install App</button>
       </div>
 
@@ -1431,7 +1441,7 @@
           </div>
           <div class="workspace-actions">
             <span class="pill">PWA Ready</span>
-            <span class="pill" id="mobile-build-pill">Build 2026-06-28LJ4</span>
+            <span class="pill" id="mobile-build-pill">Build 2026-06-28LJ7</span>
             <button class="install-button" id="mobile-install-app" type="button" hidden>Install App</button>
           </div>
           <p class="install-status" id="install-status">Install on phone or desktop for staff and parents.</p>
@@ -2809,7 +2819,7 @@
 
   <script>
     (() => {
-      const buildVersion = "2026-06-28LJ4";
+      const buildVersion = "2026-06-28LJ7";
       const workspaceLinks = document.querySelectorAll("[data-view-target]");
       const workspaceViews = document.querySelectorAll(".workspace-view");
       const workspaceTitle = document.getElementById("workspace-title");
