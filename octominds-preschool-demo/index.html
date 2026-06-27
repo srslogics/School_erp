@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OctoMinds ERP Demo | Multi-Centre Preschool ERP</title>
   <meta name="description" content="A live preschool ERP demo for OctoMinds showing leadership dashboard, admissions, branch operations, parent app, fee collections, child progress tracking, and installable PWA apps across 7 centres.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="OctoMinds ERP Demo">
+  <meta property="og:description" content="A live multi-centre preschool ERP demo for OctoMinds across admissions, parent app, collections, branch operations, and leadership visibility.">
+  <meta property="og:image" content="./octominds-og-preview.png?v=octo1">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="OctoMinds ERP">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OctoMinds ERP Demo">
+  <meta name="twitter:description" content="A live multi-centre preschool ERP demo for OctoMinds across admissions, parent app, collections, branch operations, and leadership visibility.">
+  <meta name="twitter:image" content="./octominds-og-preview.png?v=octo1">
   <meta name="theme-color" content="#fff5ea">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -161,18 +172,12 @@
       min-width: 0;
     }
 
-    .brand-badge {
-      width: 2.7rem;
-      height: 2.7rem;
-      border-radius: 0.95rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #ff9eb5, #ffc57f);
-      color: white;
-      font-size: 1.25rem;
-      box-shadow: 0 10px 24px rgba(243, 172, 129, 0.28);
+    .brand-logo {
+      width: 10.8rem;
+      height: auto;
+      display: block;
       flex-shrink: 0;
+      filter: drop-shadow(0 10px 22px rgba(243, 172, 129, 0.18));
     }
 
     .brand-name {
@@ -1460,6 +1465,10 @@
         max-width: 100%;
       }
 
+      .brand-logo {
+        width: 8.6rem;
+      }
+
       .brand-name {
         font-size: 0.96rem;
       }
@@ -1648,7 +1657,7 @@
     <header class="site-header">
       <div class="container">
         <a class="brand" href="#overview" aria-label="OctoMinds ERP demo home" data-view-link="overview">
-          <span class="brand-badge" aria-hidden="true">O</span>
+          <img class="brand-logo" src="./octominds-logo.png" alt="OctoMinds logo">
           <span class="brand-mark">
             <span class="brand-name">OctoMinds Preschool ERP</span>
             <span class="brand-tag">7-centre preschool operations</span>
@@ -1770,7 +1779,7 @@
           </div>
           <div class="topbar-actions">
             <span class="pwa-pill">PWA Ready</span>
-            <span class="build-pill" id="build-pill">Build 2026-06-27B</span>
+            <span class="build-pill" id="build-pill">Build 2026-06-28O1</span>
             <button class="install-button" id="install-app" type="button" hidden>Install App</button>
           </div>
           <p class="install-status" id="install-status"><span class="status-accent">Installable on mobile and desktop:</span> admin, centres, staff, and parents can all use role-based PWA apps.</p>
@@ -2737,7 +2746,7 @@
       const isIos = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
       const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
       const isMobileViewport = window.matchMedia("(max-width: 720px)");
-      const buildVersion = "2026-06-27B";
+      const buildVersion = "2026-06-28O1";
       let deferredInstallPrompt = null;
 
       if (buildPill) {
