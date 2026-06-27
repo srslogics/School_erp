@@ -50,6 +50,10 @@
       box-sizing: border-box;
     }
 
+    [hidden] {
+      display: none !important;
+    }
+
     html {
       min-height: 100%;
       background: var(--bg);
@@ -208,6 +212,7 @@
       justify-content: center;
       cursor: pointer;
       gap: 0.18rem;
+      z-index: 45;
     }
 
     .mobile-menu-button span {
@@ -463,6 +468,10 @@
       gap: 0.55rem;
       flex-wrap: wrap;
       justify-content: flex-start;
+    }
+
+    .workspace-menu-button {
+      display: none;
     }
 
     .install-status {
@@ -1177,7 +1186,7 @@
         align-items: flex-start;
         justify-content: space-between;
         padding: 0.82rem 0.9rem;
-        padding-right: 0.9rem;
+        padding-right: 4.4rem;
       }
 
       .header-actions {
@@ -1187,7 +1196,7 @@
       .brand {
         flex: 1;
         min-width: 0;
-        max-width: calc(100% - 4rem);
+        max-width: 100%;
         width: auto;
         gap: 0.58rem;
       }
@@ -1215,11 +1224,13 @@
       .mobile-menu-button {
         display: inline-flex;
         flex-shrink: 0;
-        position: static;
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
         width: 3.05rem;
         height: 3.05rem;
-        margin-left: 0.65rem;
-        z-index: 41;
+        margin-left: 0;
+        z-index: 45;
       }
 
       .mobile-drawer {
@@ -1240,6 +1251,11 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: 0.6rem;
+      }
+
+      .workspace-menu-button {
+        display: inline-flex;
+        width: 100%;
       }
 
       .workspace-actions #mobile-build-pill {
@@ -1349,7 +1365,7 @@
       }
 
       .mini-table table {
-        min-width: 28rem;
+        min-width: 22rem;
       }
 
       .mini-table,
@@ -1376,8 +1392,8 @@
       </div>
 
       <div class="header-actions">
-        <span class="pill">PWA Ready</span>
-        <span class="pill" id="build-pill">Build 2026-06-28LJ7</span>
+        <span class="pill">Mobile App Ready</span>
+        <span class="pill" id="build-pill" hidden>Build 2026-06-28LJ7</span>
         <button class="install-button" id="install-app" type="button" hidden>Install App</button>
       </div>
 
@@ -1437,18 +1453,19 @@
         <div class="workspace-topbar">
           <div class="workspace-title">
             <strong id="workspace-title">Overview</strong>
-            <span id="workspace-subtitle">Little Jewels ERP live view</span>
+            <span id="workspace-subtitle">School operations overview</span>
           </div>
           <div class="workspace-actions">
-            <span class="pill">PWA Ready</span>
-            <span class="pill" id="mobile-build-pill">Build 2026-06-28LJ7</span>
+            <button class="install-button workspace-menu-button" id="workspace-menu-button" type="button">Menu</button>
+            <span class="pill">Mobile App Ready</span>
+            <span class="pill" id="mobile-build-pill" hidden>Build 2026-06-28LJ7</span>
             <button class="install-button" id="mobile-install-app" type="button" hidden>Install App</button>
           </div>
           <p class="install-status" id="install-status">Install on phone or desktop for staff and parents.</p>
         </div>
 
         <div class="workspace-stage">
-          <section class="workspace-view is-active" id="overview" data-view-title="Overview" data-view-subtitle="Little Jewels ERP live view">
+          <section class="workspace-view is-active" id="overview" data-view-title="Overview" data-view-subtitle="School operations overview">
             <div class="note-card">
               <strong>Designed for Little Jewels</strong>
               <p>This demo is shaped around how Little Jewels actually runs every day: warm parent communication, careful child records, smooth admissions, and clear front-office control.</p>
@@ -2828,6 +2845,7 @@
       const installStatus = document.getElementById("install-status");
       const buildPills = document.querySelectorAll("#build-pill, #mobile-build-pill");
       const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const workspaceMenuButton = document.getElementById("workspace-menu-button");
       const mobileDrawer = document.getElementById("mobile-drawer");
       const mobileDrawerBackdrop = document.getElementById("mobile-drawer-backdrop");
       const mobileDrawerClose = document.getElementById("mobile-drawer-close");
@@ -2848,6 +2866,7 @@
         mobileDrawerBackdrop.classList.toggle("is-open", open);
         mobileMenuButton.setAttribute("aria-expanded", String(open));
         mobileMenuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        workspaceMenuButton?.setAttribute("aria-expanded", String(open));
         document.body.classList.toggle("drawer-open", open);
       };
 
@@ -3095,13 +3114,13 @@
       } else if (isIos) {
         setInstallUi("On iPhone or iPad, use Safari Share and then Add to Home Screen to install this app.", {
           showButton: true,
-          label: "How to Install",
+          label: "Install App",
           mode: "ios-help"
         });
       } else {
         setInstallUi("Installable on mobile and desktop for admin, admissions, teachers, finance, and parents.", {
           showButton: true,
-          label: "Install Help",
+          label: "Install App",
           mode: "browser-help"
         });
       }
@@ -3126,7 +3145,7 @@
           if (button.dataset.installMode === "ios-help") {
             setInstallUi("Install on iPhone: tap Share in Safari, then choose Add to Home Screen.", {
               showButton: true,
-              label: "How to Install",
+              label: "Install App",
               mode: "ios-help"
             });
             return;
@@ -3135,7 +3154,7 @@
           if (button.dataset.installMode === "browser-help" && !deferredInstallPrompt) {
             setInstallUi("If the pop-up did not appear yet, open the browser menu and choose Install App or Add to Home screen.", {
               showButton: true,
-              label: "Install Help",
+              label: "Install App",
               mode: "browser-help"
             });
             return;
@@ -3159,6 +3178,11 @@
 
       mobileMenuButton?.addEventListener("click", () => {
         const isOpen = mobileMenuButton.getAttribute("aria-expanded") === "true";
+        setMobileDrawer(!isOpen);
+      });
+
+      workspaceMenuButton?.addEventListener("click", () => {
+        const isOpen = mobileMenuButton?.getAttribute("aria-expanded") === "true";
         setMobileDrawer(!isOpen);
       });
 
