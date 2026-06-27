@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OctoMinds ERP Demo | Multi-Centre Preschool ERP</title>
-  <meta name="description" content="A live preschool ERP demo for OctoMinds showing owner dashboard, admissions, branch operations, parent app, fee collections, child progress tracking, and installable PWA apps across 7 centres.">
+  <meta name="description" content="A live preschool ERP demo for OctoMinds showing leadership dashboard, admissions, branch operations, parent app, fee collections, child progress tracking, and installable PWA apps across 7 centres.">
   <meta name="theme-color" content="#fff5ea">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -248,7 +248,10 @@
     }
 
     .mobile-module-nav,
-    .mobile-control-bar {
+    .mobile-control-bar,
+    .mobile-menu-button,
+    .mobile-drawer,
+    .mobile-drawer-backdrop {
       display: none;
     }
 
@@ -285,6 +288,85 @@
       border-color: rgba(255, 150, 177, 0.42);
       color: #51304d;
       transform: translateY(-1px);
+    }
+
+    .mobile-menu-button {
+      width: 3.7rem;
+      height: 3.7rem;
+      border-radius: 1.4rem;
+      border: 1px solid rgba(228, 189, 172, 0.28);
+      background: linear-gradient(180deg, rgba(255, 251, 246, 0.94), rgba(255, 243, 231, 0.92));
+      box-shadow: 0 12px 30px rgba(196, 149, 117, 0.16);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .mobile-menu-button span {
+      display: block;
+      width: 1.5rem;
+      height: 3px;
+      margin: 0.24rem 0;
+      border-radius: 999px;
+      background: #6a505c;
+    }
+
+    .mobile-drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(34, 26, 38, 0.42);
+      backdrop-filter: blur(6px);
+      z-index: 30;
+    }
+
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(86vw, 22rem);
+      height: 100vh;
+      padding: 1rem;
+      background: linear-gradient(180deg, rgba(255, 251, 245, 0.98), rgba(255, 243, 231, 0.98));
+      border-left: 1px solid rgba(221, 178, 160, 0.32);
+      box-shadow: -24px 0 50px rgba(88, 56, 61, 0.18);
+      z-index: 31;
+      overflow-y: auto;
+    }
+
+    .mobile-drawer.is-open,
+    .mobile-drawer-backdrop.is-open {
+      display: block;
+    }
+
+    .mobile-drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .mobile-drawer-head strong {
+      color: #4f304d;
+      font-size: 1rem;
+    }
+
+    .mobile-drawer-close {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(228, 189, 172, 0.34);
+      background: rgba(255, 255, 255, 0.72);
+      color: #654f59;
+      font: inherit;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .mobile-drawer-nav {
+      display: grid;
+      gap: 0.6rem;
     }
 
     .mobile-module-nav {
@@ -352,6 +434,10 @@
 
     .mobile-install-card span + span {
       margin-top: 0.28rem;
+    }
+
+    .mobile-quick-stats {
+      display: none;
     }
 
     .workspace-meta {
@@ -675,6 +761,11 @@
 
     .mini-stats {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .mobile-quick-stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.65rem;
     }
 
     .mini-stat {
@@ -1373,6 +1464,10 @@
         padding: 0.85rem 0;
       }
 
+      .mobile-menu-button {
+        display: inline-flex;
+      }
+
       .workspace-topbar {
         grid-template-columns: 1fr;
         gap: 0.7rem;
@@ -1413,32 +1508,18 @@
         font-size: 0.8rem;
       }
 
+      .workspace-topbar .topbar-actions {
+        gap: 0.45rem;
+      }
+
+      .pwa-pill,
+      .build-pill {
+        padding: 0.38rem 0.58rem;
+        font-size: 0.66rem;
+      }
+
       #workspace-caption {
         display: none;
-      }
-
-      .mobile-control-bar {
-        display: block;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        margin: 0 0 0.35rem;
-        padding: 0.55rem 0.6rem 0.45rem;
-        background: linear-gradient(180deg, rgba(255, 248, 240, 0.98), rgba(255, 248, 240, 0.92));
-        border-bottom: 1px solid rgba(226, 187, 170, 0.24);
-        backdrop-filter: blur(16px);
-        box-shadow: 0 8px 18px rgba(214, 174, 149, 0.12);
-      }
-
-      .mobile-control-bar .mobile-module-nav {
-        display: flex;
-        margin: 0;
-        padding: 0;
-      }
-
-      .mobile-module-chip {
-        padding: 0.68rem 0.86rem;
-        font-size: 0.8rem;
       }
 
       .mobile-top-summary {
@@ -1447,6 +1528,15 @@
 
       .mobile-install-card {
         display: block;
+      }
+
+      .mobile-quick-stats {
+        display: grid;
+      }
+
+      .mobile-top-summary,
+      .mobile-install-card {
+        padding: 0.72rem 0.8rem;
       }
 
       .demo-hero-copy,
@@ -1479,15 +1569,36 @@
       }
 
       .demo-hero-copy h1 {
-        font-size: clamp(2rem, 11vw, 2.85rem);
-        line-height: 1.01;
-        margin-bottom: 0.85rem;
+        font-size: clamp(1.85rem, 10vw, 2.45rem);
+        line-height: 1.02;
+        margin-bottom: 0.7rem;
       }
 
       .demo-label {
         font-size: 0.7rem;
         letter-spacing: 0.11em;
         padding: 0.42rem 0.72rem;
+      }
+
+      .lead {
+        font-size: 0.95rem;
+      }
+
+      .demo-hero-copy > .lead {
+        max-width: 28ch;
+      }
+
+      .persona-switcher,
+      .screen-nav,
+      .demo-hero-panel,
+      .mini-stats {
+        display: none;
+      }
+
+      #persona-copy {
+        margin-bottom: 0;
+        font-size: 0.98rem;
+        color: #5e4753;
       }
 
       .screen-nav {
@@ -1529,42 +1640,34 @@
           <span class="brand-badge" aria-hidden="true">O</span>
           <span class="brand-mark">
             <span class="brand-name">OctoMinds Preschool ERP</span>
-            <span class="brand-tag">Owner demo for 7-centre operations</span>
+            <span class="brand-tag">7-centre preschool operations</span>
           </span>
         </a>
+
+        <button class="mobile-menu-button" id="mobile-menu-button" type="button" aria-expanded="false" aria-controls="mobile-drawer" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
 
       </div>
     </header>
 
     <main class="app-workspace">
-      <div class="mobile-control-bar">
-        <div class="mobile-module-nav" aria-label="Mobile ERP navigation">
-          <button class="mobile-module-chip is-active" type="button" data-view-target="overview">Overview</button>
-          <button class="mobile-module-chip" type="button" data-view-target="owner-control-room">Control Room</button>
-          <button class="mobile-module-chip" type="button" data-view-target="admissions-engine">Admissions</button>
-          <button class="mobile-module-chip" type="button" data-view-target="branch-operations">Centres</button>
-          <button class="mobile-module-chip" type="button" data-view-target="parent-app">Parent App</button>
-          <button class="mobile-module-chip" type="button" data-view-target="fees-control">Fees</button>
-          <button class="mobile-module-chip" type="button" data-view-target="child-progress">Progress</button>
-          <button class="mobile-module-chip" type="button" data-view-target="module-map">ERP Scope</button>
-          <button class="mobile-module-chip" type="button" data-view-target="rollout-plan">Rollout Plan</button>
+      <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
+      <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile navigation">
+        <div class="mobile-drawer-head">
+          <strong>Navigate Modules</strong>
+          <button class="mobile-drawer-close" id="mobile-drawer-close" type="button" aria-label="Close menu">×</button>
         </div>
-      </div>
-
-      <aside class="workspace-sidebar">
-        <div class="workspace-brand">
-          <strong>OctoMinds Owner Console</strong>
-          <span>One live environment for all 7 centres, designed to feel like the actual software the team will use every day.</span>
-        </div>
-
-        <div class="workspace-nav" aria-label="ERP modules">
+        <div class="mobile-drawer-nav">
           <button class="workspace-link is-active" type="button" data-view-target="overview">
             <strong>Overview</strong>
             <span>Product vision and why this feels like one software.</span>
           </button>
           <button class="workspace-link" type="button" data-view-target="owner-control-room">
             <strong>Control Room</strong>
-            <span>Owner snapshot across all 7 centres.</span>
+            <span>Leadership snapshot across all 7 centres.</span>
           </button>
           <button class="workspace-link" type="button" data-view-target="admissions-engine">
             <strong>Admissions</strong>
@@ -1592,7 +1695,53 @@
           </button>
           <button class="workspace-link" type="button" data-view-target="rollout-plan">
             <strong>Rollout Plan</strong>
-            <span>From prototype to MVP launch.</span>
+            <span>Launch roadmap for the first release.</span>
+          </button>
+        </div>
+      </aside>
+
+      <aside class="workspace-sidebar">
+        <div class="workspace-brand">
+          <strong>OctoMinds Central Console</strong>
+          <span>One live environment for all 7 centres, designed to feel like the actual software the team will use every day.</span>
+        </div>
+
+        <div class="workspace-nav" aria-label="ERP modules">
+          <button class="workspace-link is-active" type="button" data-view-target="overview">
+            <strong>Overview</strong>
+            <span>Product vision and why this feels like one software.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="owner-control-room">
+            <strong>Control Room</strong>
+            <span>Leadership snapshot across all 7 centres.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="admissions-engine">
+            <strong>Admissions</strong>
+            <span>Lead to child-master conversion engine.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="branch-operations">
+            <strong>Centres</strong>
+            <span>Daily branch execution and class operations.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="parent-app">
+            <strong>Parent App</strong>
+            <span>Premium family-facing touchpoints.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="fees-control">
+            <strong>Fees</strong>
+            <span>Collections, dues, and branch-wise recovery.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="child-progress">
+            <strong>Progress</strong>
+            <span>Milestones instead of exam-heavy records.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="module-map">
+            <strong>ERP Scope</strong>
+            <span>Full 7-module rollout structure.</span>
+          </button>
+          <button class="workspace-link" type="button" data-view-target="rollout-plan">
+            <strong>Rollout Plan</strong>
+            <span>Launch roadmap for the first release.</span>
           </button>
         </div>
 
@@ -1606,18 +1755,32 @@
         <div class="workspace-topbar">
           <div class="workspace-heading">
             <strong id="workspace-title">Overview</strong>
-            <span id="workspace-subtitle">Owner demo environment · single-app walkthrough</span>
+            <span id="workspace-subtitle">Live product walkthrough · single-app experience</span>
           </div>
           <div class="topbar-actions">
             <span class="pwa-pill">PWA Ready</span>
             <span class="build-pill" id="build-pill">Build 2026-06-27B</span>
             <button class="install-button" id="install-app" type="button" hidden>Install App</button>
           </div>
-          <p class="install-status" id="install-status"><span class="status-accent">Installable on mobile and desktop:</span> owner, centres, staff, and parents can all use role-based PWA apps.</p>
-          <p id="workspace-caption">Move across modules from the left sidebar to simulate how the owner would actually use the software day to day.</p>
+          <p class="install-status" id="install-status"><span class="status-accent">Installable on mobile and desktop:</span> admin, centres, staff, and parents can all use role-based PWA apps.</p>
+          <p id="workspace-caption">Move across modules to experience how the product will work day to day across all 7 centres.</p>
           <div class="mobile-top-summary">
-            <strong>7-centre owner control in one app</strong>
+            <strong>7-centre school operations in one app</strong>
             <span>Admissions, branch operations, fees, parent updates, and progress tracking delivered as a mobile-friendly ERP experience.</span>
+          </div>
+          <div class="mobile-quick-stats">
+            <div class="mini-stat">
+              <span>Centres</span>
+              <strong>7</strong>
+            </div>
+            <div class="mini-stat">
+              <span>Staff</span>
+              <strong>42</strong>
+            </div>
+            <div class="mini-stat">
+              <span>Leads</span>
+              <strong>164</strong>
+            </div>
           </div>
           <div class="mobile-install-card" id="mobile-install-card">
             <strong>Install this app on phone</strong>
@@ -1627,18 +1790,18 @@
         </div>
 
         <div class="workspace-stage">
-      <section class="hero demo-hero workspace-view is-active" id="overview" data-view-title="Overview" data-view-subtitle="Owner demo environment · single-app walkthrough" data-view-caption="Move across modules from the left sidebar to simulate how the owner would actually use the software day to day.">
+      <section class="hero demo-hero workspace-view is-active" id="overview" data-view-title="Overview" data-view-subtitle="Live product walkthrough · single-app experience" data-view-caption="Move across modules to experience how the product will work day to day across all 7 centres.">
         <div class="container demo-hero-grid">
           <div class="demo-hero-copy">
-            <span class="demo-label">Live Concept Demo · 7-centre preschool chain</span>
+            <span class="demo-label">Live Product Demo · 7-centre preschool chain</span>
             <h1>OctoMinds can run on one <span class="accent-text">multi-centre preschool control system</span>, not scattered tools.</h1>
             <p class="lead">
-              This live demo converts the college-style institutional proposal into a preschool-specific operating system for admissions, parent communication, branch operations, child development tracking, collections, compliance, and owner visibility across all 7 centres.
+              This live demo presents a preschool-specific operating system for admissions, parent communication, branch operations, child development tracking, collections, compliance, and centre-wide visibility across all 7 centres.
             </p>
 
             <div class="persona-switcher" role="tablist" aria-label="Demo perspectives">
               <button class="persona-button is-active" type="button" data-persona="owner" role="tab" aria-selected="true">
-                <strong>Owner View</strong>
+                <strong>Leadership View</strong>
                 <span>See all 7 centres, fees, conversions, and exceptions.</span>
               </button>
               <button class="persona-button" type="button" data-persona="manager" role="tab" aria-selected="false">
@@ -1657,7 +1820,7 @@
 
             <div class="screen-nav" aria-label="Demo sections">
               <a href="#module-map" data-view-link="module-map">Module map</a>
-              <a href="#owner-control-room" data-view-link="owner-control-room">Owner control room</a>
+              <a href="#owner-control-room" data-view-link="owner-control-room">Central dashboard</a>
               <a href="#admissions-engine" data-view-link="admissions-engine">Admissions engine</a>
               <a href="#branch-operations" data-view-link="branch-operations">Branch operations</a>
               <a href="#parent-app" data-view-link="parent-app">Parent app</a>
@@ -1674,7 +1837,7 @@
               </div>
               <div class="mini-stat">
                 <span>Users</span>
-                <strong>Owner + 42 Staff</strong>
+                <strong>Admin + 42 Staff</strong>
               </div>
               <div class="mini-stat">
                 <span>Today</span>
@@ -1717,7 +1880,7 @@
               <li class="feed-item">
                 <div>
                   <strong>PWA ready for all roles</strong>
-                  <span>Owner, centre head, counsellor, teacher, finance, and parent apps install from browser to home screen.</span>
+                  <span>Admin, centre head, counsellor, teacher, finance, and parent apps install from browser to home screen.</span>
                 </div>
                 <span class="status-pill good">Apps</span>
               </li>
@@ -1733,11 +1896,11 @@
         </div>
       </section>
 
-      <section class="section-frame workspace-view" id="module-map" data-view-title="ERP Scope" data-view-subtitle="7-module preschool operating system" data-view-caption="This is the full rollout structure behind the live screens. The owner can use the product module by module without losing the bigger operating picture.">
+      <section class="section-frame workspace-view" id="module-map" data-view-title="ERP Scope" data-view-subtitle="7-module preschool operating system" data-view-caption="This is the full rollout structure behind the live screens. The product can be understood module by module without losing the bigger operating picture.">
         <div class="container demo-section-card">
           <span class="eyebrow">Preschool ERP module map</span>
           <h2>The 7-module preschool version of the institutional system.</h2>
-          <p class="section-intro">This is the scope behind the screens the owner is clicking through.</p>
+          <p class="section-intro">This is the scope behind the screens shown in the live demo.</p>
 
           <div class="module-grid">
             <article class="module-card">
@@ -1780,7 +1943,7 @@
                 <li>Program-wise fee plans and daycare add-ons</li>
                 <li>Pending dues and reminder automation</li>
                 <li>Receipts and payment method tracking</li>
-                <li>Owner-level collection visibility by centre</li>
+                <li>Leadership-level collection visibility by centre</li>
               </ul>
             </article>
 
@@ -1808,8 +1971,8 @@
             </article>
 
             <article class="module-card">
-              <h3>7. Owner Control Dashboard</h3>
-              <p>Show the owner exactly what matters daily across all 7 centres without opening separate reports.</p>
+              <h3>7. Central Leadership Dashboard</h3>
+              <p>Show the school leadership team exactly what matters daily across all 7 centres without opening separate reports.</p>
               <ul class="module-list">
                 <li>Admissions velocity and occupancy</li>
                 <li>Collections, defaulters, and fee health</li>
@@ -1823,16 +1986,16 @@
             <button class="insight-chip" type="button">Removed: Placement system</button>
             <button class="insight-chip" type="button">Reworked: Examination system into progress tracking</button>
             <button class="insight-chip" type="button">Added: Parent app and pickup trust layer</button>
-            <button class="insight-chip" type="button">Added: Multi-centre owner control room</button>
+            <button class="insight-chip" type="button">Added: Multi-centre central dashboard</button>
           </div>
         </div>
       </section>
 
-      <section class="section-frame workspace-view" id="owner-control-room" data-view-title="Control Room" data-view-subtitle="Owner visibility across all 7 centres" data-view-caption="This is the daily owner screen: occupancy, fee health, admissions momentum, branch performance, and escalations in one place.">
+      <section class="section-frame workspace-view" id="owner-control-room" data-view-title="Control Room" data-view-subtitle="Leadership visibility across all 7 centres" data-view-caption="This is the daily leadership screen: occupancy, fee health, admissions momentum, branch performance, and escalations in one place.">
         <div class="container demo-panel">
           <span class="eyebrow">Screen 1</span>
-          <h2>Owner control room for all 7 centres.</h2>
-          <p class="section-intro">What the owner should see first every morning.</p>
+          <h2>Central control room for all 7 centres.</h2>
+          <p class="section-intro">What the leadership team should see first every morning.</p>
 
           <div class="metric-grid">
             <div class="metric">
@@ -1976,7 +2139,7 @@
             <aside class="owner-sidebar">
               <div class="owner-sidebar-header">
                 <strong>Priority queue</strong>
-                <span class="score-pill">Owner actions</span>
+                <span class="score-pill">Key actions</span>
               </div>
               <div class="sidebar-body">
                 <ul class="priority-list">
@@ -2327,7 +2490,7 @@
           </div>
 
           <div class="cta-bar">
-            <p>Every role can get its own installable PWA experience: owner console, centre manager app, admissions app, teacher app, finance app, and parent app.</p>
+            <p>Every role can get its own installable PWA experience: admin console, centre manager app, admissions app, teacher app, finance app, and parent app.</p>
           </div>
         </div>
       </section>
@@ -2392,7 +2555,7 @@
                 <li>Daycare add-on charges and timing slabs</li>
                 <li>Sibling discounts or special concessions</li>
                 <li>Receipt sharing directly into parent app</li>
-                <li>Branch-wise defaulter visibility for centre heads and owner</li>
+                <li>Branch-wise defaulter visibility for centre heads and leadership</li>
               </ul>
             </div>
           </div>
@@ -2468,16 +2631,16 @@
         </div>
       </section>
 
-      <section class="section-frame workspace-view" id="rollout-plan" data-view-title="Rollout Plan" data-view-subtitle="From prototype to MVP launch" data-view-caption="This screen keeps the implementation grounded. The owner should leave the meeting seeing both the product and the path to rollout.">
+      <section class="section-frame workspace-view" id="rollout-plan" data-view-title="Rollout Plan" data-view-subtitle="Launch roadmap for the first release" data-view-caption="This screen keeps the implementation grounded. The school should leave the discussion seeing both the product and the path to rollout.">
         <div class="container demo-panel">
           <span class="eyebrow">What we should build first</span>
-          <h2>Recommended live demo scope for the owner meeting.</h2>
+          <h2>Recommended live demo scope for the school discussion.</h2>
           <p class="section-intro">Launch the high-impact screens first, then expand.</p>
 
           <div class="report-grid">
             <article class="report-card">
               <h3>Phase 1 demo screens</h3>
-              <p>Owner dashboard, branch dashboard, admissions pipeline, child profile, fee board, parent PWA.</p>
+              <p>Central dashboard, branch dashboard, admissions pipeline, child profile, fee board, parent PWA.</p>
             </article>
             <article class="report-card">
               <h3>Phase 2 expansion</h3>
@@ -2492,25 +2655,25 @@
           <div class="rollout-grid">
             <article class="timeline-card">
               <h3>Step 1 · Discovery</h3>
-              <p>Map actual roles: owner, centre head, counsellor, front desk, teacher, finance, and parent.</p>
+              <p>Map actual roles: admin, centre head, counsellor, front desk, teacher, finance, and parent.</p>
             </article>
             <article class="timeline-card">
-              <h3>Step 2 · Clickable prototype</h3>
-              <p>Build the live preview with centre-wise data and realistic branch names so the owner can react to something tangible.</p>
+              <h3>Step 2 · Clickable preview</h3>
+              <p>Build the live preview with centre-wise data and realistic branch names so the school can react to something tangible.</p>
             </article>
             <article class="timeline-card">
               <h3>Step 3 · MVP build</h3>
-              <p>Launch admissions, child master, parent app basics, fees, owner dashboard, and installable PWAs first, then expand.</p>
+              <p>Launch admissions, child master, parent app basics, fees, central dashboard, and installable PWAs first, then expand.</p>
             </article>
           </div>
 
           <div class="cta-bar">
-            <p><strong>Use this page in the meeting like a live storyboard:</strong> start at the owner control room, go into one branch, open one admissions funnel, show one child record, then end on parent app and fee visibility. That sequence makes the product feel operational, not theoretical.</p>
-            <a class="button" href="#owner-control-room" data-view-link="owner-control-room">Return to control room</a>
+            <p><strong>Use this page like a live walkthrough:</strong> start at the central dashboard, go into one branch, open one admissions funnel, show one child record, then end on parent app and fee visibility. That sequence makes the product feel operational, not theoretical.</p>
+            <a class="button" href="#owner-control-room" data-view-link="owner-control-room">Return to dashboard</a>
           </div>
 
           <p class="footer-note">
-            This page is a concept prototype tailored from the WCEM institutional proposal into a preschool-specific multi-centre ERP demo for OctoMinds.
+            This page is a preschool-specific multi-centre ERP demo tailored for OctoMinds.
           </p>
         </div>
       </section>
@@ -2524,7 +2687,7 @@
       const personaButtons = document.querySelectorAll(".persona-button");
       const personaCopy = document.getElementById("persona-copy");
       const personaText = {
-        owner: "The owner dashboard should feel like a command centre: centre-wise occupancy, admissions funnel movement, pending collections, open parent issues, and branch performance in one place.",
+        owner: "The central dashboard should feel like a command centre: centre-wise occupancy, admissions funnel movement, pending collections, open parent issues, and branch performance in one place.",
         manager: "The centre manager view should help one branch run smoothly each day with attendance, staff coverage, pickups, parent follow-ups, and zero confusion about what needs attention next.",
         parent: "The parent experience should feel premium and calm: attendance, updates, receipts, notices, pickup confidence, and progress visibility without overwhelming families."
       };
@@ -2555,6 +2718,10 @@
       const mobileInstallCard = document.getElementById("mobile-install-card");
       const mobileInstallLine1 = document.getElementById("mobile-install-line-1");
       const mobileInstallLine2 = document.getElementById("mobile-install-line-2");
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileDrawer = document.getElementById("mobile-drawer");
+      const mobileDrawerBackdrop = document.getElementById("mobile-drawer-backdrop");
+      const mobileDrawerClose = document.getElementById("mobile-drawer-close");
       const workspaceMain = document.querySelector(".workspace-main");
       const isIos = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
       const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
@@ -2605,6 +2772,14 @@
         }
       };
 
+      const setMobileDrawer = (open) => {
+        if (!mobileDrawer || !mobileDrawerBackdrop || !mobileMenuButton) return;
+        mobileDrawer.classList.toggle("is-open", open);
+        mobileDrawerBackdrop.classList.toggle("is-open", open);
+        mobileMenuButton.setAttribute("aria-expanded", String(open));
+        document.body.style.overflow = open && window.innerWidth <= 720 ? "hidden" : "";
+      };
+
       tabs.forEach((tab) => {
         tab.addEventListener("click", () => {
           const target = tab.dataset.screen;
@@ -2618,7 +2793,10 @@
       });
 
       workspaceLinks.forEach((link) => {
-        link.addEventListener("click", () => activateView(link.dataset.viewTarget, { focusWorkspace: true }));
+        link.addEventListener("click", () => {
+          activateView(link.dataset.viewTarget, { focusWorkspace: true });
+          if (window.innerWidth <= 720) setMobileDrawer(false);
+        });
       });
 
       viewLinks.forEach((link) => {
@@ -2634,7 +2812,7 @@
       activateView("overview", { preserveScroll: true });
 
       if (isStandalone) {
-        setInstallUi("App installed. The owner can now reopen it like a real product from the home screen or desktop.");
+        setInstallUi("App installed. It can now be reopened like a real product from the home screen or desktop.");
         setMobileInstallCard("App installed", "This demo is already installed and can now be opened like a real app.", "");
       } else if (isIos) {
         setInstallUi("On iPhone or iPad, use Safari Share and then Add to Home Screen to install this app.", {
@@ -2665,7 +2843,7 @@
 
       window.addEventListener("appinstalled", () => {
         deferredInstallPrompt = null;
-        setInstallUi("App installed. The owner can now reopen it like a real product from the home screen or desktop.");
+        setInstallUi("App installed. It can now be reopened like a real product from the home screen or desktop.");
         setMobileInstallCard("App installed", "The demo can now be opened from the home screen like a real app.", "");
       });
 
@@ -2717,6 +2895,20 @@
           });
         });
       }
+
+      mobileMenuButton?.addEventListener("click", () => {
+        const isOpen = mobileMenuButton.getAttribute("aria-expanded") === "true";
+        setMobileDrawer(!isOpen);
+      });
+
+      mobileDrawerClose?.addEventListener("click", () => setMobileDrawer(false));
+      mobileDrawerBackdrop?.addEventListener("click", () => setMobileDrawer(false));
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 720) {
+          setMobileDrawer(false);
+        }
+      });
 
     })();
   </script>
