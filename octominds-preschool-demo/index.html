@@ -118,6 +118,10 @@
       margin: 0 auto;
     }
 
+    .site-shell {
+      min-height: 100vh;
+    }
+
     .site-header {
       background:
         linear-gradient(180deg, rgba(255, 251, 246, 0.92), rgba(255, 245, 233, 0.88));
@@ -143,7 +147,18 @@
     }
 
     .brand {
+      display: inline-flex;
+      align-items: center;
       gap: 0.7rem;
+      min-width: 0;
+      flex: 1 1 auto;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      display: grid;
+      gap: 0.14rem;
+      min-width: 0;
     }
 
     .brand-badge {
@@ -162,12 +177,21 @@
 
     .brand-name {
       color: #51304d;
+      font-size: 1.08rem;
+      font-weight: 700;
+      line-height: 1.08;
       text-shadow: none;
     }
 
     .brand-tag,
     .site-nav a {
-      color: #8d6c73;
+      color: #6c545f;
+    }
+
+    .brand-tag {
+      font-size: 0.74rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
 
     .site-nav a:hover,
@@ -276,7 +300,7 @@
     }
 
     .workspace-brand span {
-      color: #745f68;
+      color: #66515b;
       font-size: 0.88rem;
     }
 
@@ -308,7 +332,7 @@
     .workspace-link span {
       display: block;
       font-size: 0.82rem;
-      color: #907b84;
+      color: #75616b;
     }
 
     .workspace-link:hover,
@@ -336,14 +360,14 @@
 
     .workspace-meta p {
       margin: 0;
-      color: #755f69;
+      color: #67535d;
       font-size: 0.84rem;
     }
 
     .workspace-topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) auto;
+      align-items: start;
       gap: 1rem;
       padding: 1rem 1.2rem;
       background: rgba(255, 248, 240, 0.92);
@@ -359,12 +383,17 @@
     .workspace-topbar span,
     .workspace-topbar p {
       margin: 0;
-      color: #81676f;
+      color: #6d5862;
       font-size: 0.86rem;
     }
 
     .workspace-topbar p {
       max-width: 38rem;
+    }
+
+    .workspace-heading {
+      display: grid;
+      gap: 0.18rem;
     }
 
     .topbar-actions {
@@ -373,6 +402,7 @@
       gap: 0.75rem;
       flex-wrap: wrap;
       justify-content: flex-end;
+      align-self: start;
     }
 
     .pwa-pill,
@@ -417,9 +447,15 @@
 
     .install-status {
       margin: 0;
-      color: #8a6b72;
-      font-size: 0.78rem;
-      text-align: right;
+      color: #705964;
+      font-size: 0.8rem;
+      grid-column: 1 / -1;
+      padding-top: 0.15rem;
+    }
+
+    .status-accent {
+      font-weight: 600;
+      color: #553553;
     }
 
     .workspace-stage {
@@ -494,7 +530,7 @@
     }
 
     .demo-hero-copy p {
-      color: #725d67;
+      color: #65515b;
       max-width: 62ch;
     }
 
@@ -540,7 +576,7 @@
     .persona-button span,
     .mini-tab span {
       font-size: 0.83rem;
-      color: #8f7984;
+      color: #75616b;
     }
 
     .persona-button.is-active,
@@ -603,7 +639,7 @@
     }
 
     .quick-card span {
-      color: #745f68;
+      color: #66525c;
       font-size: 0.84rem;
     }
 
@@ -660,7 +696,7 @@
     }
 
     .feed-item span {
-      color: #775f67;
+      color: #65525b;
       font-size: 0.82rem;
     }
 
@@ -701,7 +737,7 @@
     }
 
     .section-intro {
-      color: #735f67;
+      color: #67535c;
       max-width: 68ch;
       margin-bottom: 1rem;
     }
@@ -787,7 +823,7 @@
     .flow-card p,
     .timeline-card p {
       margin: 0;
-      color: #735e67;
+      color: #67535c;
       font-size: 0.92rem;
     }
 
@@ -1224,7 +1260,7 @@
 
     .cta-bar p {
       margin: 0;
-      color: #735e67;
+      color: #67535c;
       max-width: 48rem;
     }
 
@@ -1241,6 +1277,11 @@
 
       .workspace-sidebar {
         position: static;
+        order: 2;
+      }
+
+      .workspace-main {
+        order: 1;
       }
 
       .demo-hero-grid,
@@ -1270,8 +1311,25 @@
     }
 
     @media (max-width: 720px) {
+      .container {
+        width: min(calc(100% - 1rem), 1180px);
+      }
+
       .nav-toggle {
         display: block;
+      }
+
+      .brand {
+        max-width: calc(100% - 3.75rem);
+      }
+
+      .brand-name {
+        font-size: 0.96rem;
+      }
+
+      .brand-tag {
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
       }
 
       .site-nav {
@@ -1290,16 +1348,29 @@
       }
 
       .workspace-topbar {
-        flex-direction: column;
-        align-items: flex-start;
+        grid-template-columns: 1fr;
+        padding: 0.95rem 1rem;
       }
 
       .topbar-actions {
         justify-content: flex-start;
       }
 
+      .install-status {
+        padding-top: 0;
+      }
+
       .workspace-stage {
         padding: 0.75rem;
+      }
+
+      .workspace-sidebar {
+        padding: 0.85rem;
+        border-radius: 24px;
+      }
+
+      .workspace-link {
+        padding: 0.86rem 0.92rem;
       }
 
       .demo-hero-copy,
@@ -1331,6 +1402,22 @@
         grid-template-columns: 92px minmax(0, 1fr) 38px;
       }
 
+      .demo-hero-copy h1 {
+        font-size: clamp(2rem, 12vw, 3rem);
+        line-height: 1.02;
+      }
+
+      .screen-nav {
+        gap: 0.55rem;
+      }
+
+      .screen-nav a,
+      .insight-chip,
+      .persona-button,
+      .mini-tab {
+        width: 100%;
+      }
+
       .nav-cta {
         width: 100%;
       }
@@ -1344,8 +1431,8 @@
         <a class="brand" href="#overview" aria-label="OctoMinds ERP demo home" data-view-link="overview">
           <span class="brand-badge" aria-hidden="true">O</span>
           <span class="brand-mark">
-            <span class="brand-name">OctoMinds ERP</span>
-            <span class="brand-tag">Founder demo environment</span>
+            <span class="brand-name">OctoMinds Preschool ERP</span>
+            <span class="brand-tag">Owner demo for 7-centre operations</span>
           </span>
         </a>
 
@@ -1370,8 +1457,8 @@
     <main class="app-workspace">
       <aside class="workspace-sidebar">
         <div class="workspace-brand">
-          <strong>OctoMinds Founder Console</strong>
-          <span>One live environment for all 7 centres, with every role delivered as an installable PWA app.</span>
+          <strong>OctoMinds Owner Console</strong>
+          <span>One live environment for all 7 centres, designed to feel like the actual software the team will use every day.</span>
         </div>
 
         <div class="workspace-nav" aria-label="ERP modules">
@@ -1381,7 +1468,7 @@
           </button>
           <button class="workspace-link" type="button" data-view-target="owner-control-room">
             <strong>Control Room</strong>
-            <span>Founder snapshot across all 7 centres.</span>
+            <span>Owner snapshot across all 7 centres.</span>
           </button>
           <button class="workspace-link" type="button" data-view-target="admissions-engine">
             <strong>Admissions</strong>
@@ -1421,20 +1508,20 @@
 
       <section class="workspace-main">
         <div class="workspace-topbar">
-          <div>
+          <div class="workspace-heading">
             <strong id="workspace-title">Overview</strong>
-            <span id="workspace-subtitle">Founder demo environment · single-app walkthrough</span>
+            <span id="workspace-subtitle">Owner demo environment · single-app walkthrough</span>
           </div>
           <div class="topbar-actions">
             <span class="pwa-pill">PWA Ready</span>
             <button class="install-button" id="install-app" type="button" hidden>Install App</button>
           </div>
-          <p class="install-status" id="install-status">Installable on mobile and desktop for owner, centres, staff, and parents.</p>
-          <p id="workspace-caption">Move across modules from the left sidebar to simulate how the founder would actually use the software day to day.</p>
+          <p class="install-status" id="install-status"><span class="status-accent">Installable on mobile and desktop:</span> owner, centres, staff, and parents can all use role-based PWA apps.</p>
+          <p id="workspace-caption">Move across modules from the left sidebar to simulate how the owner would actually use the software day to day.</p>
         </div>
 
         <div class="workspace-stage">
-      <section class="hero demo-hero workspace-view is-active" id="overview" data-view-title="Overview" data-view-subtitle="Founder demo environment · single-app walkthrough" data-view-caption="Move across modules from the left sidebar to simulate how the founder would actually use the software day to day.">
+      <section class="hero demo-hero workspace-view is-active" id="overview" data-view-title="Overview" data-view-subtitle="Owner demo environment · single-app walkthrough" data-view-caption="Move across modules from the left sidebar to simulate how the owner would actually use the software day to day.">
         <div class="container demo-hero-grid">
           <div class="demo-hero-copy">
             <span class="demo-label">Live Concept Demo · 7-centre preschool chain</span>
@@ -1540,7 +1627,7 @@
         </div>
       </section>
 
-      <section class="section-frame workspace-view" id="module-map" data-view-title="ERP Scope" data-view-subtitle="7-module preschool operating system" data-view-caption="This is the full rollout structure behind the live screens. The founder can use the product module by module without losing the bigger operating picture.">
+      <section class="section-frame workspace-view" id="module-map" data-view-title="ERP Scope" data-view-subtitle="7-module preschool operating system" data-view-caption="This is the full rollout structure behind the live screens. The owner can use the product module by module without losing the bigger operating picture.">
         <div class="container demo-section-card">
           <span class="eyebrow">Preschool ERP module map</span>
           <h2>The 7-module preschool version of the institutional system.</h2>
@@ -1616,7 +1703,7 @@
 
             <article class="module-card">
               <h3>7. Owner Control Dashboard</h3>
-              <p>Show the founder exactly what matters daily across all 7 centres without opening separate reports.</p>
+              <p>Show the owner exactly what matters daily across all 7 centres without opening separate reports.</p>
               <ul class="module-list">
                 <li>Admissions velocity and occupancy</li>
                 <li>Collections, defaulters, and fee health</li>
@@ -1630,16 +1717,16 @@
             <button class="insight-chip" type="button">Removed: Placement system</button>
             <button class="insight-chip" type="button">Reworked: Examination system into progress tracking</button>
             <button class="insight-chip" type="button">Added: Parent app and pickup trust layer</button>
-            <button class="insight-chip" type="button">Added: Multi-centre founder control room</button>
+            <button class="insight-chip" type="button">Added: Multi-centre owner control room</button>
           </div>
         </div>
       </section>
 
-      <section class="section-frame workspace-view" id="owner-control-room" data-view-title="Control Room" data-view-subtitle="Founder visibility across all 7 centres" data-view-caption="This is the daily owner screen: occupancy, fee health, admissions momentum, branch performance, and escalations in one place.">
+      <section class="section-frame workspace-view" id="owner-control-room" data-view-title="Control Room" data-view-subtitle="Owner visibility across all 7 centres" data-view-caption="This is the daily owner screen: occupancy, fee health, admissions momentum, branch performance, and escalations in one place.">
         <div class="container demo-panel">
           <span class="eyebrow">Screen 1</span>
           <h2>Owner control room for all 7 centres.</h2>
-          <p class="section-intro">What the founder should see first every morning.</p>
+          <p class="section-intro">What the owner should see first every morning.</p>
 
           <div class="metric-grid">
             <div class="metric">
@@ -2134,7 +2221,7 @@
           </div>
 
           <div class="cta-bar">
-            <p>Every role can get its own installable PWA experience: founder console, centre manager app, admissions app, teacher app, finance app, and parent app.</p>
+            <p>Every role can get its own installable PWA experience: owner console, centre manager app, admissions app, teacher app, finance app, and parent app.</p>
           </div>
         </div>
       </section>
@@ -2275,7 +2362,7 @@
         </div>
       </section>
 
-      <section class="section-frame workspace-view" id="rollout-plan" data-view-title="Rollout Plan" data-view-subtitle="From prototype to MVP launch" data-view-caption="This screen keeps the implementation grounded. The founder should leave the meeting seeing both the product and the path to rollout.">
+      <section class="section-frame workspace-view" id="rollout-plan" data-view-title="Rollout Plan" data-view-subtitle="From prototype to MVP launch" data-view-caption="This screen keeps the implementation grounded. The owner should leave the meeting seeing both the product and the path to rollout.">
         <div class="container demo-panel">
           <span class="eyebrow">What we should build first</span>
           <h2>Recommended live demo scope for the owner meeting.</h2>
@@ -2299,7 +2386,7 @@
           <div class="rollout-grid">
             <article class="timeline-card">
               <h3>Step 1 · Discovery</h3>
-              <p>Map actual roles: founder, centre head, counsellor, front desk, teacher, finance, and parent.</p>
+              <p>Map actual roles: owner, centre head, counsellor, front desk, teacher, finance, and parent.</p>
             </article>
             <article class="timeline-card">
               <h3>Step 2 · Clickable prototype</h3>
@@ -2410,7 +2497,7 @@
       window.addEventListener("appinstalled", () => {
         deferredInstallPrompt = null;
         if (installButton) installButton.hidden = true;
-        if (installStatus) installStatus.textContent = "App installed. The founder can now reopen it like a real product from the home screen or desktop.";
+        if (installStatus) installStatus.textContent = "App installed. The owner can now reopen it like a real product from the home screen or desktop.";
       });
 
       if (installButton) {
