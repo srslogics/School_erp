@@ -2761,9 +2761,6 @@
         mobileDrawer.classList.toggle("is-open", open);
         mobileDrawerBackdrop.classList.toggle("is-open", open);
         mobileMenuButton.setAttribute("aria-expanded", String(open));
-        const lockScroll = open && window.innerWidth <= 720;
-        document.body.style.overflow = lockScroll ? "hidden" : "";
-        document.documentElement.style.overflow = lockScroll ? "hidden" : "";
       };
 
       const activateView = (targetId, options = {}) => {
