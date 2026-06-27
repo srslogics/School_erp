@@ -322,7 +322,8 @@
       transform: translateY(-1px);
     }
 
-    .mobile-top-summary {
+    .mobile-top-summary,
+    .mobile-install-card {
       padding: 0.85rem 0.95rem;
       border-radius: 20px;
       background: linear-gradient(135deg, rgba(255, 221, 229, 0.96), rgba(255, 241, 210, 0.96));
@@ -330,16 +331,27 @@
       color: #57364f;
     }
 
-    .mobile-top-summary strong {
+    .mobile-top-summary strong,
+    .mobile-install-card strong {
       display: block;
       font-size: 0.96rem;
       margin-bottom: 0.2rem;
     }
 
-    .mobile-top-summary span {
+    .mobile-top-summary span,
+    .mobile-install-card span {
       display: block;
       color: #6b5660;
       font-size: 0.82rem;
+    }
+
+    .mobile-install-card {
+      display: none;
+      gap: 0.45rem;
+    }
+
+    .mobile-install-card span + span {
+      margin-top: 0.28rem;
     }
 
     .workspace-meta {
@@ -372,7 +384,8 @@
       border-bottom: 1px solid rgba(226, 187, 170, 0.35);
     }
 
-    .mobile-top-summary {
+    .mobile-top-summary,
+    .mobile-install-card {
       display: none;
     }
 
@@ -424,6 +437,21 @@
       font-size: 0.8rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+    }
+
+    .build-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.48rem 0.72rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(228, 189, 172, 0.42);
+      color: #7b5e67;
+      font-size: 0.74rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .install-button {
@@ -1349,11 +1377,6 @@
         grid-template-columns: 1fr;
         gap: 0.7rem;
         padding: 0.82rem 0.9rem 0.9rem;
-        position: sticky;
-        top: 0;
-        z-index: 8;
-        backdrop-filter: blur(18px);
-        box-shadow: 0 10px 24px rgba(214, 174, 149, 0.14);
       }
 
       .topbar-actions {
@@ -1397,13 +1420,14 @@
       .mobile-control-bar {
         display: block;
         position: sticky;
-        top: 4.85rem;
-        z-index: 7;
-        margin: 0;
-        padding: 0.35rem 0.6rem 0.45rem;
+        top: 0;
+        z-index: 10;
+        margin: 0 0 0.35rem;
+        padding: 0.55rem 0.6rem 0.45rem;
         background: linear-gradient(180deg, rgba(255, 248, 240, 0.98), rgba(255, 248, 240, 0.92));
         border-bottom: 1px solid rgba(226, 187, 170, 0.24);
         backdrop-filter: blur(16px);
+        box-shadow: 0 8px 18px rgba(214, 174, 149, 0.12);
       }
 
       .mobile-control-bar .mobile-module-nav {
@@ -1418,6 +1442,10 @@
       }
 
       .mobile-top-summary {
+        display: block;
+      }
+
+      .mobile-install-card {
         display: block;
       }
 
@@ -1509,6 +1537,20 @@
     </header>
 
     <main class="app-workspace">
+      <div class="mobile-control-bar">
+        <div class="mobile-module-nav" aria-label="Mobile ERP navigation">
+          <button class="mobile-module-chip is-active" type="button" data-view-target="overview">Overview</button>
+          <button class="mobile-module-chip" type="button" data-view-target="owner-control-room">Control Room</button>
+          <button class="mobile-module-chip" type="button" data-view-target="admissions-engine">Admissions</button>
+          <button class="mobile-module-chip" type="button" data-view-target="branch-operations">Centres</button>
+          <button class="mobile-module-chip" type="button" data-view-target="parent-app">Parent App</button>
+          <button class="mobile-module-chip" type="button" data-view-target="fees-control">Fees</button>
+          <button class="mobile-module-chip" type="button" data-view-target="child-progress">Progress</button>
+          <button class="mobile-module-chip" type="button" data-view-target="module-map">ERP Scope</button>
+          <button class="mobile-module-chip" type="button" data-view-target="rollout-plan">Rollout Plan</button>
+        </div>
+      </div>
+
       <aside class="workspace-sidebar">
         <div class="workspace-brand">
           <strong>OctoMinds Owner Console</strong>
@@ -1568,6 +1610,7 @@
           </div>
           <div class="topbar-actions">
             <span class="pwa-pill">PWA Ready</span>
+            <span class="build-pill" id="build-pill">Build 2026-06-27B</span>
             <button class="install-button" id="install-app" type="button" hidden>Install App</button>
           </div>
           <p class="install-status" id="install-status"><span class="status-accent">Installable on mobile and desktop:</span> owner, centres, staff, and parents can all use role-based PWA apps.</p>
@@ -1576,19 +1619,10 @@
             <strong>7-centre owner control in one app</strong>
             <span>Admissions, branch operations, fees, parent updates, and progress tracking delivered as a mobile-friendly ERP experience.</span>
           </div>
-        </div>
-
-        <div class="mobile-control-bar">
-          <div class="mobile-module-nav" aria-label="Mobile ERP navigation">
-            <button class="mobile-module-chip is-active" type="button" data-view-target="overview">Overview</button>
-            <button class="mobile-module-chip" type="button" data-view-target="owner-control-room">Control Room</button>
-            <button class="mobile-module-chip" type="button" data-view-target="admissions-engine">Admissions</button>
-            <button class="mobile-module-chip" type="button" data-view-target="branch-operations">Centres</button>
-            <button class="mobile-module-chip" type="button" data-view-target="parent-app">Parent App</button>
-            <button class="mobile-module-chip" type="button" data-view-target="fees-control">Fees</button>
-            <button class="mobile-module-chip" type="button" data-view-target="child-progress">Progress</button>
-            <button class="mobile-module-chip" type="button" data-view-target="module-map">ERP Scope</button>
-            <button class="mobile-module-chip" type="button" data-view-target="rollout-plan">Rollout Plan</button>
+          <div class="mobile-install-card" id="mobile-install-card">
+            <strong>Install this app on phone</strong>
+            <span id="mobile-install-line-1">Open the browser menu to install the demo as an app.</span>
+            <span id="mobile-install-line-2">If you are on iPhone, use Safari Share and then Add to Home Screen.</span>
           </div>
         </div>
 
@@ -2517,10 +2551,20 @@
       const workspaceCaption = document.getElementById("workspace-caption");
       const installButton = document.getElementById("install-app");
       const installStatus = document.getElementById("install-status");
+      const buildPill = document.getElementById("build-pill");
+      const mobileInstallCard = document.getElementById("mobile-install-card");
+      const mobileInstallLine1 = document.getElementById("mobile-install-line-1");
+      const mobileInstallLine2 = document.getElementById("mobile-install-line-2");
       const workspaceMain = document.querySelector(".workspace-main");
       const isIos = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
       const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+      const isMobileViewport = window.matchMedia("(max-width: 720px)");
+      const buildVersion = "2026-06-27B";
       let deferredInstallPrompt = null;
+
+      if (buildPill) {
+        buildPill.textContent = `Build ${buildVersion}`;
+      }
 
       const setInstallUi = (message, options = {}) => {
         const { showButton = false, label = "Install App", mode = "prompt" } = options;
@@ -2530,6 +2574,16 @@
           installButton.textContent = label;
           installButton.dataset.installMode = mode;
         }
+      };
+
+      const setMobileInstallCard = (title, line1, line2 = "") => {
+        if (!mobileInstallCard || !mobileInstallLine1 || !mobileInstallLine2) return;
+        mobileInstallCard.hidden = !isMobileViewport.matches;
+        const titleNode = mobileInstallCard.querySelector("strong");
+        if (titleNode) titleNode.textContent = title;
+        mobileInstallLine1.textContent = line1;
+        mobileInstallLine2.textContent = line2;
+        mobileInstallLine2.hidden = !line2;
       };
 
       const activateView = (targetId, options = {}) => {
@@ -2581,18 +2635,21 @@
 
       if (isStandalone) {
         setInstallUi("App installed. The owner can now reopen it like a real product from the home screen or desktop.");
+        setMobileInstallCard("App installed", "This demo is already installed and can now be opened like a real app.", "");
       } else if (isIos) {
         setInstallUi("On iPhone or iPad, use Safari Share and then Add to Home Screen to install this app.", {
           showButton: true,
           label: "How to Install",
           mode: "ios-help"
         });
+        setMobileInstallCard("Install on iPhone", "Tap Share in Safari.", "Then choose Add to Home Screen.");
       } else {
         setInstallUi("PWA foundation is active. On supported browsers, install appears from the app button or browser menu.", {
           showButton: true,
           label: "Install Help",
           mode: "browser-help"
         });
+        setMobileInstallCard("Install on Android", "Use the Install App button if the browser shows it.", "If not, open the browser menu and choose Install App or Add to Home screen.");
       }
 
       window.addEventListener("beforeinstallprompt", (event) => {
@@ -2603,11 +2660,13 @@
           label: "Install App",
           mode: "prompt"
         });
+        setMobileInstallCard("Install available now", "Tap Install App below to add this demo to the phone.", "After install, it opens like a normal app from the home screen.");
       });
 
       window.addEventListener("appinstalled", () => {
         deferredInstallPrompt = null;
         setInstallUi("App installed. The owner can now reopen it like a real product from the home screen or desktop.");
+        setMobileInstallCard("App installed", "The demo can now be opened from the home screen like a real app.", "");
       });
 
       if (installButton) {
@@ -2618,6 +2677,7 @@
               label: "How to Install",
               mode: "ios-help"
             });
+            setMobileInstallCard("Install on iPhone", "Tap Share in Safari.", "Then choose Add to Home Screen.");
             return;
           }
 
@@ -2627,6 +2687,7 @@
               label: "Install Help",
               mode: "browser-help"
             });
+            setMobileInstallCard("Install from browser menu", "Open the browser menu on the phone.", "Choose Install App or Add to Home screen.");
             return;
           }
 
@@ -2635,6 +2696,7 @@
           await deferredInstallPrompt.userChoice;
           deferredInstallPrompt = null;
           setInstallUi("If the prompt was accepted, the app will now appear like a real installed product.");
+          setMobileInstallCard("Finishing install", "If you accepted the prompt, the app icon should now appear on the phone.", "");
         });
       }
 
@@ -2647,9 +2709,11 @@
                 label: "Install Help",
                 mode: "browser-help"
               });
+              setMobileInstallCard("Install on Android", "Use the Install App button if it appears.", "If not, open the browser menu and choose Install App or Add to Home screen.");
             }
           }).catch(() => {
             setInstallUi("PWA setup needs a refresh after deployment.");
+            setMobileInstallCard("Refresh needed", "The latest app install setup needs a refresh after deployment.", "Open the page again after redeploy.");
           });
         });
       }
