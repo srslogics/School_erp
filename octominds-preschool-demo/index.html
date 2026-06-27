@@ -291,6 +291,8 @@
     }
 
     .mobile-menu-button {
+      display: inline-flex;
+      flex-direction: column;
       width: 3.7rem;
       height: 3.7rem;
       border-radius: 1.4rem;
@@ -304,10 +306,10 @@
     }
 
     .mobile-menu-button span {
-      display: inline-block;
+      display: block;
       width: 0.34rem;
       height: 0.34rem;
-      margin: 0 0.13rem;
+      margin: 0.13rem 0;
       border-radius: 999px;
       background: #6a505c;
     }
@@ -1434,7 +1436,7 @@
     @media (max-width: 720px) {
       html,
       body {
-        scroll-padding-top: 8.5rem;
+        scroll-padding-top: 0;
       }
 
       .container {
@@ -1469,6 +1471,7 @@
       }
 
       .workspace-topbar {
+        position: static;
         grid-template-columns: 1fr;
         gap: 0.7rem;
         padding: 0.82rem 0.9rem 0.9rem;
@@ -2753,6 +2756,16 @@
         mobileInstallLine2.hidden = !line2;
       };
 
+      const setMobileDrawer = (open) => {
+        if (!mobileDrawer || !mobileDrawerBackdrop || !mobileMenuButton) return;
+        mobileDrawer.classList.toggle("is-open", open);
+        mobileDrawerBackdrop.classList.toggle("is-open", open);
+        mobileMenuButton.setAttribute("aria-expanded", String(open));
+        const lockScroll = open && window.innerWidth <= 720;
+        document.body.style.overflow = lockScroll ? "hidden" : "";
+        document.documentElement.style.overflow = lockScroll ? "hidden" : "";
+      };
+
       const activateView = (targetId, options = {}) => {
         const { preserveScroll = false, focusWorkspace = false } = options;
         const view = document.getElementById(targetId);
@@ -2765,19 +2778,15 @@
         if (workspaceSubtitle) workspaceSubtitle.textContent = view.dataset.viewSubtitle || "";
         if (workspaceCaption) workspaceCaption.textContent = view.dataset.viewCaption || "";
 
+        if (window.innerWidth <= 720) {
+          setMobileDrawer(false);
+        }
+
         if (preserveScroll) {
           window.scrollTo({ top: currentScroll, left: 0, behavior: "auto" });
         } else if (focusWorkspace && window.innerWidth <= 720) {
           workspaceMain?.scrollIntoView({ behavior: "smooth", block: "start" });
         }
-      };
-
-      const setMobileDrawer = (open) => {
-        if (!mobileDrawer || !mobileDrawerBackdrop || !mobileMenuButton) return;
-        mobileDrawer.classList.toggle("is-open", open);
-        mobileDrawerBackdrop.classList.toggle("is-open", open);
-        mobileMenuButton.setAttribute("aria-expanded", String(open));
-        document.body.style.overflow = open && window.innerWidth <= 720 ? "hidden" : "";
       };
 
       tabs.forEach((tab) => {
@@ -2795,7 +2804,6 @@
       workspaceLinks.forEach((link) => {
         link.addEventListener("click", () => {
           activateView(link.dataset.viewTarget, { focusWorkspace: true });
-          if (window.innerWidth <= 720) setMobileDrawer(false);
         });
       });
 
@@ -2809,6 +2817,7 @@
       if (window.location.hash) {
         window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
       }
+      setMobileDrawer(false);
       activateView("overview", { preserveScroll: true });
 
       if (isStandalone) {
@@ -2907,6 +2916,13 @@
 
       window.addEventListener("resize", () => {
         if (window.innerWidth > 720) {
+          setMobileDrawer(false);
+        }
+      });
+
+      window.addEventListener("pagehide", () => setMobileDrawer(false));
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
           setMobileDrawer(false);
         }
       });
