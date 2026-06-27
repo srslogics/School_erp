@@ -338,7 +338,6 @@
       border-left: 1px solid rgba(221, 178, 160, 0.32);
       box-shadow: -24px 0 50px rgba(88, 56, 61, 0.18);
       z-index: 31;
-      display: flex;
       flex-direction: column;
       overflow: hidden;
     }
@@ -2788,6 +2787,7 @@
         mobileDrawer.classList.toggle("is-open", open);
         mobileDrawerBackdrop.classList.toggle("is-open", open);
         mobileMenuButton.setAttribute("aria-expanded", String(open));
+        mobileMenuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       };
 
       const activateView = (targetId, options = {}) => {
