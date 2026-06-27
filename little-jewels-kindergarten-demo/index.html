@@ -59,6 +59,11 @@
       overflow-x: hidden;
     }
 
+    body.drawer-open {
+      overflow: hidden;
+      touch-action: none;
+    }
+
     body::before,
     body::after {
       content: "";
@@ -197,6 +202,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      gap: 0.18rem;
     }
 
     .mobile-menu-button span {
@@ -208,9 +214,25 @@
       background: #fff9f2;
     }
 
+    .mobile-menu-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     .mobile-drawer-backdrop,
     .mobile-drawer {
-      display: none;
+      display: block;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 220ms ease, visibility 220ms ease, transform 220ms ease;
     }
 
     .mobile-drawer-backdrop {
@@ -234,15 +256,19 @@
       z-index: 31;
       flex-direction: column;
       overflow: hidden;
+      transform: translateX(105%);
     }
 
     .mobile-drawer.is-open,
     .mobile-drawer-backdrop.is-open {
-      display: block;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
     }
 
     .mobile-drawer.is-open {
       display: flex;
+      transform: translateX(0);
     }
 
     .mobile-drawer-head {
@@ -1186,6 +1212,10 @@
         z-index: 41;
       }
 
+      .mobile-drawer {
+        width: min(84vw, 20rem);
+      }
+
       .app-layout {
         margin-top: 0.8rem;
       }
@@ -1337,11 +1367,12 @@
 
       <div class="header-actions">
         <span class="pill">PWA Ready</span>
-        <span class="pill" id="build-pill">Build 2026-06-28LJ3</span>
+        <span class="pill" id="build-pill">Build 2026-06-28LJ4</span>
         <button class="install-button" id="install-app" type="button" hidden>Install App</button>
       </div>
 
       <button class="mobile-menu-button" id="mobile-menu-button" type="button" aria-expanded="false" aria-controls="mobile-drawer" aria-label="Open menu">
+        <span class="mobile-menu-label">Open menu</span>
         <span></span>
         <span></span>
         <span></span>
@@ -1400,7 +1431,7 @@
           </div>
           <div class="workspace-actions">
             <span class="pill">PWA Ready</span>
-            <span class="pill" id="mobile-build-pill">Build 2026-06-28LJ3</span>
+            <span class="pill" id="mobile-build-pill">Build 2026-06-28LJ4</span>
             <button class="install-button" id="mobile-install-app" type="button" hidden>Install App</button>
           </div>
           <p class="install-status" id="install-status">Install on phone or desktop for staff and parents.</p>
@@ -2778,7 +2809,7 @@
 
   <script>
     (() => {
-      const buildVersion = "2026-06-28LJ3";
+      const buildVersion = "2026-06-28LJ4";
       const workspaceLinks = document.querySelectorAll("[data-view-target]");
       const workspaceViews = document.querySelectorAll(".workspace-view");
       const workspaceTitle = document.getElementById("workspace-title");
@@ -2806,6 +2837,8 @@
         mobileDrawer.classList.toggle("is-open", open);
         mobileDrawerBackdrop.classList.toggle("is-open", open);
         mobileMenuButton.setAttribute("aria-expanded", String(open));
+        mobileMenuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        document.body.classList.toggle("drawer-open", open);
       };
 
       const setInstallUi = (message, options = {}) => {
